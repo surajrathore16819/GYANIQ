@@ -1,0 +1,1811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>Lucky Spin | GyanIQ</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  :root{
+    --bg-0:#07070d;
+    --panel:#11131f;
+    --panel-2:#161a2b;
+    --border:#252a41;
+    --border-soft:#1d2036;
+    --text:#eef0fb;
+    --muted:#8a90b3;
+    --accent:#7c5cff;
+    --accent-2:#22d3c9;
+    --gold:#ffcf5c;
+    --danger:#ff5c7a;
+    --success:#3ee08a;
+    --radius:16px;
+    --glow-accent:0 0 24px rgba(124,92,255,.35);
+
+    --seg-1:#7c5cff;
+    --seg-2:#22d3c9;
+    --seg-3:#ffcf5c;
+    --seg-4:#3ee08a;
+    --seg-5:#ff9f4d;
+    --seg-6:#3a3f5c;
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0;padding:0;
+    background:
+      radial-gradient(1200px 800px at 15% -10%, rgba(124,92,255,.18), transparent 60%),
+      radial-gradient(1000px 700px at 110% 10%, rgba(34,211,201,.14), transparent 55%),
+      radial-gradient(900px 600px at 50% 120%, rgba(255,207,92,.06), transparent 60%),
+      var(--bg-0);
+    color:var(--text);
+    font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    min-height:100vh;
+    min-height:100dvh;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .app{
+    max-width:1180px;
+    margin:0 auto;
+    padding:clamp(10px,2.5vw,18px) clamp(10px,2.5vw,16px) clamp(14px,4vw,32px);
+    display:flex;
+    flex-direction:column;
+    gap:clamp(10px,2.5vw,18px);
+    animation:fadeInApp .5s ease;
+  }
+  @keyframes fadeInApp{
+    from{opacity:0; transform:translateY(6px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+
+  /* HEADER */
+  header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:clamp(9px,2.2vw,14px) clamp(12px,3vw,18px);
+    background:linear-gradient(135deg, rgba(124,92,255,.16), rgba(34,211,201,.09));
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    backdrop-filter:blur(8px);
+    box-shadow:0 8px 30px rgba(0,0,0,.3);
+  }
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand .logo{
+    width:38px;height:38px;border-radius:10px;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:18px;color:#0a0a12;
+    box-shadow:0 4px 18px rgba(124,92,255,.45);
+    flex-shrink:0;
+    animation:logoGlow 3.2s ease-in-out infinite;
+  }
+  @keyframes logoGlow{
+    0%,100%{box-shadow:0 4px 18px rgba(124,92,255,.45);}
+    50%{box-shadow:0 4px 26px rgba(34,211,201,.55);}
+  }
+  .brand .titles{display:flex;flex-direction:column;line-height:1.15;}
+  .brand .titles .name{
+    font-size:19px;font-weight:800;letter-spacing:.3px;
+    background:linear-gradient(90deg,#fff,#c9c6ff);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .brand .titles .tag{font-size:11px;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;}
+  .header-right{display:flex;align-items:center;gap:10px;}
+  .coin-pill{
+    display:flex;align-items:center;gap:6px;
+    padding:7px 14px;
+    border-radius:999px;
+    background:linear-gradient(135deg, rgba(255,207,92,.18), rgba(255,207,92,.06));
+    border:1px solid rgba(255,207,92,.4);
+    font-weight:800;
+    font-size:13px;
+    color:var(--gold);
+  }
+  .coin-pill .coin-ico{font-size:15px;}
+  .sound-toggle{
+    width:34px;height:34px;
+    border-radius:10px;
+    border:1px solid var(--border);
+    background:rgba(255,255,255,.03);
+    color:var(--text);
+    font-size:15px;
+    cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    transition:.2s;
+    flex-shrink:0;
+  }
+  .sound-toggle:hover{border-color:var(--accent);box-shadow:var(--glow-accent);}
+  .sound-toggle.muted{opacity:.5;}
+  .gyaniq-badge{
+    font-size:12px;color:var(--muted);
+    padding:6px 12px;border:1px solid var(--border);border-radius:999px;
+    background:rgba(255,255,255,.02);
+    text-decoration:none;
+    display:flex;align-items:center;gap:6px;
+    transition:.2s;
+  }
+  .gyaniq-badge:hover{border-color:var(--accent);color:var(--text);box-shadow:var(--glow-accent);}
+  .gyaniq-badge b{color:var(--accent-2);}
+
+  /* LAYOUT */
+  .layout{
+    display:flex;
+    gap:26px;
+    align-items:flex-start;
+    justify-content:center;
+    flex-wrap:wrap;
+  }
+
+  .wheel-wrap{
+    flex:0 0 auto;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:clamp(10px,2.2vw,18px);
+    width:100%;
+    max-width:460px;
+  }
+
+  .wheel-stage{
+    position:relative;
+    width:min(88vw, 46dvh, 440px);
+    aspect-ratio:1/1;
+  }
+
+  .pointer{
+    position:absolute;
+    top:-4px;
+    left:50%;
+    transform:translateX(-50%);
+    width:46px;
+    height:56px;
+    z-index:5;
+    filter:drop-shadow(0 6px 10px rgba(0,0,0,.55));
+    animation:pointerBob 2.4s ease-in-out infinite;
+  }
+  @keyframes pointerBob{
+    0%,100%{transform:translateX(-50%) translateY(0);}
+    50%{transform:translateX(-50%) translateY(3px);}
+  }
+  .pointer svg{width:100%;height:100%;display:block;}
+
+  .wheel-frame{
+    position:relative;
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    padding:14px;
+    background:
+      radial-gradient(circle at 50% 20%, rgba(255,255,255,.08), transparent 60%),
+      linear-gradient(160deg, #1c1f33, #0d0e18);
+    box-shadow:
+      0 24px 70px rgba(0,0,0,.6),
+      inset 0 0 0 2px rgba(255,255,255,.05),
+      0 0 0 6px rgba(124,92,255,.15);
+  }
+  .wheel-frame::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    border-radius:50%;
+    padding:2px;
+    background:conic-gradient(from 0deg, var(--gold), var(--accent), var(--accent-2), var(--gold));
+    -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite:xor;
+    mask-composite:exclude;
+    opacity:.55;
+    pointer-events:none;
+    animation:ringShimmer 7s linear infinite;
+  }
+  @keyframes ringShimmer{
+    from{ filter:hue-rotate(0deg); }
+    to{ filter:hue-rotate(360deg); }
+  }
+
+  .wheel{
+    position:relative;
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    overflow:hidden;
+    box-shadow:inset 0 0 30px rgba(0,0,0,.5), 0 0 0 2px rgba(0,0,0,.4);
+    background:conic-gradient(
+      var(--seg-1) 0deg 60deg,
+      var(--seg-2) 60deg 120deg,
+      var(--seg-3) 120deg 180deg,
+      var(--seg-4) 180deg 240deg,
+      var(--seg-5) 240deg 300deg,
+      var(--seg-6) 300deg 360deg
+    );
+    transition: transform 4.5s cubic-bezier(.15,.8,.15,1);
+    will-change:transform;
+  }
+  .wheel.spinning-glow{
+    filter:drop-shadow(0 0 24px rgba(255,207,92,.35));
+  }
+  .wheel::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    border-radius:50%;
+    background:radial-gradient(circle at 50% 50%, transparent 55%, rgba(0,0,0,.28) 100%);
+    pointer-events:none;
+  }
+
+  .segment-label{
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:50%;
+    height:0;
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    padding-right:14%;
+    transform-origin:0% 0%;
+    pointer-events:none;
+  }
+  .segment-label span{
+    display:inline-block;
+    font-weight:800;
+    font-size:clamp(9.5px, 2.1vw, 12.5px);
+    color:#0a0a12;
+    text-shadow:0 1px 0 rgba(255,255,255,.25);
+    white-space:nowrap;
+    letter-spacing:.2px;
+    text-align:center;
+  }
+  .segment-label.light span{color:#0a0a12;}
+  .segment-label.dark span{color:#f2f3fb;text-shadow:0 1px 2px rgba(0,0,0,.5);}
+
+  .hub{
+    position:absolute;
+    top:50%;left:50%;
+    transform:translate(-50%,-50%);
+    width:19%;
+    height:19%;
+    border-radius:50%;
+    background:linear-gradient(160deg,#fefefe,#d8d4ff);
+    box-shadow:
+      0 6px 18px rgba(0,0,0,.5),
+      inset 0 0 0 3px rgba(124,92,255,.4);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:4;
+  }
+  .hub .hub-text{
+    font-weight:900;
+    font-size:clamp(9px,2vw,12px);
+    color:#4a2fd6;
+    letter-spacing:.5px;
+    text-align:center;
+    line-height:1.1;
+  }
+
+  .spin-btn{
+    border:none;
+    cursor:pointer;
+    font-weight:800;
+    font-size:clamp(13.5px,3vw,16px);
+    letter-spacing:.4px;
+    padding:clamp(12px,3vw,16px) clamp(30px,7vw,44px);
+    border-radius:999px;
+    color:#0a0a12;
+    background:linear-gradient(135deg,var(--gold),#ffe6a3);
+    box-shadow:0 12px 30px rgba(255,207,92,.4), inset 0 0 0 1px rgba(255,255,255,.4);
+    transition:transform .15s, box-shadow .15s, opacity .2s;
+    width:100%;
+    max-width:340px;
+  }
+  .spin-btn.idle-pulse:not(:disabled){
+    animation:spinBtnPulse 2.2s ease-in-out infinite;
+  }
+  @keyframes spinBtnPulse{
+    0%,100%{box-shadow:0 12px 30px rgba(255,207,92,.4), inset 0 0 0 1px rgba(255,255,255,.4);}
+    50%{box-shadow:0 16px 42px rgba(255,207,92,.65), inset 0 0 0 1px rgba(255,255,255,.5);}
+  }
+  .spin-btn:hover:not(:disabled){transform:translateY(-2px); box-shadow:0 16px 36px rgba(255,207,92,.55), inset 0 0 0 1px rgba(255,255,255,.4);}
+  .spin-btn:active:not(:disabled){transform:scale(.97);}
+  .spin-btn:disabled{opacity:.5;cursor:not-allowed;animation:none;}
+
+  /* SIDE PANEL */
+  .panel{
+    flex:0 0 320px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .card{
+    background:linear-gradient(160deg, var(--panel), var(--panel-2));
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:clamp(12px,3vw,18px);
+    box-shadow:0 12px 36px rgba(0,0,0,.35);
+    transition:box-shadow .2s ease;
+  }
+  .result-card{width:100%;max-width:460px;}
+  .card:hover{box-shadow:0 14px 40px rgba(0,0,0,.45);}
+  .card h3{
+    margin:0 0 14px;
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:.8px;
+    color:var(--muted);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+
+  .result-display{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:6px;
+    text-align:center;
+    padding:clamp(4px,1.2vw,10px) 6px 2px;
+  }
+  .result-icon{
+    font-size:clamp(28px,7vw,38px);
+    line-height:1;
+    filter:drop-shadow(0 6px 14px rgba(255,207,92,.35));
+    transition:transform .3s;
+  }
+  .result-icon.pop{animation:resultPop .5s ease;}
+  @keyframes resultPop{
+    0%{transform:scale(.4) rotate(-15deg); opacity:0;}
+    60%{transform:scale(1.15) rotate(6deg); opacity:1;}
+    100%{transform:scale(1) rotate(0deg);}
+  }
+  .result-title{
+    font-size:clamp(15px,3.6vw,19px);
+    font-weight:800;
+    background:linear-gradient(90deg,#fff,#c9c6ff);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .result-title.win{background:linear-gradient(90deg,var(--gold),#fff3d1);-webkit-background-clip:text;background-clip:text;}
+  .result-title.lose{background:linear-gradient(90deg,var(--danger),#ffd6de);-webkit-background-clip:text;background-clip:text;}
+  .result-sub{font-size:clamp(11px,2.4vw,12.5px);color:var(--muted);}
+
+  .stats-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:12px;
+  }
+  .stat-box{
+    background:rgba(255,255,255,.03);
+    border:1px solid var(--border-soft);
+    border-radius:12px;
+    padding:12px 8px;
+    text-align:center;
+    transition:transform .18s ease, border-color .18s ease;
+  }
+  .stat-box:hover{transform:translateY(-3px); border-color:var(--accent);}
+  .stat-box .icon{font-size:15px;margin-bottom:2px;display:block;}
+  .stat-box .val{font-size:19px;font-weight:800;color:var(--accent-2);}
+  .stat-box.coins .val{color:var(--gold);}
+  .stat-box.highest .val{background:linear-gradient(90deg,var(--success),#c9ffe4);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .stat-box.streak .val{color:#ff9f4d;}
+  .stat-box .lbl{font-size:10.5px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.4px;}
+
+  .new-spin-btn{
+    width:100%;
+    margin-top:14px;
+    border:none;
+    cursor:pointer;
+    font-weight:700;
+    font-size:13.5px;
+    padding:12px 18px;
+    border-radius:12px;
+    color:#0a0a12;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    box-shadow:0 10px 24px rgba(124,92,255,.4);
+    transition:transform .15s, box-shadow .15s, opacity .2s;
+  }
+  .new-spin-btn:hover:not(:disabled){transform:translateY(-2px);}
+  .new-spin-btn:active:not(:disabled){transform:scale(.97);}
+  .new-spin-btn:disabled{opacity:.45;cursor:not-allowed;}
+
+  /* DAILY REWARDS / STREAK CARD */
+  .daily-status-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    padding:12px 14px;
+    border-radius:14px;
+    background:linear-gradient(135deg, rgba(62,224,138,.1), rgba(34,211,201,.06));
+    border:1px solid rgba(62,224,138,.3);
+    margin-bottom:14px;
+  }
+  .daily-status-row .ds-left{display:flex;align-items:center;gap:10px;}
+  .daily-status-row .ds-icon{font-size:26px;animation:flameFlicker 1.6s ease-in-out infinite;}
+  @keyframes flameFlicker{
+    0%,100%{transform:scale(1) rotate(0deg);}
+    50%{transform:scale(1.08) rotate(-3deg);}
+  }
+  .daily-status-row .ds-streak-num{font-size:20px;font-weight:900;color:var(--success);line-height:1;}
+  .daily-status-row .ds-streak-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;}
+  .daily-status-row .ds-timer{font-size:11px;color:var(--muted);text-align:right;}
+  .daily-status-row .ds-timer b{color:var(--gold);display:block;font-size:13px;font-weight:800;}
+
+  .streak-track{
+    display:flex;
+    gap:6px;
+    margin-bottom:14px;
+  }
+  .streak-day{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:4px;
+    padding:8px 4px;
+    border-radius:10px;
+    background:rgba(255,255,255,.03);
+    border:1px solid var(--border-soft);
+    font-size:9.5px;
+    color:var(--muted);
+    position:relative;
+    transition:.2s;
+  }
+  .streak-day .sd-num{
+    width:22px;height:22px;
+    border-radius:50%;
+    background:rgba(255,255,255,.05);
+    display:flex;align-items:center;justify-content:center;
+    font-size:10.5px;font-weight:800;
+    color:var(--text);
+    transition:.2s;
+  }
+  .streak-day.done{
+    border-color:rgba(62,224,138,.5);
+    background:rgba(62,224,138,.1);
+  }
+  .streak-day.done .sd-num{background:var(--success); color:#0a0a12;}
+  .streak-day.milestone{
+    border-color:rgba(255,207,92,.5);
+  }
+  .streak-day.milestone .sd-num{box-shadow:0 0 0 2px rgba(255,207,92,.5);}
+  .streak-day.today{
+    border-color:rgba(124,92,255,.7);
+    box-shadow:0 0 0 2px rgba(124,92,255,.3);
+    animation:todayPulse 1.6s infinite;
+  }
+  @keyframes todayPulse{
+    0%,100%{box-shadow:0 0 0 2px rgba(124,92,255,.3);}
+    50%{box-shadow:0 0 0 4px rgba(124,92,255,.5);}
+  }
+  .streak-day .sd-bonus{font-size:8.5px;color:var(--gold);font-weight:700;white-space:nowrap;}
+
+  .daily-claim-wrap{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+  }
+  .daily-claim-note{font-size:11px;color:var(--muted);text-align:center;}
+
+  /* REWARD / PRIZE HISTORY (dedicated, structured) */
+  .history-list{
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+    max-height:210px;
+    overflow-y:auto;
+    padding-right:4px;
+  }
+  .history-empty{font-size:12px;color:var(--muted);text-align:center;padding:14px 0;}
+  .history-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:8px 10px;
+    border-radius:10px;
+    background:rgba(255,255,255,.03);
+    border:1px solid var(--border-soft);
+    animation:logIn .2s ease;
+  }
+  .history-row .h-icon{font-size:17px;flex-shrink:0;}
+  .history-row .h-main{flex:1; min-width:0;}
+  .history-row .h-label{font-size:12.5px;font-weight:700;color:var(--text);}
+  .history-row .h-time{font-size:10px;color:var(--muted);}
+  .history-row .h-coins{font-size:12px;font-weight:800;color:var(--gold);white-space:nowrap;}
+  .history-row.lose-row .h-coins{color:var(--danger);}
+  .history-row.bonus-row .h-coins{color:var(--success);}
+  .history-list::-webkit-scrollbar{width:5px;}
+  .history-list::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+
+  .log{
+    max-height:150px;
+    overflow-y:auto;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    font-size:12px;
+    color:var(--muted);
+    padding-right:4px;
+  }
+  .log div{
+    padding:6px 8px;
+    border-radius:8px;
+    background:rgba(255,255,255,.02);
+    border-left:2px solid var(--accent);
+    animation:logIn .2s ease;
+  }
+  @keyframes logIn{
+    from{opacity:0; transform:translateX(-6px);}
+    to{opacity:1; transform:translateX(0);}
+  }
+  .log div.win{border-left-color:var(--gold); color:var(--gold); font-weight:700;}
+  .log div.bonus{border-left-color:var(--success); color:var(--success); font-weight:700;}
+  .log div.lose{border-left-color:var(--danger);}
+  .log::-webkit-scrollbar{width:5px;}
+  .log::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+
+  footer{
+    text-align:center;
+    color:var(--muted);
+    font-size:12px;
+    padding-top:6px;
+  }
+  footer a{color:var(--accent-2);text-decoration:none;font-weight:600;}
+
+  /* CONFETTI */
+  .confetti-layer{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:150;
+    overflow:hidden;
+  }
+  .confetti-piece{
+    position:absolute;
+    top:-12px;
+    width:8px;height:14px;
+    border-radius:2px;
+    opacity:.9;
+    animation:confettiFall linear forwards;
+  }
+  @keyframes confettiFall{
+    to{ transform:translateY(110vh) rotate(540deg); opacity:0; }
+  }
+
+  /* WIN POPUP */
+  .win-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(4,4,10,.75);
+    backdrop-filter:blur(6px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:100;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .35s ease;
+    padding:20px;
+  }
+  .win-overlay.show{opacity:1;pointer-events:auto;}
+  .win-card{
+    position:relative;
+    width:min(92vw, 380px);
+    background:linear-gradient(160deg, var(--panel), var(--panel-2));
+    border:1px solid var(--border);
+    border-radius:24px;
+    padding:36px 28px 30px;
+    text-align:center;
+    box-shadow:0 30px 90px rgba(0,0,0,.6), 0 0 0 1px rgba(255,207,92,.15);
+    transform:scale(.8) translateY(14px);
+    transition:transform .4s cubic-bezier(.34,1.56,.64,1);
+    overflow:hidden;
+  }
+  .win-overlay.show .win-card{transform:scale(1) translateY(0);}
+  .win-card .ring{
+    position:absolute;
+    top:-70px; left:50%;
+    transform:translateX(-50%);
+    width:220px;height:220px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(255,207,92,.25), transparent 70%);
+    pointer-events:none;
+  }
+  .win-card .w-icon{
+    font-size:64px;
+    line-height:1;
+    margin-bottom:8px;
+    position:relative;
+    animation:winIconBounce 1.2s ease-in-out infinite;
+    filter:drop-shadow(0 8px 18px rgba(255,207,92,.5));
+  }
+  @keyframes winIconBounce{
+    0%,100%{transform:translateY(0) scale(1);}
+    50%{transform:translateY(-10px) scale(1.06);}
+  }
+  .win-card h2{
+    margin:4px 0 6px;
+    font-size:24px;
+    font-weight:800;
+    position:relative;
+    background:linear-gradient(90deg,var(--gold),#fff8dd,var(--gold));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .win-card h2.lose-title{
+    background:linear-gradient(90deg,#c9cbe0,#fff,#c9cbe0);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .win-card p{
+    margin:0 0 22px;
+    font-size:13.5px;
+    color:var(--muted);
+    position:relative;
+  }
+  .win-coin-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:10px 20px;
+    border-radius:999px;
+    background:linear-gradient(135deg, rgba(255,207,92,.2), rgba(255,207,92,.06));
+    border:1px solid rgba(255,207,92,.4);
+    font-size:20px;
+    font-weight:900;
+    color:var(--gold);
+    margin-bottom:14px;
+    position:relative;
+  }
+  .win-coin-badge .coin-ico{font-size:22px;}
+  .win-streak-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 18px;
+    border-radius:999px;
+    background:linear-gradient(135deg, rgba(62,224,138,.2), rgba(62,224,138,.06));
+    border:1px solid rgba(62,224,138,.4);
+    font-size:14px;
+    font-weight:800;
+    color:var(--success);
+    margin-bottom:22px;
+    position:relative;
+  }
+  .win-card .win-close-btn{
+    border:none;
+    cursor:pointer;
+    font-weight:700;
+    font-size:14px;
+    padding:13px 22px;
+    border-radius:12px;
+    color:#0a0a12;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    box-shadow:0 10px 24px rgba(124,92,255,.4);
+    transition:transform .15s;
+    width:100%;
+    position:relative;
+  }
+  .win-card .win-close-btn:active{transform:scale(.97);}
+
+  /* ---------- RESPONSIVE LAYOUT ---------- */
+  /* Mobile: < 600px */
+  @media (max-width:599px){
+    header{padding:12px 14px;flex-wrap:wrap;}
+    .brand .titles .name{font-size:16px;}
+    .spin-btn{padding:14px 34px;font-size:14.5px;}
+    .daily-status-row{flex-direction:column;align-items:flex-start;gap:8px;}
+    .daily-status-row .ds-timer{text-align:left;}
+    .layout{flex-direction:column;}
+    .panel{width:100%;max-width:100%;}
+    .stats-grid{grid-template-columns:1fr 1fr;}
+  }
+  /* Tablet: 600px - 1024px */
+  @media (min-width:600px) and (max-width:1024px){
+    .layout{flex-direction:column;align-items:center;}
+    .panel{width:100%;max-width:520px;}
+    .wheel-stage{width:min(70vw, 46dvh, 420px);}
+  }
+  /* Laptop: 1025px - 1440px */
+  @media (min-width:1025px) and (max-width:1440px){
+    .layout{flex-direction:row;}
+    .panel{flex:0 0 320px;}
+    .wheel-stage{width:min(34vw, 58dvh, 440px);}
+  }
+  /* Desktop: > 1440px */
+  @media (min-width:1441px){
+    .app{max-width:1320px;}
+    .layout{gap:40px;}
+    .wheel-stage{width:min(30vw, 60dvh, 520px);}
+    .panel{flex:0 0 340px;}
+  }
+
+  /* HOME / START SCREEN */
+  .home-overlay{
+    position:fixed;
+    inset:0;
+    background:
+      radial-gradient(1200px 800px at 15% -10%, rgba(124,92,255,.24), transparent 60%),
+      radial-gradient(1000px 700px at 110% 10%, rgba(34,211,201,.18), transparent 55%),
+      radial-gradient(900px 600px at 50% 110%, rgba(255,207,92,.12), transparent 60%),
+      rgba(4,4,10,.94);
+    backdrop-filter:blur(10px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:300;
+    padding:20px;
+    opacity:1;
+    transition:opacity .4s ease;
+    overflow-y:auto;
+  }
+  .home-overlay.hide{opacity:0; pointer-events:none;}
+  .home-card{
+    width:min(94vw,540px);
+    background:linear-gradient(160deg, var(--panel), var(--panel-2));
+    border:1px solid var(--border);
+    border-radius:26px;
+    padding:38px 32px 32px;
+    text-align:center;
+    box-shadow:0 40px 100px rgba(0,0,0,.65), 0 0 0 1px rgba(255,207,92,.1);
+    margin:auto;
+    animation:homeCardIn .5s cubic-bezier(.34,1.2,.64,1);
+  }
+  @keyframes homeCardIn{
+    from{opacity:0; transform:scale(.9) translateY(18px);}
+    to{opacity:1; transform:scale(1) translateY(0);}
+  }
+  .home-wheel-preview{
+    width:96px;height:96px;
+    margin:0 auto 16px;
+    border-radius:50%;
+    background:conic-gradient(
+      var(--seg-1) 0deg 60deg,
+      var(--seg-2) 60deg 120deg,
+      var(--seg-3) 120deg 180deg,
+      var(--seg-4) 180deg 240deg,
+      var(--seg-5) 240deg 300deg,
+      var(--seg-6) 300deg 360deg
+    );
+    box-shadow:0 10px 30px rgba(0,0,0,.5), 0 0 0 4px rgba(255,207,92,.25);
+    animation:homeWheelSpin 6s linear infinite;
+    position:relative;
+  }
+  .home-wheel-preview::after{
+    content:'';
+    position:absolute;
+    inset:30%;
+    border-radius:50%;
+    background:linear-gradient(160deg,#fefefe,#d8d4ff);
+    box-shadow:inset 0 0 0 2px rgba(124,92,255,.4);
+  }
+  @keyframes homeWheelSpin{
+    from{transform:rotate(0deg);}
+    to{transform:rotate(360deg);}
+  }
+  .home-card h1{
+    margin:0 0 6px;
+    font-size:28px;
+    font-weight:800;
+    background:linear-gradient(90deg,#fff,#c9c6ff,#ffe6a3);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .home-card .home-tag{
+    font-size:12.5px;
+    color:var(--muted);
+    letter-spacing:.6px;
+    text-transform:uppercase;
+    margin-bottom:22px;
+  }
+  .home-features{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-bottom:26px;
+    text-align:left;
+  }
+  .home-feature{
+    display:flex;
+    align-items:flex-start;
+    gap:8px;
+    padding:10px 12px;
+    border-radius:12px;
+    background:rgba(255,255,255,.03);
+    border:1px solid var(--border-soft);
+    font-size:12px;
+    color:var(--muted);
+  }
+  .home-feature .hf-icon{font-size:15px;flex-shrink:0;}
+  .home-feature b{color:var(--text);}
+  .home-actions{display:flex;flex-direction:column;gap:10px;}
+  .home-actions .btn-home{
+    border:none;
+    cursor:pointer;
+    font-weight:800;
+    font-size:15px;
+    padding:15px 24px;
+    border-radius:999px;
+    color:#0a0a12;
+    background:linear-gradient(135deg,var(--gold),#ffe6a3);
+    box-shadow:0 12px 30px rgba(255,207,92,.4);
+    transition:transform .15s, box-shadow .15s;
+  }
+  .home-actions .btn-home:hover{transform:translateY(-2px);}
+  .home-actions .btn-home:active{transform:scale(.97);}
+  .home-actions .btn-home-secondary{
+    border:1px solid var(--border);
+    background:transparent;
+    color:var(--text);
+    font-weight:700;
+    font-size:13.5px;
+    padding:12px 22px;
+    border-radius:12px;
+    cursor:pointer;
+    transition:.15s;
+  }
+  .home-actions .btn-home-secondary:hover{border-color:var(--accent);box-shadow:var(--glow-accent);}
+  .home-meta{
+    margin-top:18px;
+    font-size:11px;
+    color:var(--muted);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+  }
+  .home-meta b{color:var(--gold);}
+  @media (max-width:599px){
+    .home-card{padding:28px 20px 24px;}
+    .home-card h1{font-size:22px;}
+    .home-features{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header>
+    <div class="brand">
+      <div class="logo">GQ</div>
+      <div class="titles">
+        <span class="name">Lucky Spin</span>
+        <span class="tag">Spin & Win Rewards</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <a class="gyaniq-badge" href="games.html">← Games</a>
+      <button class="sound-toggle" id="soundToggle" title="Toggle sound effects">🔊</button>
+      <div class="coin-pill"><span class="coin-ico">🪙</span><span id="headerCoins">0</span></div>
+      <a class="gyaniq-badge" href="https://gyaniq.netlify.app" target="_blank" rel="noopener">
+        Built for <b>GyanIQ</b>
+      </a>
+    </div>
+  </header>
+
+  <div class="layout">
+
+    <div class="wheel-wrap">
+      <div class="wheel-stage">
+        <div class="pointer">
+          <svg viewBox="0 0 46 56" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="23,56 4,10 42,10" fill="#ffcf5c" stroke="#0a0a12" stroke-width="2"/>
+            <circle cx="23" cy="10" r="7" fill="#ffcf5c" stroke="#0a0a12" stroke-width="2"/>
+          </svg>
+        </div>
+        <div class="wheel-frame">
+          <div class="wheel" id="wheel">
+            <!-- segment labels injected by JS -->
+          </div>
+          <div class="hub"><span class="hub-text">SPIN</span></div>
+        </div>
+      </div>
+
+      <button class="spin-btn idle-pulse" id="spinBtn">🎯 SPIN NOW</button>
+
+      <div class="card result-card">
+        <h3>Result</h3>
+        <div class="result-display">
+          <div class="result-icon" id="resultIcon">🎡</div>
+          <div class="result-title" id="resultTitle">Ready to Spin</div>
+          <div class="result-sub" id="resultSub">Tap "Spin Now" to try your luck!</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+
+      <!-- STATISTICS SECTION -->
+      <div class="card">
+        <h3>Statistics</h3>
+        <div class="stats-grid">
+          <div class="stat-box">
+            <span class="icon">🎡</span>
+            <div class="val" id="statTotalSpins">0</div>
+            <div class="lbl">Total Spins</div>
+          </div>
+          <div class="stat-box coins">
+            <span class="icon">🪙</span>
+            <div class="val" id="statTotalCoins">0</div>
+            <div class="lbl">Coins Won</div>
+          </div>
+          <div class="stat-box highest">
+            <span class="icon">💎</span>
+            <div class="val" id="statHighestReward">0</div>
+            <div class="lbl">Highest Reward</div>
+          </div>
+          <div class="stat-box streak">
+            <span class="icon">🔥</span>
+            <div class="val" id="statCurrentStreak">0</div>
+            <div class="lbl">Current Streak</div>
+          </div>
+        </div>
+        <button class="new-spin-btn" id="newSpinBtn">✨ New Spin</button>
+      </div>
+
+      <div class="card">
+        <h3>Daily Rewards <span style="font-weight:400;font-size:10.5px;text-transform:none;letter-spacing:0;">1 Spin / Day</span></h3>
+
+        <div class="daily-status-row">
+          <div class="ds-left">
+            <span class="ds-icon">🔥</span>
+            <div>
+              <div class="ds-streak-num" id="streakNum">0</div>
+              <div class="ds-streak-lbl">Day Streak</div>
+            </div>
+          </div>
+          <div class="ds-timer">
+            Next free spin in
+            <b id="nextSpinTimer">Available!</b>
+          </div>
+        </div>
+
+        <div class="streak-track" id="streakTrack"></div>
+
+        <div class="daily-claim-wrap">
+          <div class="daily-claim-note" id="dailyClaimNote">Come back daily to build your streak and unlock bigger bonuses.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Reward History</h3>
+        <div class="history-list" id="prizeHistoryList">
+          <div class="history-empty" id="historyEmpty">No spins yet — your wins will show up here.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Spin Log</h3>
+        <div class="log" id="spinLog">
+          <div>Welcome to Lucky Spin! Good luck 🍀</div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <footer>
+    Lucky Spin &copy; <span id="year"></span> — Crafted for <a href="https://gyaniq.netlify.app" target="_blank" rel="noopener">GyanIQ</a>
+  </footer>
+
+</div>
+
+<div class="confetti-layer" id="confettiLayer"></div>
+
+<!-- WIN POPUP -->
+<div class="win-overlay" id="winOverlay">
+  <div class="win-card">
+    <div class="ring"></div>
+    <div class="w-icon" id="winIcon">🎉</div>
+    <h2 id="winTitle">You Won!</h2>
+    <p id="winSub">Congratulations on your prize.</p>
+    <div class="win-coin-badge" id="winCoinBadge" style="display:none;">
+      <span class="coin-ico">🪙</span><span id="winCoinAmount">+0 Coins</span>
+    </div>
+    <div class="win-streak-badge" id="winStreakBadge" style="display:none;">
+      <span>🔥</span><span id="winStreakText">Day 3 Streak Bonus!</span>
+    </div>
+    <button class="win-close-btn" id="winCloseBtn">Close</button>
+  </div>
+</div>
+
+<!-- HOME / START SCREEN -->
+<div class="home-overlay" id="homeOverlay">
+  <div class="home-card">
+    <div class="home-wheel-preview"></div>
+    <h1>Lucky Spin</h1>
+    <div class="home-tag">Spin & Win Rewards · GyanIQ</div>
+
+    <div class="home-features">
+      <div class="home-feature"><span class="hf-icon">🎯</span><span><b>Fair spins</b> with transparent win odds shown for every prize.</span></div>
+      <div class="home-feature"><span class="hf-icon">🎁</span><span><b>1 Free Spin Daily</b> — come back to keep your streak alive.</span></div>
+      <div class="home-feature"><span class="hf-icon">🔥</span><span><b>Streak bonuses</b> on Day 1, Day 3 and Day 7.</span></div>
+      <div class="home-feature"><span class="hf-icon">📊</span><span><b>Stats & history</b> tracked across every spin you take.</span></div>
+    </div>
+
+    <div class="home-actions">
+      <button class="btn-home" id="startGameBtn">🎡 Start Spinning</button>
+      <button class="btn-home-secondary" id="howToPlayBtn">📖 How It Works</button>
+    </div>
+
+    <div class="home-meta">Lifetime record: <b id="homeStatsLine">0 spins · 0 coins</b></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  /* ══ SUPABASE — real backend, same table as GeoChamp/Quiz-Game/TicTacToe/Snake-Rush ══ */
+  const SUPA_URL = 'https://tkdsvzumcribcmbsikwg.supabase.co';
+  const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRrZHN2enVtY3JpYmNtYnNpa3dnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk2Mjg0NzMsImV4cCI6MjA5NTIwNDQ3M30.aKE22gf_yU-ybrI-CI05MZamuBG1-PXQd8OnuAYjMQU';
+  let supa = null;
+  try{
+    if(!window.supabase) throw new Error('Supabase SDK failed to load');
+    supa = window.supabase.createClient(SUPA_URL, SUPA_KEY);
+  }catch(err){ console.error('Supabase init failed', err); }
+
+  // Save round points via the add_game_points RPC — this safely ADDS to the
+  // player's existing study-zone total (a raw insert fails after game 1,
+  // since the table only allows one row per player per zone).
+  //
+  // IMPORTANT: the RPC now has 3 overloads in the DB (4/5/6-arg versions,
+  // added later for win/tournament tracking). Calling with only 4 named
+  // params is AMBIGUOUS to Postgres (it can't tell which overload you mean)
+  // and throws "function ... is not unique" — silently breaking every
+  // points-save call. Always pass ALL 6 params explicitly to pin down the
+  // exact overload. (This same fix is needed in every other game file too.)
+  //
+  // PRIVACY FIX: username is fetched from user_profiles.username — a safe,
+  // unique handle generated at signup from the person's name + a
+  // per-account suffix (never their email). The old code fell back to
+  // session.user.email.split('@')[0] when the name wasn't set, which
+  // leaked the exact local-part of a real email address onto the public
+  // leaderboard. That fallback has been removed entirely.
+  async function saveScoreToServer(points, isWin) {
+    if(!supa || points <= 0) return;
+    try{
+      const { data: { session } } = await supa.auth.getSession();
+      if(!session){ console.warn('Not logged in — points not saved'); return; }
+      const { data: profile, error: profileErr } = await supa
+        .from('user_profiles')
+        .select('username')
+        .eq('id', session.user.id)
+        .single();
+      if(profileErr || !profile?.username){
+        console.warn('No safe username on profile — points not saved (never falls back to email)', profileErr);
+        return;
+      }
+      const username = profile.username;
+      const { error } = await supa.rpc('add_game_points', {
+        p_zone: 'study',
+        p_username: username,
+        p_points: points,
+        p_game_id: 'lucky-spin',
+        p_is_win: !!isWin,
+        p_is_tournament: false
+      });
+      if(error) console.error('score save failed', error);
+    }catch(err){ console.error('score save exception', err); }
+  }
+
+  /* Safe logging helper — some sandboxed preview environments strip or
+     replace parts of the console object (e.g. console.info), which throws
+     if called directly. This falls back silently instead of crashing. */
+  function safeLog(...args){
+    try{
+      if(typeof console !== 'undefined' && typeof console.log === 'function'){
+        console.log(...args);
+      }
+    }catch(e){ /* ignore — logging should never break the app */ }
+  }
+
+  /* ============================
+     SUPABASE INTEGRATION STUB
+     ============================
+     To connect: include the Supabase JS client via CDN, create a client with
+     your project URL + anon key, then swap the localStorage-based
+     DailyRewardService methods below (load/save/claim) for reads/writes
+     against a `daily_rewards` table keyed by user id (columns: user_id,
+     last_claim_date, current_streak, longest_streak, total_days_claimed,
+     total_coins, total_spins, highest_reward). Spin history can migrate the
+     same way using a `spin_history` table.
+  */
+  const SUPABASE_CONFIG = { url:null, anonKey:null, client:null };
+  function connectSupabase(url, anonKey){
+    SUPABASE_CONFIG.url = url;
+    SUPABASE_CONFIG.anonKey = anonKey;
+    safeLog('Supabase integration not active yet — include @supabase/supabase-js to enable.');
+  }
+
+  /* ============================
+     USER COIN WALLET — FUTURE COMPATIBILITY STUB
+     ============================
+     totalCoins currently lives in local state + localStorage. To back it
+     with a real wallet system: replace direct `totalCoins +=` mutations
+     with calls to Wallet.credit(amount, reason) below, which can be swapped
+     to call a Supabase RPC / edge function that updates a `wallet_balances`
+     table atomically (important for preventing race conditions across
+     multiple devices/tabs).
+  */
+  const Wallet = {
+    credit(amount, reason){
+      // Local behavior for now — mirrors totalCoins directly.
+      // Swap for: await SUPABASE_CONFIG.client.rpc('credit_wallet', { amount, reason });
+      return amount;
+    },
+    getBalance(){
+      return totalCoins;
+    }
+  };
+
+  /* ============================
+     LEADERBOARD — FUTURE COMPATIBILITY STUB
+     ============================
+     Once Supabase is connected, submitScore() below should upsert the
+     player's total_coins / current_streak into a `leaderboard` table, and
+     fetchLeaderboard() should select top N rows ordered by total_coins.
+  */
+  const Leaderboard = {
+    enabled:false,
+    submitScore(playerId, coins, streak){
+      safeLog('Leaderboard not active yet — would submit', { playerId, coins, streak });
+    },
+    fetchLeaderboard(){
+      return Promise.resolve([]);
+    }
+  };
+
+  /* ============================
+     SOUND EFFECT PLACEHOLDERS
+     ============================
+     Lightweight WebAudio beeps stand in for real SFX files until proper
+     audio assets are wired up. Swap playTone() calls for <audio> playback
+     (e.g. Sound.buffers.spin.play()) once real sound files are added.
+  */
+  const Sound = {
+    enabled: true,
+    ctx: null,
+    ensureCtx(){
+      if(!this.ctx){
+        try{ this.ctx = new (window.AudioContext || window.webkitAudioContext)(); }
+        catch(e){ this.ctx = null; }
+      }
+      return this.ctx;
+    },
+    tone(freq, duration, type){
+      if(!this.enabled) return;
+      const ctx = this.ensureCtx();
+      if(!ctx) return;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = type || 'sine';
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0.06, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + duration);
+    },
+    play(name){
+      if(!this.enabled) return;
+      switch(name){
+        case 'spinStart': this.tone(300, 0.1, 'triangle'); break;
+        case 'tick': this.tone(500, 0.03, 'square'); break;
+        case 'win': this.tone(660,0.12,'triangle'); setTimeout(()=>this.tone(880,0.16,'triangle'),110); setTimeout(()=>this.tone(1040,0.22,'triangle'),230); break;
+        case 'bonus': this.tone(520, 0.1, 'triangle'); setTimeout(()=>this.tone(720,0.14,'triangle'),100); break;
+        case 'lose': this.tone(180, 0.2, 'sawtooth'); break;
+        case 'claim': this.tone(600,0.1,'sine'); setTimeout(()=>this.tone(900,0.14,'sine'),90); break;
+        case 'milestone': this.tone(700,0.12,'triangle'); setTimeout(()=>this.tone(950,0.14,'triangle'),100); setTimeout(()=>this.tone(1200,0.2,'triangle'),220); break;
+        default: break;
+      }
+    }
+  };
+
+  const soundToggle = document.getElementById('soundToggle');
+  soundToggle.addEventListener('click', ()=>{
+    Sound.enabled = !Sound.enabled;
+    soundToggle.textContent = Sound.enabled ? '🔊' : '🔇';
+    soundToggle.classList.toggle('muted', !Sound.enabled);
+  });
+
+  /* ---------- PRIZE CONFIG (with fair, weighted probabilities) ---------- */
+  const PRIZES = [
+    { label:'10 Coins',  type:'coins', value:10,  color:'var(--seg-1)', textClass:'dark',  icon:'🪙', weight:30 },
+    { label:'20 Coins',  type:'coins', value:20,  color:'var(--seg-2)', textClass:'light', icon:'🪙', weight:25 },
+    { label:'50 Coins',  type:'coins', value:50,  color:'var(--seg-3)', textClass:'light', icon:'💰', weight:18 },
+    { label:'100 Coins', type:'coins', value:100, color:'var(--seg-4)', textClass:'light', icon:'💎', weight:9  },
+    { label:'Bonus Spin',type:'bonus', value:0,   color:'var(--seg-5)', textClass:'light', icon:'🔄', weight:8  },
+    { label:'Try Again', type:'lose', value:0, color:'var(--seg-6)', textClass:'dark', icon:'😔', weight:10 }
+  ];
+  const TOTAL_WEIGHT = PRIZES.reduce((s,p)=> s+p.weight, 0);
+  const SEGMENT_ANGLE = 360 / PRIZES.length;
+
+  /* ============================
+     DAILY REWARD / STREAK LOGIC — stored as a plain JS structure
+     ============================
+     STREAK_REWARDS defines milestone bonuses within a rolling 7-day cycle.
+     Day counters that aren't listed here still count toward the streak but
+     carry no extra bonus coins.
+  */
+  const STREAK_REWARDS = [
+    { day:1, label:'Day 1 Bonus', coins:15,  icon:'🎁' },
+    { day:3, label:'Day 3 Bonus', coins:50,  icon:'🎉' },
+    { day:7, label:'Day 7 Bonus', coins:150, icon:'🏆' }
+  ];
+  const STREAK_CYCLE_LENGTH = 7; // streak resets to day 1 after completing day 7
+
+  function getStreakRewardForDay(day){
+    return STREAK_REWARDS.find(r=> r.day === day) || null;
+  }
+
+  /* ---------- DAILY REWARD SERVICE (localStorage now; Supabase-ready shape) ---------- */
+  const DailyRewardService = {
+    STORAGE_KEY: 'luckySpinDaily_gyaniq',
+
+    _default(){
+      return {
+        lastClaimDate: null,     // 'YYYY-MM-DD' of most recent daily claim
+        currentStreak: 0,        // consecutive days claimed (1-7 cycle)
+        longestStreak: 0,
+        totalDaysClaimed: 0
+      };
+    },
+
+    load(){
+      try{
+        const raw = localStorage.getItem(this.STORAGE_KEY);
+        if(raw) return Object.assign(this._default(), JSON.parse(raw));
+      }catch(e){ /* localStorage unavailable — fall back to in-memory default */ }
+      return this._default();
+    },
+
+    save(data){
+      // NOTE: when Supabase is connected, replace this with an upsert to the
+      // `daily_rewards` table for the current authenticated user instead of
+      // localStorage, e.g.:
+      //   await SUPABASE_CONFIG.client.from('daily_rewards').upsert({...data, user_id});
+      try{ localStorage.setItem(this.STORAGE_KEY, JSON.stringify(data)); }
+      catch(e){ /* ignore persistence errors */ }
+    },
+
+    todayString(){
+      const d = new Date();
+      return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+    },
+
+    isYesterday(dateStr, todayStr){
+      if(!dateStr) return false;
+      const d1 = new Date(dateStr + 'T00:00:00');
+      const d2 = new Date(todayStr + 'T00:00:00');
+      const diffDays = Math.round((d2 - d1) / 86400000);
+      return diffDays === 1;
+    },
+
+    canClaimToday(data){
+      return data.lastClaimDate !== this.todayString();
+    },
+
+    /* Applies today's claim, advancing or resetting the streak as appropriate.
+       Returns the updated data plus info about which milestone (if any) was hit. */
+    claim(data){
+      const today = this.todayString();
+      if(!this.canClaimToday(data)) return { data, streakDay:data.currentStreak, milestone:null, alreadyClaimed:true };
+
+      let newStreak;
+      if(this.isYesterday(data.lastClaimDate, today)){
+        newStreak = data.currentStreak + 1;
+        if(newStreak > STREAK_CYCLE_LENGTH) newStreak = 1; // cycle back to day 1 after day 7
+      } else {
+        newStreak = 1; // streak broken or first-ever claim
+      }
+
+      const updated = Object.assign({}, data, {
+        lastClaimDate: today,
+        currentStreak: newStreak,
+        longestStreak: Math.max(data.longestStreak, newStreak),
+        totalDaysClaimed: data.totalDaysClaimed + 1
+      });
+
+      const milestone = getStreakRewardForDay(newStreak);
+      return { data: updated, streakDay: newStreak, milestone, alreadyClaimed:false };
+    },
+
+    msUntilNextClaim(data){
+      if(this.canClaimToday(data)) return 0;
+      const now = new Date();
+      const nextMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate()+1, 0, 0, 0, 0);
+      return Math.max(0, nextMidnight - now);
+    }
+  };
+
+  let dailyData = DailyRewardService.load();
+
+  /* ---------- LIFETIME STATISTICS (localStorage now; Supabase-ready shape) ---------- */
+  const STATS_KEY = 'luckySpinStats_gyaniq';
+  function loadLifetimeStats(){
+    try{
+      const raw = localStorage.getItem(STATS_KEY);
+      if(raw) return Object.assign({ totalSpins:0, totalCoinsWon:0, highestReward:0 }, JSON.parse(raw));
+    }catch(e){}
+    return { totalSpins:0, totalCoinsWon:0, highestReward:0 };
+  }
+  function saveLifetimeStats(){
+    try{ localStorage.setItem(STATS_KEY, JSON.stringify({ totalSpins, totalCoinsWon:totalCoins, highestReward })); }
+    catch(e){}
+  }
+
+  const wheelEl = document.getElementById('wheel');
+  const spinBtn = document.getElementById('spinBtn');
+  const newSpinBtn = document.getElementById('newSpinBtn');
+  const resultIcon = document.getElementById('resultIcon');
+  const resultTitle = document.getElementById('resultTitle');
+  const resultSub = document.getElementById('resultSub');
+  const headerCoinsEl = document.getElementById('headerCoins');
+  const spinLogEl = document.getElementById('spinLog');
+  const confettiLayer = document.getElementById('confettiLayer');
+  const prizeHistoryListEl = document.getElementById('prizeHistoryList');
+
+  const statTotalSpinsEl = document.getElementById('statTotalSpins');
+  const statTotalCoinsEl = document.getElementById('statTotalCoins');
+  const statHighestRewardEl = document.getElementById('statHighestReward');
+  const statCurrentStreakEl = document.getElementById('statCurrentStreak');
+
+  const streakNumEl = document.getElementById('streakNum');
+  const nextSpinTimerEl = document.getElementById('nextSpinTimer');
+  const streakTrackEl = document.getElementById('streakTrack');
+  const dailyClaimNoteEl = document.getElementById('dailyClaimNote');
+
+  const winOverlay = document.getElementById('winOverlay');
+  const winIcon = document.getElementById('winIcon');
+  const winTitle = document.getElementById('winTitle');
+  const winSub = document.getElementById('winSub');
+  const winCoinBadge = document.getElementById('winCoinBadge');
+  const winCoinAmount = document.getElementById('winCoinAmount');
+  const winStreakBadge = document.getElementById('winStreakBadge');
+  const winStreakText = document.getElementById('winStreakText');
+  const winCloseBtn = document.getElementById('winCloseBtn');
+
+  const lifetime = loadLifetimeStats();
+  let totalCoins = lifetime.totalCoinsWon;
+  let totalSpins = lifetime.totalSpins;
+  let highestReward = lifetime.highestReward;
+  let currentRotation = 0;
+  let spinning = false;
+  let bonusSpinsPending = 0;
+  let prizeHistory = [];
+  let pendingIsDailyClaim = false;
+  let countdownInterval = null;
+
+  /* ---------- BUILD WHEEL LABELS ---------- */
+  function buildWheel(){
+    PRIZES.forEach((prize, i)=>{
+      const midAngle = SEGMENT_ANGLE * i + SEGMENT_ANGLE / 2;
+      const label = document.createElement('div');
+      label.className = 'segment-label ' + prize.textClass;
+      // Rotate the label along the segment's own radius — this is what
+      // keeps each label inside its own wedge and naturally spaces labels
+      // apart from each other (each points a different direction), which
+      // is what prevents adjacent labels from overlapping.
+      label.style.transform = `rotate(${midAngle}deg)`;
+
+      // A label rotated past 90°–270° would otherwise render mirrored /
+      // upside-down to the viewer. Flip just the glyphs (not the label's
+      // position) 180° for that half so every label still reads normally,
+      // left-to-right, no matter which side of the wheel it's on.
+      const span = document.createElement('span');
+      const needsFlip = midAngle > 90 && midAngle < 270;
+      span.style.transform = needsFlip ? 'rotate(180deg)' : 'none';
+      span.textContent = `${prize.icon} ${prize.label}`;
+      label.appendChild(span);
+
+      wheelEl.appendChild(label);
+    });
+  }
+  buildWheel();
+
+  /* ---------- DAILY REWARDS UI ---------- */
+  function renderStreakTrack(){
+    streakTrackEl.innerHTML = '';
+    const canClaim = DailyRewardService.canClaimToday(dailyData);
+
+    for(let day=1; day<=STREAK_CYCLE_LENGTH; day++){
+      const cell = document.createElement('div');
+      let cls = 'streak-day';
+
+      const done = day <= dailyData.currentStreak;
+
+      if(done) cls += ' done';
+      const milestone = getStreakRewardForDay(day);
+      if(milestone) cls += ' milestone';
+      if(canClaim && day === (dailyData.currentStreak >= STREAK_CYCLE_LENGTH ? 1 : dailyData.currentStreak + 1)) cls += ' today';
+
+      cell.className = cls;
+      cell.innerHTML = `
+        <div class="sd-num">${done ? '✓' : day}</div>
+        <div>Day ${day}</div>
+        ${milestone ? `<div class="sd-bonus">+${milestone.coins}</div>` : ''}
+      `;
+      streakTrackEl.appendChild(cell);
+    }
+  }
+
+  function formatCountdown(ms){
+    const totalSec = Math.floor(ms/1000);
+    const h = String(Math.floor(totalSec/3600)).padStart(2,'0');
+    const m = String(Math.floor((totalSec%3600)/60)).padStart(2,'0');
+    const s = String(totalSec%60).padStart(2,'0');
+    return `${h}:${m}:${s}`;
+  }
+
+  function updateDailyUI(){
+    streakNumEl.textContent = dailyData.currentStreak;
+    renderStreakTrack();
+
+    const canClaim = DailyRewardService.canClaimToday(dailyData);
+    // Only 1 spin allowed per day, total — gate BOTH spin buttons on it,
+    // not just a separate "daily claim" button.
+    spinBtn.disabled = !canClaim;
+    newSpinBtn.disabled = !canClaim;
+
+    if(canClaim){
+      spinBtn.textContent = '🎯 SPIN NOW';
+      spinBtn.classList.add('idle-pulse');
+      nextSpinTimerEl.textContent = 'Available!';
+      dailyClaimNoteEl.textContent = dailyData.currentStreak > 0
+        ? `Keep your ${dailyData.currentStreak}-day streak alive — spin today!`
+        : 'Come back daily to build your streak and unlock bigger bonuses.';
+      if(countdownInterval){ clearInterval(countdownInterval); countdownInterval = null; }
+    } else {
+      spinBtn.textContent = '✓ Come Back Tomorrow';
+      spinBtn.classList.remove('idle-pulse');
+      dailyClaimNoteEl.textContent = `You're on a ${dailyData.currentStreak}-day streak. Come back tomorrow for your next spin!`;
+      startCountdown();
+    }
+  }
+
+  function startCountdown(){
+    if(countdownInterval) clearInterval(countdownInterval);
+    function tick(){
+      const remaining = DailyRewardService.msUntilNextClaim(dailyData);
+      if(remaining <= 0){
+        clearInterval(countdownInterval);
+        countdownInterval = null;
+        updateDailyUI();
+        return;
+      }
+      nextSpinTimerEl.textContent = formatCountdown(remaining);
+    }
+    tick();
+    countdownInterval = setInterval(tick, 1000);
+  }
+
+  /* ---------- LOG ---------- */
+  function addLog(text, cls){
+    const div = document.createElement('div');
+    if(cls) div.className = cls;
+    div.textContent = text;
+    spinLogEl.insertBefore(div, spinLogEl.firstChild);
+  }
+
+  /* ---------- REWARD / PRIZE HISTORY (structured, persistent list) ---------- */
+  function addToPrizeHistory(prize, spinNumber, isDaily){
+    const entry = {
+      spinNumber,
+      label: isDaily ? (prize.label + ' (Daily)') : prize.label,
+      icon: prize.icon,
+      type: prize.type,
+      value: prize.value,
+      time: new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit', second:'2-digit'})
+    };
+    prizeHistory.unshift(entry);
+    if(prizeHistory.length > 50) prizeHistory.pop();
+    renderPrizeHistory();
+  }
+
+  function renderPrizeHistory(){
+    prizeHistoryListEl.innerHTML = '';
+    if(prizeHistory.length === 0){
+      const empty = document.createElement('div');
+      empty.className = 'history-empty';
+      empty.textContent = 'No spins yet — your wins will show up here.';
+      prizeHistoryListEl.appendChild(empty);
+      return;
+    }
+    prizeHistory.forEach(entry=>{
+      const row = document.createElement('div');
+      let rowCls = 'history-row';
+      let coinText = '—';
+      if(entry.type==='coins'){ coinText = '+' + entry.value; }
+      else if(entry.type==='bonus'){ rowCls += ' bonus-row'; coinText = 'Bonus'; }
+      else { rowCls += ' lose-row'; coinText = '0'; }
+      row.className = rowCls;
+      row.innerHTML = `
+        <span class="h-icon">${entry.icon}</span>
+        <span class="h-main">
+          <div class="h-label">${entry.label}</div>
+          <div class="h-time">Spin #${entry.spinNumber} · ${entry.time}</div>
+        </span>
+        <span class="h-coins">${coinText}</span>
+      `;
+      prizeHistoryListEl.appendChild(row);
+    });
+  }
+
+  /* ---------- CONFETTI ---------- */
+  const CONFETTI_COLORS = ['#7c5cff','#22d3c9','#ffcf5c','#ff5c7a','#3ee08a','#ffffff'];
+  function launchConfetti(){
+    for(let i=0;i<36;i++){
+      const piece = document.createElement('div');
+      piece.className = 'confetti-piece';
+      piece.style.left = (Math.random()*100) + '%';
+      piece.style.background = CONFETTI_COLORS[Math.floor(Math.random()*CONFETTI_COLORS.length)];
+      piece.style.animationDuration = (1.6 + Math.random()*1.4) + 's';
+      piece.style.animationDelay = (Math.random()*0.3) + 's';
+      confettiLayer.appendChild(piece);
+      setTimeout(()=> piece.remove(), 3400);
+    }
+  }
+
+  /* ---------- COIN COUNT-UP ANIMATION ---------- */
+  function animateCoinCount(el, from, to, duration){
+    const start = performance.now();
+    function tick(now){
+      const progress = Math.min(1, (now-start)/duration);
+      const eased = 1 - Math.pow(1-progress, 3);
+      const current = Math.round(from + (to-from)*eased);
+      el.textContent = current;
+      if(progress < 1) requestAnimationFrame(tick);
+      else el.textContent = to;
+    }
+    requestAnimationFrame(tick);
+  }
+
+  /* ---------- UI STATE ---------- */
+  function updateStatsUI(prevCoins){
+    if(typeof prevCoins === 'number' && prevCoins !== totalCoins){
+      animateCoinCount(headerCoinsEl, prevCoins, totalCoins, 700);
+      animateCoinCount(statTotalCoinsEl, prevCoins, totalCoins, 700);
+    } else {
+      headerCoinsEl.textContent = totalCoins;
+      statTotalCoinsEl.textContent = totalCoins;
+    }
+    statTotalSpinsEl.textContent = totalSpins;
+    statHighestRewardEl.textContent = highestReward;
+    statCurrentStreakEl.textContent = dailyData.currentStreak;
+    saveLifetimeStats();
+  }
+
+  function setResultUI(prize, streakInfo){
+    resultIcon.classList.remove('pop');
+    void resultIcon.offsetWidth;
+    resultIcon.classList.add('pop');
+    resultIcon.textContent = prize.icon;
+
+    const bonus = streakInfo && streakInfo.milestone ? streakInfo.milestone : null;
+
+    resultTitle.className = 'result-title';
+    if(prize.type==='coins'){
+      resultTitle.classList.add('win');
+      resultTitle.textContent = '🎯 Landed on: ' + prize.value + ' Coins!';
+      resultSub.textContent = bonus
+        ? `+${prize.value} Coins  +  ${bonus.label} (+${bonus.coins} Coins)  =  ${prize.value + bonus.coins} Coins added`
+        : `+${prize.value} Coins added to your total balance.`;
+    } else if(prize.type==='bonus'){
+      resultTitle.classList.add('win');
+      resultTitle.textContent = '🎯 Landed on: Bonus Spin!';
+      resultSub.textContent = bonus
+        ? `Free extra spin  +  ${bonus.label} (+${bonus.coins} Coins) added.`
+        : 'Spin again — it\'s on the house.';
+    } else {
+      resultTitle.classList.add('lose');
+      resultTitle.textContent = '🎯 Landed on: Better Luck Next Time';
+      resultSub.textContent = bonus
+        ? `No wheel reward, but ${bonus.label} still added +${bonus.coins} Coins!`
+        : 'No reward this round — try again!';
+    }
+  }
+
+  /* ---------- WIN POPUP ---------- */
+  function showWinPopup(prize, streakInfo){
+    winIcon.textContent = prize.icon;
+    winCoinBadge.style.display = 'none';
+    winStreakBadge.style.display = 'none';
+
+    if(prize.type==='coins'){
+      winTitle.className = '';
+      winTitle.textContent = 'Congratulations!';
+      winSub.textContent = 'You landed on a coin reward.';
+      winCoinBadge.style.display = 'inline-flex';
+      winCoinAmount.textContent = '+' + prize.value + ' Coins';
+    } else if(prize.type==='bonus'){
+      winTitle.className = '';
+      winTitle.textContent = 'Bonus Spin!';
+      winSub.textContent = 'You get another free spin — good luck!';
+    } else {
+      winTitle.className = 'lose-title';
+      winTitle.textContent = 'So Close!';
+      winSub.textContent = 'No prize this time — give it another spin.';
+    }
+
+    if(streakInfo && streakInfo.milestone){
+      winStreakBadge.style.display = 'inline-flex';
+      winStreakText.textContent = `${streakInfo.milestone.label}: +${streakInfo.milestone.coins} Coins!`;
+    }
+
+    winOverlay.classList.add('show');
+  }
+  function hideWinPopup(){
+    winOverlay.classList.remove('show');
+  }
+  winCloseBtn.addEventListener('click', hideWinPopup);
+  winOverlay.addEventListener('click', (e)=>{
+    if(e.target === winOverlay) hideWinPopup();
+  });
+
+  /* ---------- FAIR WEIGHTED RANDOM SELECTION ---------- */
+  function pickPrizeIndex(){
+    // Uses cryptographically-stronger randomness when available, falling back to Math.random.
+    let r;
+    if(window.crypto && window.crypto.getRandomValues){
+      const arr = new Uint32Array(1);
+      window.crypto.getRandomValues(arr);
+      r = (arr[0] / 4294967295) * TOTAL_WEIGHT;
+    } else {
+      r = Math.random() * TOTAL_WEIGHT;
+    }
+    let cumulative = 0;
+    for(let i=0; i<PRIZES.length; i++){
+      cumulative += PRIZES[i].weight;
+      if(r <= cumulative) return i;
+    }
+    return PRIZES.length - 1;
+  }
+
+  /* ---------- SPIN LOGIC ---------- */
+  /* Only ONE spin allowed per calendar day, total — every spin (main button
+     or "New Spin") is treated as that day's single claim. This is the fix
+     for the "unlimited spins" bug: previously spinBtn had no daily gate at
+     all, only the separate Daily Claim button did. */
+  function spin(){
+    if(spinning) return;
+    if(!DailyRewardService.canClaimToday(dailyData)) return; // already used today's spin
+    spinning = true;
+    pendingIsDailyClaim = true;
+    spinBtn.disabled = true;
+    spinBtn.classList.remove('idle-pulse');
+    newSpinBtn.disabled = true;
+    spinBtn.textContent = '🎡 Spinning...';
+    wheelEl.classList.add('spinning-glow');
+    hideWinPopup();
+    Sound.play('spinStart');
+
+    const prizeIndex = pickPrizeIndex();
+    const prize = PRIZES[prizeIndex];
+
+    // Angle so the pointer (fixed at top, 0deg) lands on the middle of the chosen segment.
+    const segMid = SEGMENT_ANGLE * prizeIndex + SEGMENT_ANGLE / 2;
+    const targetWithinCircle = 360 - segMid; // rotate wheel so this segment aligns to pointer
+    const extraFullSpins = 6 + Math.floor(Math.random()*3); // 6-8 full spins for drama
+    const jitter = (Math.random()*SEGMENT_ANGLE*0.6) - (SEGMENT_ANGLE*0.3); // slight randomness within segment
+
+    const newRotation = currentRotation + extraFullSpins*360 + targetWithinCircle + jitter;
+    currentRotation = newRotation;
+
+    wheelEl.style.transform = `rotate(${newRotation}deg)`;
+
+    // subtle tick sound placeholders during the spin
+    let tickCount = 0;
+    const tickInterval = setInterval(()=>{
+      tickCount++;
+      Sound.play('tick');
+      if(tickCount >= 10) clearInterval(tickInterval);
+    }, 380);
+
+    setTimeout(()=>{
+      clearInterval(tickInterval);
+      spinning = false;
+      wheelEl.classList.remove('spinning-glow');
+      totalSpins++;
+      const prevCoins = totalCoins;
+
+      if(prize.type==='coins'){
+        totalCoins += Wallet.credit(prize.value, 'spin');
+        highestReward = Math.max(highestReward, prize.value);
+        addLog(`🎉 Spin #${totalSpins}: Won ${prize.value} Coins!` + (pendingIsDailyClaim ? ' (Daily Free Spin)' : ''), 'win');
+        saveScoreToServer(prize.value, true); // add the coins won to the real study-zone points total
+        launchConfetti();
+        Sound.play('win');
+        spinBtn.textContent = '🎯 SPIN NOW';
+      } else if(prize.type==='bonus'){
+        bonusSpinsPending++;
+        addLog(`🔄 Spin #${totalSpins}: Bonus Spin unlocked!` + (pendingIsDailyClaim ? ' (Daily Free Spin)' : ''), 'bonus');
+        launchConfetti();
+        Sound.play('bonus');
+        spinBtn.textContent = '🔄 BONUS SPIN';
+      } else {
+        addLog(`Spin #${totalSpins}: Better luck next time.` + (pendingIsDailyClaim ? ' (Daily Free Spin)' : ''), 'lose');
+        Sound.play('lose');
+        spinBtn.textContent = '🎯 SPIN NOW';
+      }
+
+      let streakInfo = null;
+      if(pendingIsDailyClaim){
+        const result = DailyRewardService.claim(dailyData);
+        dailyData = result.data;
+        DailyRewardService.save(dailyData);
+        streakInfo = result;
+
+        if(result.milestone){
+          totalCoins += Wallet.credit(result.milestone.coins, 'streak_milestone');
+          highestReward = Math.max(highestReward, result.milestone.coins);
+          addLog(`🔥 ${result.milestone.label}! Streak Day ${result.streakDay} — +${result.milestone.coins} bonus coins!`, 'bonus');
+          saveScoreToServer(result.milestone.coins, false); // streak bonus coins also count toward real points
+          addToPrizeHistory({ label: result.milestone.label, icon: result.milestone.icon, type:'coins', value: result.milestone.coins }, totalSpins, false);
+          launchConfetti();
+          Sound.play('milestone');
+        } else {
+          addLog(`🔥 Daily streak: Day ${result.streakDay} of ${STREAK_CYCLE_LENGTH}.`, 'bonus');
+          Sound.play('claim');
+        }
+        updateDailyUI();
+      }
+
+      addToPrizeHistory(prize, totalSpins, pendingIsDailyClaim);
+      setResultUI(prize, streakInfo);
+      updateStatsUI(prevCoins);
+      showWinPopup(prize, streakInfo);
+
+      Leaderboard.submitScore('local-player', totalCoins, dailyData.currentStreak);
+
+      // NOTE: spinBtn/newSpinBtn are deliberately NOT re-enabled here.
+      // updateDailyUI() (called above, inside the claim block) already set
+      // them to disabled + "Come Back Tomorrow", since today's one spin is
+      // now used. Re-enabling here would recreate the unlimited-spins bug.
+      pendingIsDailyClaim = false;
+    }, 4550);
+  }
+
+  spinBtn.addEventListener('click', ()=> spin());
+
+  /* ---------- NEW SPIN BUTTON ---------- */
+  newSpinBtn.addEventListener('click', ()=>{
+    if(spinning || newSpinBtn.disabled) return;
+    document.querySelector('.wheel-stage').scrollIntoView({ behavior:'smooth', block:'center' });
+    setTimeout(()=> spin(), 350);
+  });
+
+  /* ---------- HOME / START SCREEN ---------- */
+  const homeOverlay = document.getElementById('homeOverlay');
+  const startGameBtn = document.getElementById('startGameBtn');
+  const howToPlayBtn = document.getElementById('howToPlayBtn');
+  const homeStatsLine = document.getElementById('homeStatsLine');
+
+  function updateHomeStatsLine(){
+    homeStatsLine.textContent = totalSpins + ' spins · ' + totalCoins + ' coins';
+  }
+
+  function hideHomeScreen(){
+    homeOverlay.classList.add('hide');
+  }
+
+  startGameBtn.addEventListener('click', hideHomeScreen);
+
+  howToPlayBtn.addEventListener('click', ()=>{
+    hideHomeScreen();
+    setTimeout(()=>{
+      const el = document.querySelector('.wheel-stage');
+      if(el) el.scrollIntoView({ behavior:'smooth', block:'center' });
+    }, 350);
+  });
+
+  /* ---------- INIT ---------- */
+  updateStatsUI();
+  updateDailyUI();
+  updateHomeStatsLine();
+
+})();
+</script>
+</body>
+</html>

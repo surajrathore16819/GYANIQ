@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Socho Zara 🧩 — GyanIQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   ROOT VARIABLES — GyanIQ Theme
+═══════════════════════════════════════════ */
+:root {
+  --bg:     #05080F;
+  --bg2:    #0A1020;
+  --bg3:    #0E1524;
+  --card:   #111B30;
+  --gold:   #F7B731;
+  --gold2:  #e8a020;
+  --teal:   #00E5C3;
+  --pink:   #FF6B9D;
+  --purple: #A78BFA;
+  --green:  #06D6A0;
+  --red:    #EF476F;
+  --text:   #F0F4FF;
+  --text2:  #6B7A99;
+  --text3:  #3D4F6E;
+  --b1:     rgba(255,255,255,0.07);
+  --b2:     rgba(255,255,255,0.13);
+}
+*,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Space Grotesk', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+/* Ambient glow */
+body::before {
+  content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse 65% 40% at 50% 0%,   rgba(0,229,195,0.05),  transparent),
+    radial-gradient(ellipse 45% 50% at 100% 100%, rgba(247,183,49,0.04), transparent),
+    radial-gradient(ellipse 40% 55% at 0% 80%,    rgba(255,107,157,0.03),transparent);
+}
+.z1 { position:relative; z-index:1; }
+
+/* ═══════════════════════════════════════════
+   NAV
+═══════════════════════════════════════════ */
+nav {
+  position:sticky; top:0; z-index:200;
+  height:56px;
+  background:rgba(5,8,15,0.92);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--b1);
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 20px;
+}
+.nav-logo {
+  font-family:'Baloo 2',cursive; font-size:19px; font-weight:900;
+  background:linear-gradient(135deg,var(--gold),var(--teal));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  cursor:pointer; text-decoration:none;
+}
+.nav-game-name {
+  font-family:'Baloo 2',cursive; font-size:16px; font-weight:800;
+  color:var(--teal); letter-spacing:0.04em;
+}
+.nav-back {
+  display:flex; align-items:center; gap:5px;
+  font-size:12px; font-weight:600; color:var(--text2);
+  padding:6px 12px; border-radius:9px;
+  border:1px solid var(--b1); background:var(--bg3);
+  cursor:pointer; transition:all 0.2s;
+}
+.nav-back:hover { color:var(--text); border-color:var(--b2); }
+
+/* ═══════════════════════════════════════════
+   SCREEN SYSTEM
+═══════════════════════════════════════════ */
+.screen { display:none; }
+.screen.active { display:flex; flex-direction:column; min-height:calc(100vh - 56px); }
+
+/* ═══════════════════════════════════════════
+   LANGUAGE SELECTION SCREEN
+═══════════════════════════════════════════ */
+#s-lang {
+  align-items:center; justify-content:center;
+  padding:32px 20px 48px;
+  background:radial-gradient(ellipse 70% 40% at 50% 0%,rgba(247,183,49,0.07),transparent);
+}
+.lang-inner { width:100%; max-width:440px; text-align:center; }
+
+.sz-glyph {
+  display:inline-flex; align-items:center; justify-content:center;
+  width:88px; height:88px; border-radius:28px;
+  background:linear-gradient(135deg,var(--gold),var(--pink),var(--teal));
+  font-size:44px; margin-bottom:20px;
+  box-shadow:0 10px 40px rgba(247,183,49,0.3);
+  animation:glyphFloat 3s ease-in-out infinite;
+}
+@keyframes glyphFloat{0%,100%{transform:translateY(0) rotate(-2deg);}50%{transform:translateY(-10px) rotate(2deg);}}
+
+.sz-title {
+  font-family:'Baloo 2',cursive;
+  font-size:clamp(42px,10vw,60px); font-weight:900;
+  background:linear-gradient(135deg,var(--gold) 0%,var(--teal) 50%,var(--pink) 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  letter-spacing:-1.5px; line-height:1; margin-bottom:8px;
+}
+.sz-tagline {
+  font-size:14px; color:var(--text2); margin-bottom:32px;
+  font-style:italic; letter-spacing:0.04em;
+}
+
+.lang-label {
+  font-size:11px; font-weight:700; color:var(--text2);
+  text-transform:uppercase; letter-spacing:0.12em;
+  margin-bottom:14px;
+}
+.lang-cards {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:12px; margin-bottom:28px;
+}
+.lang-card {
+  background:var(--bg3); border:2px solid var(--b1);
+  border-radius:20px; padding:22px 16px;
+  cursor:pointer; transition:all 0.25s;
+  position:relative; overflow:hidden;
+}
+.lang-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:var(--lc, var(--teal));
+}
+.lang-card:hover { transform:translateY(-4px); border-color:var(--b2); }
+.lang-card.selected { border-color:var(--gold); background:rgba(247,183,49,0.07); }
+.lc-flag { font-size:38px; margin-bottom:10px; display:block; }
+.lc-name { font-family:'Baloo 2',cursive; font-size:20px; font-weight:900; margin-bottom:4px; }
+.lc-sub { font-size:11px; color:var(--text2); line-height:1.4; }
+
+/* Category pills */
+.cat-label { font-size:11px; font-weight:700; color:var(--text2); text-transform:uppercase; letter-spacing:0.12em; margin-bottom:12px; }
+.cat-pills { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-bottom:28px; }
+.cat-pill {
+  padding:8px 16px; border-radius:20px;
+  border:1.5px solid var(--b2); background:var(--bg3);
+  font-size:12px; font-weight:700; color:var(--text2);
+  cursor:pointer; transition:all 0.2s;
+}
+.cat-pill:hover { border-color:var(--gold); color:var(--gold); }
+.cat-pill.on { border-color:var(--gold); background:rgba(247,183,49,0.1); color:var(--gold); }
+
+/* Info pills */
+.info-row { display:flex; gap:8px; justify-content:center; margin-bottom:28px; }
+.info-pill {
+  display:flex; align-items:center; gap:6px;
+  background:var(--bg3); border:1px solid var(--b1);
+  border-radius:20px; padding:7px 14px;
+  font-size:12px; font-weight:600; color:var(--text2);
+}
+.info-pill span:first-child { font-size:15px; }
+
+/* Start button */
+.start-btn {
+  width:100%; padding:18px;
+  border-radius:16px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  border:none; color:#0A0D14;
+  font-family:'Baloo 2',cursive; font-size:18px; font-weight:900;
+  cursor:pointer; letter-spacing:0.03em;
+  box-shadow:0 8px 32px rgba(247,183,49,0.4);
+  transition:all 0.2s; position:relative; overflow:hidden;
+}
+.start-btn::after {
+  content:''; position:absolute;
+  top:-50%; left:-60%; width:35%; height:200%;
+  background:rgba(255,255,255,0.2); transform:skewX(-15deg);
+  animation:btnShine 3s 1s infinite;
+}
+@keyframes btnShine{0%{left:-60%;}30%,100%{left:130%;}}
+.start-btn:hover { transform:translateY(-3px); box-shadow:0 12px 40px rgba(247,183,49,0.5); }
+.start-btn:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
+
+/* ═══════════════════════════════════════════
+   COUNTDOWN SCREEN
+═══════════════════════════════════════════ */
+#s-cd {
+  align-items:center; justify-content:center;
+  background:var(--bg);
+}
+.cd-box { text-align:center; }
+.cd-num {
+  font-family:'Baloo 2',cursive;
+  font-size:clamp(110px,28vw,170px); font-weight:900; line-height:1;
+  background:linear-gradient(135deg,var(--gold),var(--teal));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  animation:cdPop 0.45s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes cdPop{from{transform:scale(0.2);opacity:0;}to{transform:scale(1);opacity:1;}}
+.cd-sub {
+  font-family:'Baloo 2',cursive; font-size:20px; font-weight:800;
+  color:var(--text2); margin-top:10px; letter-spacing:0.1em;
+}
+
+/* ═══════════════════════════════════════════
+   GAME SCREEN
+═══════════════════════════════════════════ */
+#s-game { background:var(--bg); }
+
+/* Game header */
+.gh {
+  position:sticky; top:0; z-index:100;
+  background:rgba(5,8,15,0.93); backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--b1);
+  padding:10px 20px;
+  display:flex; align-items:center; gap:10px;
+}
+.gh-stat {
+  display:flex; flex-direction:column; align-items:center;
+  background:var(--bg3); border:1px solid var(--b1);
+  border-radius:12px; padding:6px 14px; min-width:60px;
+}
+.gh-stat-lbl { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--text2); }
+.gh-stat-val { font-family:'Baloo 2',cursive; font-size:20px; font-weight:900; line-height:1.1; }
+.gv-score { color:var(--gold); }
+.gv-streak { color:var(--pink); }
+
+/* Timer circle */
+.gh-timer { position:relative; width:52px; height:52px; margin-left:auto; flex-shrink:0; }
+.t-svg { width:52px; height:52px; transform:rotate(-90deg); }
+.t-track { fill:none; stroke:#1A2A40; stroke-width:4.5; }
+.t-arc {
+  fill:none; stroke:var(--teal); stroke-width:4.5;
+  stroke-linecap:round; stroke-dasharray:138; stroke-dashoffset:0;
+  transition:stroke-dashoffset 0.9s linear, stroke 0.4s;
+}
+.t-num {
+  position:absolute; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Baloo 2',cursive; font-size:15px; font-weight:900;
+  color:var(--teal); transition:color 0.3s;
+}
+.urgent .t-arc { stroke:var(--red); }
+.urgent .t-num { color:var(--red); }
+.urgent { animation:urgPulse 0.7s ease-in-out infinite; }
+@keyframes urgPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.1);}}
+
+/* Time strip */
+.t-strip { height:3px; background:rgba(255,255,255,0.05); }
+.t-strip-fill {
+  height:100%; width:100%;
+  background:linear-gradient(90deg,var(--teal),var(--gold));
+  transition:width 0.9s linear, background 0.4s;
+}
+.t-strip-fill.urg { background:linear-gradient(90deg,var(--red),var(--pink)); }
+
+/* Q area */
+.q-area {
+  flex:1; padding:20px 20px 100px;
+  max-width:580px; margin:0 auto; width:100%;
+}
+
+/* Category + progress */
+.q-meta {
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:14px;
+}
+.q-cat-badge {
+  display:inline-flex; align-items:center; gap:5px;
+  font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:0.1em;
+  padding:5px 12px; border-radius:20px;
+  background:rgba(0,229,195,0.1); color:var(--teal);
+  border:1px solid rgba(0,229,195,0.2);
+}
+.q-num { font-size:12px; font-weight:700; color:var(--text2); }
+
+/* Progress dots */
+.prog-row { display:flex; gap:5px; margin-bottom:16px; flex-wrap:wrap; }
+.p-dot {
+  flex:1; min-width:8px; max-width:28px; height:5px;
+  border-radius:3px; background:#1A2A40;
+  transition:all 0.3s;
+}
+.p-dot.ok   { background:var(--teal); }
+.p-dot.bad  { background:var(--red); }
+.p-dot.cur  { background:var(--gold); box-shadow:0 0 6px rgba(247,183,49,0.5); }
+
+/* Riddle card */
+.riddle-card {
+  background:var(--bg3); border:1px solid var(--b2);
+  border-radius:24px; overflow:hidden; margin-bottom:16px;
+  animation:cardSlideIn 0.3s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes cardSlideIn{from{transform:translateX(50px);opacity:0;}to{transform:translateX(0);opacity:1;}}
+.riddle-card.out { animation:cardSlideOut 0.2s ease-in both; }
+@keyframes cardSlideOut{from{transform:translateX(0);opacity:1;}to{transform:translateX(-50px);opacity:0;}}
+.rc-topbar { height:3px; background:linear-gradient(90deg,var(--gold),var(--teal),var(--pink)); }
+.rc-body { padding:22px 20px 20px; }
+.rc-icon { font-size:46px; text-align:center; margin-bottom:14px; display:block; animation:iconPop 0.4s cubic-bezier(.34,1.56,.64,1) both; }
+@keyframes iconPop{from{transform:scale(0.3);opacity:0;}to{transform:scale(1);opacity:1;}}
+.rc-text {
+  font-family:'Baloo 2',cursive;
+  font-size:clamp(17px,4.5vw,22px); font-weight:800;
+  line-height:1.45; color:var(--text); text-align:center;
+}
+.rc-hint { font-size:12px; color:var(--text2); text-align:center; margin-top:10px; font-style:italic; }
+
+/* Options */
+.opts { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.opt {
+  display:flex; align-items:center; gap:10px;
+  padding:14px 14px;
+  background:var(--bg2); border:1.5px solid var(--b1);
+  border-radius:16px; cursor:pointer;
+  font-family:'Space Grotesk',sans-serif; font-size:14px; font-weight:600;
+  color:var(--text); text-align:left;
+  transition:all 0.18s; user-select:none;
+  position:relative; overflow:hidden;
+}
+.opt:hover:not(:disabled) {
+  border-color:rgba(247,183,49,0.45);
+  background:rgba(247,183,49,0.05);
+  transform:translateY(-2px);
+}
+.opt:disabled { cursor:not-allowed; }
+.opt.correct {
+  border-color:var(--green); background:rgba(6,214,160,0.1); color:var(--green);
+  animation:optGood 0.4s ease;
+}
+.opt.wrong {
+  border-color:var(--red); background:rgba(239,71,111,0.1); color:var(--red);
+  animation:optShake 0.4s ease;
+}
+@keyframes optGood{0%{transform:scale(1);}40%{transform:scale(1.04);box-shadow:0 0 22px rgba(6,214,160,0.4);}100%{transform:scale(1);}}
+@keyframes optShake{0%,100%{transform:translateX(0);}20%{transform:translateX(-7px);}40%{transform:translateX(7px);}60%{transform:translateX(-4px);}80%{transform:translateX(4px);}}
+.opt-l {
+  display:inline-flex; align-items:center; justify-content:center;
+  width:26px; height:26px; border-radius:8px; flex-shrink:0;
+  background:rgba(255,255,255,0.06);
+  font-size:11px; font-weight:900; font-family:'Baloo 2',cursive;
+}
+
+/* Score float */
+.score-float {
+  position:fixed; z-index:999;
+  font-family:'Baloo 2',cursive; font-size:26px; font-weight:900;
+  pointer-events:none;
+  animation:floatUp 0.9s ease-out forwards;
+}
+@keyframes floatUp{0%{opacity:1;transform:translateY(0) scale(1);}100%{opacity:0;transform:translateY(-80px) scale(1.4);}}
+
+/* Combo toast */
+.combo-toast {
+  position:fixed; top:72px; right:16px; z-index:400;
+  background:linear-gradient(135deg,var(--gold),var(--pink));
+  color:#0A0D14; font-family:'Baloo 2',cursive; font-size:15px; font-weight:900;
+  padding:10px 18px; border-radius:14px;
+  box-shadow:0 6px 24px rgba(247,183,49,0.5);
+  transform:translateX(130%); transition:transform 0.3s cubic-bezier(.34,1.56,.64,1);
+  pointer-events:none;
+}
+.combo-toast.show { transform:translateX(0); }
+
+/* ═══════════════════════════════════════════
+   RESULT SCREEN
+═══════════════════════════════════════════ */
+#s-result {
+  align-items:center; overflow-y:auto;
+  background:radial-gradient(ellipse 70% 40% at 50% 0%,rgba(247,183,49,0.06),transparent);
+}
+.result-inner { width:100%; max-width:500px; margin:0 auto; padding:32px 20px 80px; }
+
+/* Rank block */
+.rank-block { text-align:center; margin-bottom:24px; animation:rankIn 0.6s cubic-bezier(.34,1.56,.64,1) both; }
+@keyframes rankIn{from{transform:scale(0.4) rotate(-12deg);opacity:0;}to{transform:scale(1) rotate(0);opacity:1;}}
+.rank-emo { font-size:78px; display:block; animation:emoBob 1.8s 0.6s ease-in-out infinite alternate; }
+@keyframes emoBob{from{transform:translateY(0) rotate(-3deg);}to{transform:translateY(-14px) rotate(3deg);}}
+.rank-title { font-family:'Baloo 2',cursive; font-size:28px; font-weight:900; margin-top:10px; }
+.rank-sub { font-size:13px; color:var(--text2); margin-top:5px; }
+
+/* Score big */
+.score-big-wrap {
+  text-align:center; margin-bottom:24px;
+  animation:fadeUp 0.5s 0.3s ease both;
+}
+@keyframes fadeUp{from{transform:translateY(20px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.score-big-label { font-size:11px; font-weight:700; color:var(--text2); text-transform:uppercase; letter-spacing:0.12em; margin-bottom:6px; }
+.score-big {
+  font-family:'Baloo 2',cursive; font-size:clamp(58px,16vw,80px); font-weight:900; line-height:1;
+  background:linear-gradient(135deg,var(--gold),#FFD77A);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+}
+.score-big-pts { font-size:16px; color:var(--text2); margin-top:4px; }
+
+/* New best banner */
+.new-best {
+  display:flex; align-items:center; gap:10px;
+  background:rgba(0,229,195,0.08); border:1px solid rgba(0,229,195,0.2);
+  border-radius:14px; padding:12px 18px; margin-bottom:20px;
+  font-size:13px; font-weight:700; color:var(--teal);
+  animation:fadeUp 0.4s 0.4s ease both;
+}
+.nb-icon { font-size:22px; animation:spin 0.7s ease-out; }
+@keyframes spin{from{transform:rotate(0) scale(0.5);}to{transform:rotate(360deg) scale(1);}}
+
+/* Stats grid */
+.stats-grid {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:10px; margin-bottom:20px;
+  animation:fadeUp 0.4s 0.5s ease both;
+}
+.stat-card {
+  background:var(--bg3); border:1px solid var(--b2);
+  border-radius:18px; padding:18px 14px;
+  position:relative; overflow:hidden;
+}
+.stat-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2.5px; }
+.stat-card:nth-child(1)::before { background:var(--teal); }
+.stat-card:nth-child(2)::before { background:var(--pink); }
+.stat-card:nth-child(3)::before { background:var(--gold); }
+.stat-card:nth-child(4)::before { background:var(--purple); }
+.stat-icon { font-size:22px; margin-bottom:6px; }
+.stat-val { font-family:'Baloo 2',cursive; font-size:28px; font-weight:900; line-height:1; margin-bottom:2px; }
+.stat-card:nth-child(1) .stat-val { color:var(--teal); }
+.stat-card:nth-child(2) .stat-val { color:var(--pink); }
+.stat-card:nth-child(3) .stat-val { color:var(--gold); }
+.stat-card:nth-child(4) .stat-val { color:var(--purple); }
+.stat-lbl { font-size:11px; color:var(--text2); font-weight:600; }
+
+/* Category breakdown */
+.breakdown {
+  background:var(--bg3); border:1px solid var(--b1);
+  border-radius:18px; padding:18px 18px; margin-bottom:24px;
+  animation:fadeUp 0.4s 0.6s ease both;
+}
+.bk-title { font-size:11px; font-weight:700; color:var(--text2); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:14px; }
+.bk-row { margin-bottom:12px; }
+.bk-row:last-child { margin-bottom:0; }
+.bk-row-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:5px; }
+.bk-row-name { font-size:12px; font-weight:700; color:var(--text); }
+.bk-row-pct { font-size:12px; font-weight:800; color:var(--teal); }
+.bk-track { height:6px; background:#1A2A40; border-radius:3px; overflow:hidden; }
+.bk-fill { height:100%; background:linear-gradient(90deg,var(--teal),var(--gold)); border-radius:3px; width:0%; transition:width 0.8s ease; }
+
+/* Action buttons */
+.result-btns { display:flex; flex-direction:column; gap:10px; animation:fadeUp 0.4s 0.7s ease both; }
+.btn-primary {
+  width:100%; padding:16px; border-radius:14px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  border:none; color:#0A0D14;
+  font-family:'Baloo 2',cursive; font-size:17px; font-weight:900;
+  cursor:pointer; box-shadow:0 6px 28px rgba(247,183,49,0.35);
+  transition:all 0.22s; display:flex; align-items:center; justify-content:center; gap:8px;
+}
+.btn-primary:hover { transform:translateY(-3px); box-shadow:0 10px 36px rgba(247,183,49,0.45); }
+.btn-secondary {
+  width:100%; padding:14px; border-radius:14px;
+  background:none; border:1.5px solid var(--b2);
+  color:var(--text2); font-family:'Space Grotesk',sans-serif; font-size:14px; font-weight:600;
+  cursor:pointer; transition:all 0.2s;
+  display:flex; align-items:center; justify-content:center; gap:8px;
+}
+.btn-secondary:hover { border-color:var(--teal); color:var(--teal); }
+
+/* ═══════════════════════════════════════════
+   MOBILE RESPONSIVE
+═══════════════════════════════════════════ */
+@media(max-width:380px) {
+  .opts { grid-template-columns:1fr; }
+  .lang-cards { grid-template-columns:1fr; }
+  .stats-grid { grid-template-columns:1fr 1fr; }
+  .opt { padding:12px 10px; font-size:13px; }
+}
+@media(min-width:600px) {
+  .q-area,.result-inner,.lang-inner { padding-left:0; padding-right:0; }
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="index.html">🧠 GyanIQ</a>
+  <div class="nav-game-name">🧩 Socho Zara</div>
+  <div class="nav-back" onclick="goHome()">← Games</div>
+</nav>
+
+<!-- Combo toast -->
+<div class="combo-toast" id="combo-toast">🔥 3x Combo!</div>
+
+<!-- ═══════════════════════════════════════
+     LANGUAGE + CATEGORY SELECTION
+═══════════════════════════════════════ -->
+<div class="screen active z1" id="s-lang">
+  <div class="lang-inner">
+
+    <div class="sz-glyph">🧩</div>
+    <div class="sz-title">Socho Zara</div>
+    <p class="sz-tagline">Paheliyan Bujho, Points Kamao!</p>
+
+    <!-- Language -->
+    <div class="lang-label">Bhasha / Language Chuno</div>
+    <div class="lang-cards">
+      <div class="lang-card" style="--lc:var(--gold)" id="lc-hinglish" onclick="selectLang('hinglish')">
+        <span class="lc-flag">🗣️</span>
+        <div class="lc-name" style="color:var(--gold)">Hinglish</div>
+        <div class="lc-sub">Roman script mein Hindi + English mix</div>
+      </div>
+      <div class="lang-card" style="--lc:var(--teal)" id="lc-hindi" onclick="selectLang('hindi')">
+        <span class="lc-flag">🇮🇳</span>
+        <div class="lc-name" style="color:var(--teal)">हिन्दी</div>
+        <div class="lc-sub">देवनागरी लिपि में शुद्ध हिन्दी</div>
+      </div>
+    </div>
+
+    <!-- Category -->
+    <div class="cat-label">Category Chuno (Optional)</div>
+    <div class="cat-pills" id="cat-pills">
+      <div class="cat-pill on" data-cat="all" onclick="selectCat(this)">🎯 Sab</div>
+      <div class="cat-pill" data-cat="easy" onclick="selectCat(this)">😊 Easy</div>
+      <div class="cat-pill" data-cat="funny" onclick="selectCat(this)">😂 Funny</div>
+      <div class="cat-pill" data-cat="desi" onclick="selectCat(this)">🌾 Desi</div>
+      <div class="cat-pill" data-cat="logical" onclick="selectCat(this)">🧠 Logical</div>
+      <div class="cat-pill" data-cat="hard" onclick="selectCat(this)">💀 Hard</div>
+    </div>
+
+    <!-- Info -->
+    <div class="info-row">
+      <div class="info-pill"><span>⏱️</span><span>60 Second</span></div>
+      <div class="info-pill"><span>🧩</span><span>MCQ Format</span></div>
+      <div class="info-pill"><span>🏆</span><span>Score Banao</span></div>
+    </div>
+
+    <button class="start-btn" id="start-btn" onclick="startCountdown()" disabled>
+      🚀 Khelo — Socho Zara!
+    </button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     COUNTDOWN SCREEN
+═══════════════════════════════════════ -->
+<div class="screen z1" id="s-cd">
+  <div class="cd-box">
+    <div class="cd-num" id="cd-num">3</div>
+    <div class="cd-sub" id="cd-sub">Taiyaar Ho Jao!</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     GAME SCREEN
+═══════════════════════════════════════ -->
+<div class="screen z1" id="s-game">
+  <!-- Sticky header -->
+  <div class="gh">
+    <div class="gh-stat">
+      <span class="gh-stat-lbl">Score</span>
+      <span class="gh-stat-val gv-score" id="gh-score">0</span>
+    </div>
+    <div class="gh-stat">
+      <span class="gh-stat-lbl">Streak</span>
+      <span class="gh-stat-val gv-streak" id="gh-streak">0🔥</span>
+    </div>
+    <!-- Timer -->
+    <div class="gh-timer" id="gh-timer">
+      <svg class="t-svg" viewBox="0 0 52 52">
+        <circle class="t-track" cx="26" cy="26" r="22"/>
+        <circle class="t-arc" id="t-arc" cx="26" cy="26" r="22"/>
+      </svg>
+      <div class="t-num" id="t-num">60</div>
+    </div>
+  </div>
+  <div class="t-strip" id="t-strip-wrap"><div class="t-strip-fill" id="t-strip-fill"></div></div>
+
+  <!-- Question area -->
+  <div class="q-area">
+    <!-- Meta -->
+    <div class="q-meta">
+      <span class="q-cat-badge" id="q-cat-badge">🎯 Paheli</span>
+      <span class="q-num" id="q-num">#1</span>
+    </div>
+    <!-- Progress dots -->
+    <div class="prog-row" id="prog-row"></div>
+    <!-- Riddle card -->
+    <div class="riddle-card" id="riddle-card">
+      <div class="rc-topbar"></div>
+      <div class="rc-body">
+        <span class="rc-icon" id="rc-icon">🤔</span>
+        <div class="rc-text" id="rc-text">Loading...</div>
+        <div class="rc-hint" id="rc-hint"></div>
+      </div>
+    </div>
+    <!-- Options -->
+    <div class="opts" id="opts-grid"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     RESULT SCREEN
+═══════════════════════════════════════ -->
+<div class="screen z1" id="s-result">
+  <div class="result-inner">
+    <div class="rank-block">
+      <span class="rank-emo" id="r-emo">🏆</span>
+      <div class="rank-title" id="r-title">Shandaar!</div>
+      <div class="rank-sub" id="r-sub">Bahut badhiya performance!</div>
+    </div>
+
+    <div class="score-big-wrap">
+      <div class="score-big-label">Final Score</div>
+      <div class="score-big" id="r-score">0</div>
+      <div class="score-big-pts">points</div>
+    </div>
+
+    <div class="new-best" id="new-best" style="display:none">
+      <span class="nb-icon">⭐</span>
+      <span id="nb-text">Naya Personal Best! 🎉</span>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-val" id="r-correct">0</div><div class="stat-lbl">Sahi Jawab</div></div>
+      <div class="stat-card"><div class="stat-icon">❌</div><div class="stat-val" id="r-wrong">0</div><div class="stat-lbl">Galat Jawab</div></div>
+      <div class="stat-card"><div class="stat-icon">🎯</div><div class="stat-val" id="r-acc">0%</div><div class="stat-lbl">Accuracy</div></div>
+      <div class="stat-card"><div class="stat-icon">🔥</div><div class="stat-val" id="r-streak">0</div><div class="stat-lbl">Best Streak</div></div>
+    </div>
+
+    <div class="breakdown">
+      <div class="bk-title">Category Breakdown</div>
+      <div class="bk-row"><div class="bk-row-top"><span class="bk-row-name">😊 Easy</span><span class="bk-row-pct" id="bk-easy-p">—</span></div><div class="bk-track"><div class="bk-fill" id="bk-easy"></div></div></div>
+      <div class="bk-row"><div class="bk-row-top"><span class="bk-row-name">😂 Funny</span><span class="bk-row-pct" id="bk-funny-p">—</span></div><div class="bk-track"><div class="bk-fill" id="bk-funny"></div></div></div>
+      <div class="bk-row"><div class="bk-row-top"><span class="bk-row-name">🌾 Desi</span><span class="bk-row-pct" id="bk-desi-p">—</span></div><div class="bk-track"><div class="bk-fill" id="bk-desi"></div></div></div>
+      <div class="bk-row"><div class="bk-row-top"><span class="bk-row-name">🧠 Logical</span><span class="bk-row-pct" id="bk-logical-p">—</span></div><div class="bk-track"><div class="bk-fill" id="bk-logical"></div></div></div>
+      <div class="bk-row"><div class="bk-row-top"><span class="bk-row-name">💀 Hard</span><span class="bk-row-pct" id="bk-hard-p">—</span></div><div class="bk-track"><div class="bk-fill" id="bk-hard"></div></div></div>
+    </div>
+
+    <div class="result-btns">
+      <button class="btn-primary" onclick="restartGame()">🔄 Phir Khelo</button>
+      <button class="btn-secondary" onclick="changeLang()">🌐 Language Badlo</button>
+      <button class="btn-secondary" onclick="goHome()">← Games Pe Wapas</button>
+    </div>
+  </div>
+</div>
+
+<script>
+</script>
+<script src="questions/socho-zara-riddles.js"></script>
+<script>
+
+/* ═══════════════════════════════════════════
+   GAME STATE
+═══════════════════════════════════════════ */
+let G = {
+  lang: null,
+  cat: 'all',
+  pool: [],
+  idx: 0,
+  score: 0,
+  correct: 0,
+  wrong: 0,
+  streak: 0,
+  bestStreak: 0,
+  timeLeft: 60,
+  timer: null,
+  answered: false,
+  qCount: 0,
+  dots: [],
+  // Category stats
+  stats: { easy:{c:0,t:0}, funny:{c:0,t:0}, desi:{c:0,t:0}, logical:{c:0,t:0}, hard:{c:0,t:0} }
+};
+
+/* Category display names */
+const CAT_META = {
+  easy:    { label:'😊 Easy',    col:'var(--teal)' },
+  funny:   { label:'😂 Funny',   col:'var(--pink)' },
+  desi:    { label:'🌾 Desi',    col:'var(--gold)' },
+  logical: { label:'🧠 Logical', col:'var(--purple)' },
+  hard:    { label:'💀 Hard',    col:'var(--red)' },
+};
+
+/* ═══════════════════════════════════════════
+   UTILITIES
+═══════════════════════════════════════════ */
+const $ = id => document.getElementById(id);
+const shuffle = arr => [...arr].sort(() => Math.random() - 0.5);
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  $(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+/* ═══════════════════════════════════════════
+   LANGUAGE & CATEGORY SELECTION
+═══════════════════════════════════════════ */
+function selectLang(lang) {
+  G.lang = lang;
+  document.querySelectorAll('.lang-card').forEach(c => c.classList.remove('selected'));
+  $('lc-' + lang).classList.add('selected');
+  $('start-btn').disabled = false;
+}
+
+function selectCat(el) {
+  document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('on'));
+  el.classList.add('on');  G.cat = el.dataset.cat;
+}
+
+function startCountdown() {
+  if (!G.lang) return;
+  G = { ...G,
+    score:0, correct:0, wrong:0, streak:0, bestStreak:0,
+    timeLeft:60, timer:null, answered:false, qCount:0, dots:[],
+    stats:{ easy:{c:0,t:0}, funny:{c:0,t:0}, desi:{c:0,t:0}, logical:{c:0,t:0}, hard:{c:0,t:0} }
+  };
+  let all = RIDDLES[G.lang];
+  if (G.cat !== 'all') all = all.filter(r => r.cat === G.cat);
+  if (all.length === 0) all = RIDDLES[G.lang];
+  G.pool = shuffle(all);
+  G.idx = 0;
+  showScreen('s-cd');
+  let n = 3;
+  const cdEl = $('cd-num');
+  const cdSub = $('cd-sub');
+  cdEl.textContent = n;
+  cdSub.textContent = G.lang === 'hindi' ? 'तैयार हो जाओ!' : 'Taiyaar Ho Jao!';
+  const tick = setInterval(() => {
+    n--;
+    if (n > 0) {
+      cdEl.style.animation = 'none'; void cdEl.offsetWidth; cdEl.style.animation = '';
+      cdEl.textContent = n;
+      cdSub.textContent = G.lang === 'hindi' ? 'लगभग...' : 'Almost...';
+    } else if (n === 0) {
+      cdEl.style.animation = 'none'; void cdEl.offsetWidth; cdEl.style.animation = '';
+      cdEl.textContent = G.lang === 'hindi' ? 'जाओ!' : 'GO!';
+      cdSub.textContent = '🧩 ' + (G.lang === 'hindi' ? 'सोचो ज़रा!' : 'Socho Zara!');
+    } else { clearInterval(tick); startGame(); }
+  }, 900);
+}
+
+function startGame() {
+  showScreen('s-game');
+  const dotRow = $('prog-row');
+  dotRow.innerHTML = '';
+  G.dots = [];
+  const dotCount = Math.min(G.pool.length, 20);
+  for (let i = 0; i < dotCount; i++) {
+    const d = document.createElement('div');
+    d.className = 'p-dot'; d.id = 'dot-' + i;
+    dotRow.appendChild(d); G.dots.push(d);
+  }
+  startTimer(); loadRiddle();
+}
+
+function startTimer() {
+  const arc   = $('t-arc');
+  const num   = $('t-num');
+  const wrap  = $('gh-timer');
+  const fill  = $('t-strip-fill');  // correct ID now
+  const CIRC  = 138;
+  clearInterval(G.timer);
+  G.gameEnded = false;              // flag to prevent double endGame
+  G.timer = setInterval(() => {
+    if (G.gameEnded) { clearInterval(G.timer); return; }
+    G.timeLeft--;
+    if (G.timeLeft < 0) G.timeLeft = 0; // hard floor — no minus
+    const pct = G.timeLeft / 60;
+    if (arc)  arc.style.strokeDashoffset = CIRC * (1 - pct);
+    if (num)  num.textContent = G.timeLeft;
+    if (fill) fill.style.width = (pct * 100) + '%';
+    if (G.timeLeft <= 15) {
+      if (wrap) wrap.classList.add('urgent');
+      if (fill) fill.classList.add('urg');
+    }
+    if (G.timeLeft <= 0) {
+      clearInterval(G.timer);
+      if (!G.gameEnded) { G.gameEnded = true; endGame(); }
+    }
+  }, 1000);
+}
+
+function loadRiddle() {
+  if (G.idx >= G.pool.length) { G.pool = shuffle(G.pool); G.idx = 0; }
+  const r = G.pool[G.idx++];
+  G.qCount++; G.answered = false;
+  const cm = CAT_META[r.cat];
+  const badge = $('q-cat-badge');
+  badge.textContent = cm.label;
+  badge.style.background = ''; badge.style.color = cm.col; badge.style.borderColor = '';
+  $('q-num').textContent = '#' + G.qCount;
+  const card = $('riddle-card');
+  card.style.animation = 'none'; void card.offsetWidth;
+  card.style.animation = 'cardSlideIn 0.3s cubic-bezier(.22,1,.36,1) both';
+  const icon = $('rc-icon');
+  icon.style.animation = 'none'; void icon.offsetWidth;
+  icon.style.animation = 'iconPop 0.4s cubic-bezier(.34,1.56,.64,1) both';
+  icon.textContent = r.icon;
+  $('rc-text').textContent = r.q;
+  $('rc-hint').textContent = '💡 ' + r.hint;
+  if (G.qCount - 1 < G.dots.length) G.dots[G.qCount - 1].classList.add('cur');
+  const shuffled = shuffle(r.opts);
+  const letters = ['A','B','C','D'];
+  $('opts-grid').innerHTML = shuffled.map((opt, i) => {
+    const safeOpt = opt.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    const safeAns = r.ans.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    return `<button class="opt" id="opt-${i}" onclick="answerRiddle('${safeOpt}','${safeAns}','${r.cat}',${i})"><span class="opt-l">${letters[i]}</span><span>${opt}</span></button>`;
+  }).join('');
+  updateHUD();
+}
+
+function answerRiddle(chosen, correct, cat, idx) {
+  if (G.answered) return;
+  G.answered = true;
+  document.querySelectorAll('.opt').forEach(b => b.disabled = true);
+  const isCorrect = chosen === correct;
+  document.querySelectorAll('.opt').forEach(btn => {
+    if (btn.querySelector('span:last-child').textContent === correct) btn.classList.add('correct');
+  });
+  if (isCorrect) {
+    $('opt-' + idx)?.classList.add('correct');
+    G.score++; G.correct++; G.streak++;
+    if (G.streak > G.bestStreak) G.bestStreak = G.streak;
+    G.stats[cat].c++;
+    if (G.streak === 3 || G.streak === 5 || G.streak === 7 || G.streak % 10 === 0) showCombo(G.streak);
+    showFloat('+1', '#06D6A0');
+    if (G.qCount - 1 < G.dots.length) { G.dots[G.qCount-1].classList.remove('cur'); G.dots[G.qCount-1].classList.add('ok'); }
+  } else {
+    $('opt-' + idx)?.classList.add('wrong');
+    G.wrong++; G.streak = 0;
+    showFloat('✗', '#EF476F');
+    if (G.qCount - 1 < G.dots.length) { G.dots[G.qCount-1].classList.remove('cur'); G.dots[G.qCount-1].classList.add('bad'); }
+  }
+  G.stats[cat].t++;
+  updateHUD();
+  setTimeout(() => { if (G.timeLeft > 0 && !G.gameEnded) loadRiddle(); }, 750);
+}
+
+function updateHUD() {
+  const s = $('gh-score');
+  s.textContent = G.score;
+  s.style.transform = 'scale(1.35)';
+  setTimeout(() => s.style.transform = 'scale(1)', 180);
+  $('gh-streak').textContent = G.streak + (G.streak >= 2 ? '🔥' : '');
+}
+
+function showCombo(n) {
+  const t = $('combo-toast');
+  const msgs = {3:'🔥 3x Combo!', 5:'⚡ 5x Streak!', 7:'💥 7x Unstoppable!'};
+  t.textContent = msgs[n] || `🏆 ${n}x Combo!`;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function showFloat(text, color) {
+  const el = document.createElement('div');
+  el.className = 'score-float z1';
+  el.style.cssText = `color:${color};top:${window.innerHeight*0.42}px;left:${window.innerWidth/2-18}px;`;
+  el.textContent = text;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 950);
+}
+
+/* ══ SUPABASE — real backend, same table/RPC as other GyanIQ games ══ */
+const SUPA_URL = 'https://tkdsvzumcribcmbsikwg.supabase.co';
+const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRrZHN2enVtY3JpYmNtYnNpa3dnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk2Mjg0NzMsImV4cCI6MjA5NTIwNDQ3M30.aKE22gf_yU-ybrI-CI05MZamuBG1-PXQd8OnuAYjMQU';
+let supa = null;
+try{
+  if(!window.supabase) throw new Error('Supabase SDK failed to load');
+  supa = window.supabase.createClient(SUPA_URL, SUPA_KEY);
+}catch(err){ console.error('Supabase init failed', err); }
+
+// Saves this round's points via the add_game_points RPC — safely ADDS to
+// the player's existing Study-zone total (never overwrites it).
+async function saveScoreToServer(score) {
+  if(!supa || score <= 0) return;
+  try{
+    const { data: { session } } = await supa.auth.getSession();
+    if(!session){ console.warn('Not logged in — score not saved'); return; }
+    const username = session.user.user_metadata?.username || session.user.user_metadata?.name || ('Player' + session.user.id.slice(0,6));
+    const { error } = await supa.rpc('add_game_points', {
+      p_zone: 'study',
+      p_username: username,
+      p_points: score,
+      p_game_id: 'socho-zara'
+    });
+    if(error) console.error('score save failed', error);
+  }catch(err){ console.error('score save exception', err); }
+}
+
+function endGame() {
+  G.gameEnded = true;
+  clearInterval(G.timer);
+  const total = G.correct + G.wrong;
+  const acc = total > 0 ? Math.round(G.correct / total * 100) : 0;
+  const key = 'sz_best_' + G.lang;
+  const prev = parseInt(localStorage.getItem(key) || '0');
+  const isNew = G.score > prev;
+  if (isNew) localStorage.setItem(key, G.score);
+  let emo, title, sub;
+  if (acc >= 90)      { emo='🏆'; title=G.lang==='hindi'?'शानदार!':'Shandaar!'; sub=G.lang==='hindi'?'पहेली मास्टर!':'Paheli Master!'; }
+  else if (acc >= 70) { emo='⭐'; title=G.lang==='hindi'?'बहुत बढ़िया!':'Bahut Badhiya!'; sub=G.lang==='hindi'?'लगभग परफेक्ट!':'Almost perfect!'; }
+  else if (acc >= 50) { emo='😊'; title=G.lang==='hindi'?'ठीक-ठाक!':'Theek-Thaak!'; sub=G.lang==='hindi'?'अभ्यास करते रहो!':'Practice karte raho!'; }
+  else                { emo='📚'; title=G.lang==='hindi'?'कोशिश जारी रखो!':'Koshish Karo!'; sub=G.lang==='hindi'?'अगली बार बेहतर!':'Agli baar better!'; }
+  showScreen('s-result');
+  saveScoreToServer(G.score);
+  $('r-emo').textContent = emo; $('r-title').textContent = title; $('r-sub').textContent = sub;
+  // Score count-up
+  const startT = performance.now(), dur = 1200;
+  $('r-score').textContent = '0';
+  function countUp(now) {
+    const t = Math.min((now-startT)/dur, 1);
+    const ease = 1 - Math.pow(1-t, 3);
+    $('r-score').textContent = Math.round(G.score * ease);
+    if (t < 1) requestAnimationFrame(countUp);
+  }
+  requestAnimationFrame(countUp);
+  $('r-correct').textContent = G.correct;
+  $('r-wrong').textContent   = G.wrong;
+  $('r-acc').textContent     = acc + '%';
+  $('r-streak').textContent  = G.bestStreak;
+  const nb = $('new-best');
+  if (isNew && G.score > 0) { nb.style.display='flex'; $('nb-text').textContent = `${G.lang==='hindi'?'नया बेस्ट':'New Best'}! ${G.lang==='hindi'?'पिछला':'Prev'}: ${prev} 🎉`; }
+  else nb.style.display = 'none';
+  // Animated breakdown bars
+  ['easy','funny','desi','logical','hard'].forEach((cat, i) => {
+    setTimeout(() => {
+      const stat = G.stats[cat];
+      const pct = stat.t > 0 ? Math.round(stat.c / stat.t * 100) : 0;
+      const bar = $('bk-' + cat), pctEl = $('bk-' + cat + '-p');
+      if (!bar) return;
+      bar.style.width = '0%';
+      if (pctEl) pctEl.textContent = stat.t > 0 ? pct + '%' : '—';
+      const s = performance.now();
+      function anim(now) {
+        const t = Math.min((now-s)/700, 1), e = 1-Math.pow(1-t, 3);
+        bar.style.width = Math.round(pct*e) + '%';
+        if (t < 1) requestAnimationFrame(anim);
+      }
+      requestAnimationFrame(anim);
+    }, 400 + i * 100);
+  });
+
+  // ── Tournament mode: report the REAL score back to tournaments.html ──
+  if (new URLSearchParams(location.search).get('tournament') === '1') {
+    setTimeout(() => reportScoreToTournament(G.score, G.correct, total), 1800);
+  }
+}
+
+function reportScoreToTournament(finalScore, correctAnswers, totalQuestions) {
+  const params = new URLSearchParams(location.search);
+  if (params.get('tournament') !== '1') return;
+  const returnUrl = params.get('return') || 'tournaments.html';
+  location.href = returnUrl + '?score=' + encodeURIComponent(finalScore)
+    + '&correct=' + encodeURIComponent(correctAnswers || 0)
+    + '&total=' + encodeURIComponent(totalQuestions || 0);
+}
+
+function restartGame() { startCountdown(); }
+function changeLang() {
+  G.lang = null; $('start-btn').disabled = true;
+  document.querySelectorAll('.lang-card').forEach(c => c.classList.remove('selected'));
+  showScreen('s-lang');
+}
+function goHome() { clearInterval(G.timer); window.location.href = 'games.html'; }
+</script>
+</body>
+</html>

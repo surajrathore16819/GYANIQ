@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>Ludo Legends — GyanIQ</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+:root{
+  --bg:#05050d;--s1:#09091a;--s2:#0e0e22;--s3:#14142e;--s4:#1c1c3a;
+  --b1:#1a1a36;--b2:#24244a;--b3:#32325e;
+  --ac:#e94560;--gd:#f0a500;--gr:#00c896;
+  --t1:#f2f2fc;--t2:#8888b0;--t3:#444468;
+  --cr:#e74c3c;--cb:#3498db;--cg:#27ae60;--cy:#f0a500;
+  --cr-bg:rgba(231,76,60,.15);--cb-bg:rgba(52,152,219,.15);
+  --cg-bg:rgba(39,174,96,.15);--cy-bg:rgba(240,165,0,.15);
+  --r:12px;--sh:0 4px 24px rgba(0,0,0,.55);
+}
+html,body{height:100%;overflow:hidden;}
+body{
+  background:var(--bg);color:var(--t1);
+  font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+  display:flex;flex-direction:column;
+  background-image:
+    radial-gradient(ellipse 65% 45% at 15% 0%,rgba(233,69,96,.07) 0%,transparent 65%),
+    radial-gradient(ellipse 50% 45% at 88% 100%,rgba(91,45,142,.08) 0%,transparent 60%);
+}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:radial-gradient(circle,rgba(255,255,255,.018) 1px,transparent 1px);
+  background-size:26px 26px;}
+
+/* ── HEADER ── */
+.hdr{flex-shrink:0;position:relative;z-index:20;background:rgba(8,8,20,.96);
+  backdrop-filter:blur(22px);border-bottom:1px solid var(--b2);height:52px;
+  padding:0 14px;display:flex;align-items:center;justify-content:space-between;
+  box-shadow:0 1px 0 rgba(233,69,96,.13),0 4px 24px rgba(0,0,0,.4);}
+.logo{display:flex;align-items:center;gap:8px;}
+.logo-t{font-size:clamp(.95rem,2.6vw,1.1rem);font-weight:900;letter-spacing:.3px;}
+.logo-t .gy{color:var(--ac);}
+.logo-chip{background:linear-gradient(135deg,var(--gd),#d4891c);color:#1a1000;
+  font-size:.58rem;font-weight:900;padding:3px 7px;border-radius:5px;letter-spacing:1.2px;text-transform:uppercase;}
+.back-link{font-size:clamp(.62rem,1.8vw,.72rem);color:var(--t2);text-decoration:none;font-weight:700;
+  padding:clamp(4px,1vw,6px) clamp(8px,2vw,11px);border-radius:8px;border:1px solid var(--b2);
+  transition:all .2s;flex-shrink:0;}
+.back-link:hover{color:var(--t1);border-color:var(--b3);background:var(--s2);}
+.hdr-right{display:flex;align-items:center;gap:clamp(4px,1.5vw,8px);}
+.turn-pill{font-size:clamp(.6rem,1.8vw,.7rem);font-weight:800;padding:clamp(4px,1vw,5px) clamp(8px,2vw,12px);border-radius:20px;
+  border:1.5px solid currentColor;display:flex;align-items:center;gap:5px;
+  transition:color .3s,border-color .3s;white-space:nowrap;}
+.turn-pill.red{color:var(--cr);}.turn-pill.blue{color:var(--cb);}
+.turn-pill.green{color:var(--cg);}.turn-pill.yellow{color:var(--cy);}
+.pill-dot{width:6px;height:6px;border-radius:50%;background:currentColor;animation:pdot 1s ease-in-out infinite alternate;}
+@keyframes pdot{from{opacity:.3;transform:scale(.6)}to{opacity:1;transform:scale(1)}}
+.diff-badge{font-size:clamp(.54rem,1.5vw,.6rem);font-weight:800;padding:clamp(3px,.8vw,3px) clamp(6px,1.6vw,8px);border-radius:10px;cursor:pointer;
+  border:1px solid var(--b2);background:var(--s2);color:var(--t3);transition:all .2s;white-space:nowrap;}
+.diff-badge:hover{color:var(--t1);background:var(--s3);}
+
+/* ── SETUP SCREEN ── */
+.setup-screen{
+  position:fixed;inset:0;z-index:300;background:rgba(5,5,13,.96);
+  backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;padding:20px;
+}
+.setup-screen.hidden{display:none;}
+.setup-box{
+  background:var(--s2);border:1px solid var(--b2);border-radius:20px;
+  padding:clamp(20px,5vw,28px) clamp(16px,4.5vw,24px);max-width:340px;width:100%;text-align:center;
+  box-shadow:0 24px 80px rgba(0,0,0,.8);
+}
+@keyframes sbIn{from{opacity:0;transform:scale(.88) translateY(20px)}to{opacity:1;transform:none}}
+.setup-box{animation:sbIn .35s cubic-bezier(.34,1.2,.64,1) both;}
+.setup-title{font-size:clamp(1.2rem,5vw,1.5rem);font-weight:900;margin-bottom:4px;}
+.setup-title .ac{color:var(--ac);}
+.setup-sub{font-size:clamp(.68rem,2.4vw,.75rem);color:var(--t2);margin-bottom:22px;line-height:1.5;}
+.setup-lbl{font-size:clamp(.58rem,1.8vw,.62rem);font-weight:800;text-transform:uppercase;letter-spacing:1.1px;
+  color:var(--t3);margin-bottom:8px;text-align:left;}
+.diff-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px;}
+.diff-card{
+  background:var(--s3);border:1.5px solid var(--b2);border-radius:var(--r);
+  padding:clamp(11px,3vw,14px) clamp(8px,2.4vw,10px);cursor:pointer;text-align:center;
+  transition:all .2s cubic-bezier(.34,1.3,.64,1);
+}
+.diff-card:hover{transform:translateY(-2px);border-color:var(--b3);}
+.diff-card.active.easy  {border-color:var(--gr);background:rgba(0,200,150,.08);}
+.diff-card.active.medium{border-color:var(--gd);background:rgba(240,165,0,.08);}
+.diff-card .dc-ico{font-size:clamp(1.2rem,4vw,1.5rem);margin-bottom:5px;}
+.diff-card .dc-name{font-size:clamp(.74rem,2.6vw,.82rem);font-weight:800;}
+.diff-card .dc-desc{font-size:clamp(.58rem,2vw,.62rem);color:var(--t2);margin-top:3px;line-height:1.35;}
+.diff-card .dc-tag{font-size:clamp(.52rem,1.6vw,.56rem);font-weight:800;padding:2px 7px;border-radius:7px;
+  margin-top:5px;display:inline-block;}
+.easy   .dc-tag{background:rgba(0,200,150,.12);color:var(--gr);border:1px solid rgba(0,200,150,.25);}
+.medium .dc-tag{background:rgba(240,165,0,.12);color:var(--gd);border:1px solid rgba(240,165,0,.25);}
+.play-btn{
+  width:100%;height:clamp(44px,10vw,48px);border:none;border-radius:var(--r);cursor:pointer;
+  background:linear-gradient(135deg,var(--ac),#c73050);color:#fff;
+  font-size:clamp(.82rem,2.8vw,.9rem);font-weight:800;letter-spacing:.4px;
+  box-shadow:0 4px 20px rgba(233,69,96,.38);
+  transition:transform .18s cubic-bezier(.34,1.3,.64,1),box-shadow .18s;
+  position:relative;overflow:hidden;
+}
+.play-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.14) 0%,transparent 55%);}
+.play-btn:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 7px 28px rgba(233,69,96,.5);}
+.play-btn:active{transform:scale(.97);}
+
+/* ── MAIN ── */
+.main{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;padding:6px 10px 0;gap:4px;overflow:hidden;min-height:0;}
+
+/* ── DICE ROW ── */
+.dice-row{display:flex;align-items:center;gap:10px;}
+.dice-box{width:48px;height:48px;border-radius:11px;background:var(--s2);border:2px solid var(--b2);
+  display:flex;align-items:center;justify-content:center;font-size:1.7rem;user-select:none;
+  box-shadow:var(--sh),inset 0 1px 0 rgba(255,255,255,.05);transition:transform .18s cubic-bezier(.34,1.4,.64,1);}
+.dice-box.rolling{animation:dRoll .45s cubic-bezier(.34,1.3,.64,1);}
+@keyframes dRoll{0%{transform:scale(.75) rotate(-18deg)}40%{transform:scale(1.18) rotate(9deg)}70%{transform:scale(.96) rotate(-4deg)}100%{transform:scale(1) rotate(0)}}
+.roll-btn{padding:9px 20px;border:none;border-radius:var(--r);cursor:pointer;
+  background:linear-gradient(135deg,var(--ac),#c73050);color:#fff;font-size:.82rem;font-weight:800;
+  letter-spacing:.4px;box-shadow:0 4px 20px rgba(233,69,96,.38);
+  transition:transform .18s cubic-bezier(.34,1.3,.64,1),box-shadow .18s,opacity .15s;
+  position:relative;overflow:hidden;}
+.roll-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.14) 0%,transparent 55%);}
+.roll-btn:hover:not(:disabled){transform:translateY(-2px) scale(1.03);box-shadow:0 7px 28px rgba(233,69,96,.5);}
+.roll-btn:active:not(:disabled){transform:scale(.97);}
+.roll-btn:disabled{opacity:.35;cursor:not-allowed;transform:none;}
+.dice-info{font-size:.78rem;font-weight:700;color:var(--t2);min-width:56px;text-align:center;}
+
+/* ── AI thinking indicator ── */
+.thinking-anim{
+  display:none;align-items:center;gap:4px;
+  font-size:.72rem;color:var(--t3);font-weight:700;
+}
+.thinking-anim.show{display:flex;}
+.thinking-anim .td{width:5px;height:5px;border-radius:50%;background:currentColor;
+  animation:tdot .6s ease-in-out infinite alternate;}
+.thinking-anim .td:nth-child(2){animation-delay:.2s;}
+.thinking-anim .td:nth-child(3){animation-delay:.4s;}
+@keyframes tdot{from{opacity:.2;transform:translateY(0)}to{opacity:1;transform:translateY(-4px)}}
+
+/* ── BOARD ── */
+.board-outer{position:relative;background:var(--s2);border-radius:14px;border:1px solid var(--b2);
+  padding:4px;box-shadow:var(--sh),0 0 0 1px rgba(255,255,255,.03);flex-shrink:0;}
+.board{display:grid;grid-template-columns:repeat(15,1fr);grid-template-rows:repeat(15,1fr);
+  gap:1px;background:var(--b1);border-radius:10px;overflow:hidden;
+  /* Fit between header(52px) + bottom panel(~170px) + padding(~20px) */
+  width:min(88vw,calc(100vh - 260px),480px);
+  height:min(88vw,calc(100vh - 260px),480px);}
+
+/* ── CELLS ── */
+.cell{background:var(--s3);display:flex;align-items:center;justify-content:center;
+  position:relative;min-width:0;min-height:0;aspect-ratio:1;transition:background .15s;}
+.cell.rh{background:var(--cr-bg);}.cell.bh{background:var(--cb-bg);}
+.cell.gh{background:var(--cg-bg);}.cell.yh{background:var(--cy-bg);}
+.cell.rp{background:rgba(231,76,60,.12);}
+.cell.bp{background:rgba(52,152,219,.12);}
+.cell.gp{background:rgba(39,174,96,.12);}
+.cell.yp{background:rgba(240,165,0,.12);}
+.cell.center-cell{background:conic-gradient(from 0deg,rgba(231,76,60,.3) 0deg 90deg,rgba(39,174,96,.3) 90deg 180deg,rgba(240,165,0,.3) 180deg 270deg,rgba(52,152,219,.3) 270deg 360deg);}
+.cell.safe-cell::before{content:'★';position:absolute;font-size:.55em;
+  color:rgba(255,255,255,.25);pointer-events:none;z-index:0;}
+.nest-bg{width:80%;height:80%;border-radius:8px;position:absolute;
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:2px;padding:2px;}
+.nest-bg.red   {background:rgba(231,76,60,.22);border:1.5px solid rgba(231,76,60,.4);}
+.nest-bg.blue  {background:rgba(52,152,219,.22);border:1.5px solid rgba(52,152,219,.4);}
+.nest-bg.green {background:rgba(39,174,96,.22);border:1.5px solid rgba(39,174,96,.4);}
+.nest-bg.yellow{background:rgba(240,165,0,.22);border:1.5px solid rgba(240,165,0,.4);}
+.cell.movable-target{cursor:pointer;animation:mTarget .65s ease-in-out infinite alternate;}
+@keyframes mTarget{from{box-shadow:inset 0 0 0 2px rgba(255,215,0,.4)}to{box-shadow:inset 0 0 0 2.5px rgba(255,215,0,.95),0 0 10px rgba(255,215,0,.3)}}
+
+/* ── TOKENS ── */
+.token{
+  border-radius:50%;
+  border:2px solid rgba(255,255,255,.45);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.36em;font-weight:900;color:#fff;
+  /* layered shadow: depth + colored glow */
+  box-shadow:
+    0 3px 8px rgba(0,0,0,.65),
+    0 1px 2px rgba(0,0,0,.4),
+    inset 0 2px 4px rgba(255,255,255,.3),
+    inset 0 -1px 3px rgba(0,0,0,.3);
+  transition:transform .22s cubic-bezier(.34,1.5,.64,1),box-shadow .22s;
+  cursor:default;user-select:none;position:relative;z-index:2;flex-shrink:0;
+  overflow:hidden;
+}
+/* Shine ring inside every token */
+.token::after{
+  content:'';position:absolute;top:8%;left:12%;
+  width:40%;height:32%;border-radius:50%;
+  background:rgba(255,255,255,.32);pointer-events:none;
+  filter:blur(1px);
+}
+/* Rich 3-stop gradients per color */
+.token.red{
+  background:radial-gradient(circle at 38% 32%,#ff8070 0%,#e74c3c 45%,#8b0000 100%);
+  border-color:rgba(255,120,100,.6);
+}
+.token.blue{
+  background:radial-gradient(circle at 38% 32%,#8fd3ff 0%,#3498db 45%,#0a3a70 100%);
+  border-color:rgba(100,180,255,.6);
+}
+.token.green{
+  background:radial-gradient(circle at 38% 32%,#80ffcc 0%,#2ecc71 45%,#0a5c30 100%);
+  border-color:rgba(80,220,140,.6);
+}
+.token.yellow{
+  background:radial-gradient(circle at 38% 32%,#fff0a0 0%,#f0c040 45%,#7a4e00 100%);
+  border-color:rgba(255,220,80,.6);
+  color:#3a2000;
+}
+.token.dim{opacity:.38;filter:saturate(.5);}
+/* Pulsing glow ring when movable */
+.token.can-move{
+  cursor:pointer;
+  animation:tPulse .7s ease-in-out infinite alternate;
+}
+@keyframes tPulse{
+  from{transform:scale(1);box-shadow:0 3px 8px rgba(0,0,0,.65),inset 0 2px 4px rgba(255,255,255,.3),0 0 0 0 rgba(255,215,0,.6);}
+  to  {transform:scale(1.24);box-shadow:0 6px 16px rgba(0,0,0,.6),inset 0 2px 4px rgba(255,255,255,.3),0 0 0 5px rgba(255,215,0,0);}
+}
+.token.won{
+  animation:none !important;
+  border-color:rgba(255,215,0,.9) !important;
+  box-shadow:0 3px 8px rgba(0,0,0,.5),0 0 0 2.5px rgba(255,215,0,.6),0 0 16px rgba(255,215,0,.45) !important;
+}
+/* Multi-token stack badge */
+.stack-badge{
+  position:absolute;bottom:-2px;right:-2px;
+  width:11px;height:11px;border-radius:50%;
+  background:linear-gradient(135deg,#1a1a36,#0a0a20);
+  color:#fff;font-size:7px;font-weight:900;
+  display:flex;align-items:center;justify-content:center;z-index:5;
+  border:1.5px solid rgba(255,215,0,.5);pointer-events:none;
+  box-shadow:0 1px 4px rgba(0,0,0,.6);
+}
+
+/* ── AI turn flash ── */
+@keyframes aiTurnFlash{
+  0%,100%{box-shadow:var(--sh),inset 0 1px 0 rgba(255,255,255,.04);}
+  50%{box-shadow:0 0 0 2px currentColor,var(--sh);}
+}
+.board-outer.ai-thinking{animation:aiTurnFlash .8s ease-in-out 2;}
+
+/* ── STATUS ── */
+.sbar{background:var(--s2);border:1px solid var(--b1);border-radius:var(--r);
+  padding:clamp(5px,1.4vw,6px) clamp(10px,3vw,14px);display:flex;align-items:center;gap:7px;font-size:clamp(.66rem,2.2vw,.74rem);
+  color:var(--t2);max-width:420px;width:100%;}
+.sico{font-size:clamp(.85rem,2.6vw,.95rem);flex-shrink:0;}
+.smsg{flex:1;text-align:center;line-height:1.35;}
+.smsg .hl {font-weight:800;color:var(--t1);}
+.smsg .hlr{font-weight:800;color:var(--cr);}
+.smsg .hlb{font-weight:800;color:var(--cb);}
+.smsg .hlg{font-weight:800;color:var(--cg);}
+.smsg .hly{font-weight:800;color:var(--cy);}
+
+/* ── TOAST ── */
+@keyframes tIn{0%{opacity:0;transform:translateX(-50%) translateY(-18px) scale(.9)}18%{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}75%{opacity:1}100%{opacity:0;transform:translateX(-50%) translateY(-12px)}}
+.toast{position:fixed;top:60px;left:50%;transform:translateX(-50%);background:rgba(8,8,20,.97);
+  border:1.5px solid rgba(255,255,255,.1);color:#fff;font-size:.8rem;font-weight:700;
+  padding:7px 20px;border-radius:22px;z-index:500;pointer-events:none;white-space:nowrap;
+  animation:tIn 2.2s cubic-bezier(.34,1.1,.64,1) forwards;box-shadow:0 10px 36px rgba(0,0,0,.65);}
+
+/* ── WIN OVERLAY ── */
+@keyframes wIn{from{opacity:0;transform:scale(.82) translateY(28px)}to{opacity:1;transform:none}}
+.woverlay{position:fixed;inset:0;background:rgba(0,0,0,.87);backdrop-filter:blur(8px);z-index:200;
+  display:none;align-items:center;justify-content:center;padding:20px;}
+.woverlay.show{display:flex;}
+.wbox{background:rgba(10,10,24,.98);border-radius:22px;padding:clamp(26px,6vw,34px) clamp(18px,5vw,26px) clamp(20px,5vw,26px);text-align:center;
+  border:1px solid var(--b3);max-width:310px;width:100%;
+  box-shadow:0 24px 80px rgba(0,0,0,.85);animation:wIn .42s cubic-bezier(.34,1.25,.64,1) both;}
+.wemo{font-size:clamp(2.8rem,10vw,3.8rem);margin-bottom:10px;display:block;animation:wobble 1.5s ease-in-out infinite;}
+@keyframes wobble{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
+.wtitle{font-size:clamp(1.35rem,5.5vw,1.75rem);font-weight:900;margin-bottom:5px;}
+.wsub{font-size:clamp(.74rem,2.6vw,.82rem);color:var(--t2);margin-bottom:8px;line-height:1.5;}
+.wdiff-tag{font-size:clamp(.6rem,2vw,.65rem);font-weight:800;padding:3px 10px;border-radius:10px;
+  display:inline-block;margin-bottom:18px;}
+.wdiff-tag.easy  {background:rgba(0,200,150,.12);color:var(--gr);border:1px solid rgba(0,200,150,.25);}
+.wdiff-tag.medium{background:rgba(240,165,0,.12);color:var(--gd);border:1px solid rgba(240,165,0,.25);}
+.w-btns{display:flex;gap:8px;}
+.wbtn{flex:1;height:clamp(42px,10vw,46px);border:none;border-radius:var(--r);cursor:pointer;font-size:clamp(.78rem,2.6vw,.85rem);font-weight:800;
+  transition:transform .18s,box-shadow .18s;position:relative;overflow:hidden;}
+.wbtn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.12) 0%,transparent 55%);}
+.wbtn:hover{transform:scale(1.03);}
+.wbtn.primary{background:linear-gradient(135deg,var(--ac),#c73050);color:#fff;box-shadow:0 4px 20px rgba(233,69,96,.4);}
+.wbtn.secondary{background:var(--s3);color:var(--t2);border:1px solid var(--b2);}
+.wbtn.secondary:hover{color:var(--t1);}
+
+/* ── CONFETTI ── */
+@keyframes cf{0%{transform:translateY(-60px) rotate(0) scale(1);opacity:1}80%{opacity:1}100%{transform:translateY(110vh) rotate(900deg) scale(.35);opacity:0}}
+.cf{position:fixed;pointer-events:none;z-index:600;animation:cf linear forwards;}
+
+/* ── CONTROL BUTTONS ROW ── */
+.ctrl-row{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;max-width:400px;width:100%;}
+.ctrl-btn{
+  display:flex;align-items:center;gap:5px;
+  padding:clamp(6px,1.8vw,8px) clamp(11px,3vw,16px);border:1px solid var(--b2);border-radius:var(--rs,9px);
+  background:var(--s2);color:var(--t2);font-size:clamp(.66rem,2.2vw,.74rem);font-weight:700;
+  cursor:pointer;letter-spacing:.3px;
+  transition:background .18s,color .18s,transform .15s,border-color .18s;
+}
+.ctrl-btn:hover{background:var(--s3);color:var(--t1);transform:translateY(-1px);}
+.ctrl-btn:active{transform:scale(.96);}
+.ctrl-btn.danger:hover{background:rgba(233,69,96,.1);color:var(--ac);border-color:rgba(233,69,96,.35);}
+
+/* ── STATISTICS PANEL ── */
+.stats-panel{
+  background:var(--s2);border:1px solid var(--b1);border-radius:var(--r);
+  overflow:hidden;max-width:400px;width:100%;
+}
+.stats-hdr{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 14px;cursor:pointer;user-select:none;transition:background .18s;
+}
+.stats-hdr:hover{background:var(--s3);}
+.stats-hlbl{display:flex;align-items:center;gap:6px;
+  font-size:.62rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--t3);}
+.stats-arr{font-size:.6rem;color:var(--t3);transition:transform .3s cubic-bezier(.34,1.2,.64,1);}
+.stats-arr.open{transform:rotate(180deg);}
+.stats-body{display:none;padding:4px 14px 14px;flex-direction:column;gap:10px;}
+.stats-body.open{display:flex;}
+.sg{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;}
+.sc{
+  background:var(--s3);border:1px solid var(--b1);border-radius:9px;
+  padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:4px;
+  transition:border-color .2s;
+}
+.sc:hover{border-color:var(--b2);}
+.sc-i{font-size:1.1rem;}
+.sc-v{font-size:1.05rem;font-weight:900;line-height:1;color:var(--ac);}
+.sc-l{font-size:.52rem;color:var(--t3);text-transform:uppercase;letter-spacing:.6px;font-weight:700;}
+.bar-row{display:flex;flex-direction:column;gap:6px;}
+.bar-item{display:flex;align-items:center;gap:8px;font-size:.7rem;}
+.bar-lbl{color:var(--t2);width:56px;flex-shrink:0;font-weight:600;}
+.bar-track{flex:1;background:var(--s4);border-radius:4px;height:5px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:4px;transition:width .65s cubic-bezier(.34,1.2,.64,1);}
+.bar-fill.w{background:linear-gradient(90deg,var(--gr),#00c896);}
+.bar-fill.l{background:linear-gradient(90deg,#c0392b,var(--cr));}
+.bar-pct{color:var(--t3);width:32px;text-align:right;flex-shrink:0;font-weight:700;}
+
+/* ── IMPROVED DICE ANIMATION ── */
+@keyframes diceShake{
+  0%  {transform:translate(-2px,-2px) rotate(-6deg);}
+  15% {transform:translate(2px,-3px) rotate(5deg);}
+  30% {transform:translate(-3px,1px) rotate(-4deg);}
+  45% {transform:translate(3px,2px) rotate(6deg);}
+  60% {transform:translate(-1px,-2px) rotate(-3deg);}
+  75% {transform:translate(2px,3px) rotate(4deg);}
+  90% {transform:translate(-2px,1px) rotate(-2deg);}
+  100%{transform:translate(0,0) rotate(0);}
+}
+.dice-box.rolling{animation:diceShake .5s cubic-bezier(.36,.07,.19,.97) both;}
+/* Dice glow by face value */
+.dice-box.d1{border-color:rgba(231,76,60,.5);box-shadow:0 0 14px rgba(231,76,60,.3);}
+.dice-box.d2{border-color:rgba(52,152,219,.5);box-shadow:0 0 14px rgba(52,152,219,.3);}
+.dice-box.d3{border-color:rgba(39,174,96,.5);box-shadow:0 0 14px rgba(39,174,96,.3);}
+.dice-box.d4{border-color:rgba(240,165,0,.5);box-shadow:0 0 14px rgba(240,165,0,.3);}
+.dice-box.d5{border-color:rgba(155,89,182,.5);box-shadow:0 0 14px rgba(155,89,182,.3);}
+.dice-box.d6{border-color:rgba(0,200,150,.55);box-shadow:0 0 18px rgba(0,200,150,.4);}
+
+/* ── SOUND TOGGLE ── */
+.sound-btn{
+  width:32px;height:32px;border-radius:7px;cursor:pointer;flex-shrink:0;
+  background:var(--s2);border:1px solid var(--b2);color:var(--t2);
+  display:flex;align-items:center;justify-content:center;font-size:.9rem;
+  transition:background .18s,color .18s,transform .15s;
+}
+.sound-btn:hover{background:var(--s3);color:var(--t1);transform:scale(1.08);}
+.sound-btn:active{transform:scale(.92);}
+
+/* ── SOUND WAVE INDICATOR ── */
+.sw{position:fixed;top:60px;right:14px;display:none;align-items:flex-end;gap:2px;height:14px;z-index:100;}
+.sw b{width:3px;border-radius:2px;background:var(--ac);animation:swa .5s ease infinite alternate;}
+.sw b:nth-child(1){height:5px;animation-delay:0s;}
+.sw b:nth-child(2){height:13px;animation-delay:.12s;}
+.sw b:nth-child(3){height:8px;animation-delay:.22s;}
+.sw b:nth-child(4){height:14px;animation-delay:.06s;}
+.sw b:nth-child(5){height:6px;animation-delay:.18s;}
+@keyframes swa{from{opacity:.2;transform:scaleY(.3)}to{opacity:1;transform:scaleY(1)}}
+
+/* ── ONLINE BADGE ── */
+.online-badge{
+  font-size:.58rem;font-weight:800;padding:2px 7px;border-radius:7px;
+  background:rgba(0,200,150,.08);color:#009e78;
+  border:1px solid rgba(0,200,150,.15);letter-spacing:.4px;
+  display:flex;align-items:center;gap:4px;
+}
+.online-dot{width:5px;height:5px;border-radius:50%;background:#00c896;}
+
+/* ── BIG DICE + ROLL BUTTON (bottom) ── */
+.thinking-wrap{min-height:18px;display:flex;align-items:center;justify-content:center;}
+.dice-bottom{
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  background:var(--s2);border:1px solid var(--b2);border-radius:var(--r);
+  padding:12px 18px;max-width:400px;width:100%;
+  box-shadow:var(--sh);
+}
+.dice-face-big{
+  width:56px;height:56px;border-radius:13px;
+  background:var(--s3);border:2px solid var(--b2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:2rem;user-select:none;flex-shrink:0;
+  box-shadow:var(--sh),inset 0 1px 0 rgba(255,255,255,.06);
+  transition:border-color .3s,box-shadow .3s;
+}
+.dice-face-big.rolling{animation:diceShake .5s cubic-bezier(.36,.07,.19,.97) both;}
+.dice-face-big.d1{border-color:rgba(231,76,60,.5);box-shadow:0 0 18px rgba(231,76,60,.35);}
+.dice-face-big.d2{border-color:rgba(52,152,219,.5);box-shadow:0 0 18px rgba(52,152,219,.35);}
+.dice-face-big.d3{border-color:rgba(39,174,96,.5);box-shadow:0 0 18px rgba(39,174,96,.35);}
+.dice-face-big.d4{border-color:rgba(240,165,0,.5);box-shadow:0 0 18px rgba(240,165,0,.35);}
+.dice-face-big.d5{border-color:rgba(155,89,182,.5);box-shadow:0 0 18px rgba(155,89,182,.35);}
+.dice-face-big.d6{border-color:rgba(0,200,150,.6);box-shadow:0 0 22px rgba(0,200,150,.45);}
+
+.roll-btn-big{
+  flex:1;max-width:180px;height:52px;border:none;border-radius:var(--r);cursor:pointer;
+  background:linear-gradient(135deg,var(--ac),#c73050);
+  color:#fff;font-size:.95rem;font-weight:900;letter-spacing:.5px;
+  box-shadow:0 4px 22px rgba(233,69,96,.45);
+  transition:transform .18s cubic-bezier(.34,1.3,.64,1),box-shadow .18s,opacity .15s;
+  position:relative;overflow:hidden;
+}
+.roll-btn-big::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.16) 0%,transparent 55%);}
+.roll-btn-big:hover:not(:disabled){
+  transform:translateY(-3px) scale(1.04);
+  box-shadow:0 8px 32px rgba(233,69,96,.6);
+}
+.roll-btn-big:active:not(:disabled){transform:scale(.96);}
+.roll-btn-big:disabled{
+  opacity:.3;cursor:not-allowed;transform:none;
+  box-shadow:none;
+}
+
+/* Remove old dice-row styles */
+.dice-row{display:none;}
+.roll-btn{display:none;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:400px){
+  .board{width:min(92vw,calc(100dvh - 255px),370px);height:min(92vw,calc(100dvh - 255px),370px);}
+  .dice-face{width:44px;height:44px;font-size:1.65rem;}
+  .roll-btn-main{font-size:.83rem;height:44px;}
+  .w-btns{flex-direction:column;}
+  .sg{grid-template-columns:repeat(2,1fr);}
+  .bottom-panel{padding:6px 10px 8px;gap:5px;}
+  .ctrl-btn{padding:6px 11px;font-size:.68rem;}
+}
+@media(min-width:480px){
+  .board{width:min(86vw,calc(100dvh - 245px),430px);height:min(86vw,calc(100dvh - 245px),430px);}
+}
+@media(min-width:768px){
+  .board{width:min(78vw,calc(100dvh - 240px),500px);height:min(78vw,calc(100dvh - 240px),500px);}
+  .sg{grid-template-columns:repeat(4,1fr);}
+}
+@media(min-width:1024px){
+  .board{width:min(calc(100dvh - 235px),560px);height:min(calc(100dvh - 235px),560px);}
+}
+
+/* ── BOTTOM PANEL ── */
+.bottom-panel{
+  flex-shrink:0;position:relative;z-index:10;
+  background:rgba(8,8,20,.97);backdrop-filter:blur(16px);
+  border-top:1px solid var(--b2);
+  padding:8px 14px 10px;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  box-shadow:0 -4px 24px rgba(0,0,0,.5);
+}
+.dice-action-row{
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  max-width:420px;width:100%;
+}
+.dice-face{
+  width:clamp(42px,10vw,50px);height:clamp(42px,10vw,50px);border-radius:12px;flex-shrink:0;
+  background:var(--s2);border:2px solid var(--b2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:clamp(1.6rem,5vw,2rem);user-select:none;
+  box-shadow:var(--sh),inset 0 1px 0 rgba(255,255,255,.06);
+  transition:border-color .3s,box-shadow .3s;
+}
+.dice-face.rolling{animation:diceShake .5s cubic-bezier(.36,.07,.19,.97) both;}
+.dice-face.d1{border-color:rgba(231,76,60,.55); box-shadow:0 0 16px rgba(231,76,60,.35);}
+.dice-face.d2{border-color:rgba(52,152,219,.55); box-shadow:0 0 16px rgba(52,152,219,.35);}
+.dice-face.d3{border-color:rgba(39,174,96,.55);  box-shadow:0 0 16px rgba(39,174,96,.35);}
+.dice-face.d4{border-color:rgba(240,165,0,.55);  box-shadow:0 0 16px rgba(240,165,0,.35);}
+.dice-face.d5{border-color:rgba(155,89,182,.55); box-shadow:0 0 16px rgba(155,89,182,.35);}
+.dice-face.d6{border-color:rgba(0,200,150,.6);   box-shadow:0 0 22px rgba(0,200,150,.45);}
+.roll-btn-main{
+  flex:1;max-width:220px;height:clamp(44px,10vw,50px);
+  border:none;border-radius:var(--r);cursor:pointer;
+  background:linear-gradient(135deg,var(--ac),#c73050);
+  color:#fff;font-size:clamp(.82rem,2.8vw,.95rem);font-weight:800;letter-spacing:.5px;
+  box-shadow:0 4px 22px rgba(233,69,96,.45);
+  position:relative;overflow:hidden;
+  transition:transform .18s cubic-bezier(.34,1.3,.64,1),box-shadow .18s,opacity .15s;
+}
+.roll-btn-main::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.15) 0%,transparent 55%);
+}
+.roll-btn-main:hover:not(:disabled){transform:translateY(-2px) scale(1.03);box-shadow:0 8px 30px rgba(233,69,96,.6);}
+.roll-btn-main:active:not(:disabled){transform:scale(.97);}
+.roll-btn-main:disabled{opacity:.3;cursor:not-allowed;transform:none;box-shadow:none;}
+.dice-label{font-size:.7rem;font-weight:700;color:var(--t3);min-width:56px;text-align:center;}
+
+</style>
+</head>
+<body>
+
+<!-- SETUP SCREEN -->
+<div class="setup-screen" id="setupScreen">
+  <div class="setup-box">
+    <div class="setup-title"><span class="ac">Ludo</span> Legends</div>
+    <div class="setup-sub">1 vs 3 Computer Opponents — Choose your difficulty</div>
+    <div class="setup-lbl">Select Difficulty</div>
+    <div class="diff-grid">
+      <div class="diff-card easy active" id="dcEasy" onclick="selectDiff('easy')">
+        <div class="dc-ico">🟢</div>
+        <div class="dc-name">Easy</div>
+        <div class="dc-desc">AI plays random valid moves. Great for beginners.</div>
+        <div class="dc-tag">Beginner</div>
+      </div>
+      <div class="diff-card medium" id="dcMedium" onclick="selectDiff('medium')">
+        <div class="dc-ico">🟡</div>
+        <div class="dc-name">Medium</div>
+        <div class="dc-desc">AI prioritises captures, home runs & safe squares.</div>
+        <div class="dc-tag">Moderate</div>
+      </div>
+    </div>
+    <button class="play-btn" onclick="startGame()">🎮 Start Game</button>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="hdr">
+  <div class="logo">
+    <span class="logo-t"><span class="gy">Gyan</span>IQ</span>
+    <span class="logo-chip">LUDO</span>
+  </div>
+  <div class="hdr-right">
+    <a class="back-link" href="games.html">← Games</a>
+    <div class="turn-pill red" id="turnPill">
+      <span class="pill-dot"></span>
+      <span id="turnTxt">Red's Turn</span>
+    </div>
+    <button class="diff-badge" id="diffBadge" onclick="showSetup()">Easy 🔄</button>
+    <button class="sound-btn" id="soundBtn" onclick="toggleSound()" title="Toggle sound">🔊</button>
+  </div>
+</header>
+
+<!-- SOUND WAVE -->
+<div class="sw" id="sw"><b></b><b></b><b></b><b></b><b></b></div>
+
+<!-- MAIN — board area only -->
+<main class="main">
+
+  <!-- AI thinking row -->
+  <div style="min-height:16px;display:flex;align-items:center;justify-content:center;">
+    <div class="thinking-anim" id="thinkAnim">
+      <span>🤖 CPU thinking</span>
+      <div class="td"></div><div class="td"></div><div class="td"></div>
+    </div>
+  </div>
+
+  <!-- BOARD -->
+  <div class="board-outer" id="boardOuter">
+    <div class="board" id="board"></div>
+  </div>
+
+</main>
+
+<!-- BOTTOM PANEL — dice + roll button always visible at bottom -->
+<div class="bottom-panel">
+
+  <!-- Status -->
+  <div class="sbar">
+    <span class="sico" id="sico">🎯</span>
+    <div class="smsg" id="smsg">Roll the dice to begin!</div>
+  </div>
+
+  <!-- Dice + Roll -->
+  <div class="dice-action-row">
+    <div class="dice-face" id="diceBox">⚀</div>
+    <button class="roll-btn-main" id="rollBtn" onclick="rollDice()">🎲 Roll Dice</button>
+    <div class="dice-label" id="diceInfo">Your turn!</div>
+  </div>
+
+  <!-- Controls -->
+  <div class="ctrl-row">
+    <button class="ctrl-btn" onclick="restartGame()">🔄 Restart</button>
+    <button class="ctrl-btn danger" onclick="showSetup()">⚙️ New Game</button>
+    <button class="ctrl-btn" onclick="toggleStats()">📊 Stats</button>
+  </div>
+
+  <!-- Stats (collapsible) -->
+  <div class="stats-panel" id="statsPanel">
+    <div class="stats-hdr" onclick="toggleStats()">
+      <span class="stats-hlbl">📊 Statistics</span>
+      <span class="stats-arr" id="statsArr">▼</span>
+    </div>
+    <div class="stats-body" id="statsBody">
+      <div class="sg">
+        <div class="sc"><div class="sc-i">🎮</div><div class="sc-v" id="stG">0</div><div class="sc-l">Played</div></div>
+        <div class="sc"><div class="sc-i">🏆</div><div class="sc-v" id="stW">0</div><div class="sc-l">Won</div></div>
+        <div class="sc"><div class="sc-i">💀</div><div class="sc-v" id="stL">0</div><div class="sc-l">Lost</div></div>
+        <div class="sc"><div class="sc-i">📈</div><div class="sc-v" id="stP">0%</div><div class="sc-l">Win %</div></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-item">
+          <span class="bar-lbl">Win Rate</span>
+          <div class="bar-track"><div class="bar-fill w" id="wBar" style="width:0%"></div></div>
+          <span class="bar-pct" id="wPct">0%</span>
+        </div>
+        <div class="bar-item">
+          <span class="bar-lbl">Loss Rate</span>
+          <div class="bar-track"><div class="bar-fill l" id="lBar" style="width:0%"></div></div>
+          <span class="bar-pct" id="lPct">0%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- WIN OVERLAY -->
+<div class="woverlay" id="woverlay">
+  <div class="wbox">
+    <span class="wemo" id="wemo">🏆</span>
+    <div class="wtitle" id="wtitle">Red Wins!</div>
+    <div class="wsub" id="wsub">All 4 tokens reached home!</div>
+    <div class="wdiff-tag easy" id="wdiffTag">Easy Mode</div>
+    <div class="w-btns">
+      <button class="wbtn primary" onclick="startGame()">🔄 Play Again</button>
+      <button class="wbtn secondary" onclick="showSetup()">⚙️ Settings</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════
+   LUDO LEGENDS — With AI Opponents (Easy & Medium)
+   Player = Red (index 0) | CPU = Blue, Green, Yellow
+══════════════════════════════════════════════════════════ */
+
+/* ══════════════════════════════════════════════════════════
+   SOUND ENGINE (Web Audio API — future-ready placeholders)
+══════════════════════════════════════════════════════════ */
+const SFX = (() => {
+  const AC = window.AudioContext || window.webkitAudioContext;
+  const ctx = AC ? new AC() : null;
+  let muted = false;
+  const CFG = {
+    roll:    { w:'sine',    f:[300,260],          d:.1,  v:.1  },
+    move:    { w:'sine',    f:[440,520],          d:.1,  v:.1  },
+    capture: { w:'square',  f:[200,150,100],      d:.25, v:.12 },
+    unlock:  { w:'sine',    f:[440,554,659],      d:.22, v:.1  },
+    home:    { w:'sine',    f:[523,659,784],      d:.3,  v:.12 },
+    win:     { w:'sine',    f:[523,659,784,1047,1319], d:.65,v:.13 },
+    lose:    { w:'sawtooth',f:[330,262,220],      d:.5,  v:.1  },
+    click:   { w:'sine',    f:[440,500],          d:.08, v:.07 },
+    noMove:  { w:'square',  f:[180,140],          d:.14, v:.07 },
+    bonus:   { w:'sine',    f:[660,880,1100],     d:.25, v:.1  },
+  };
+  function play(type) {
+    if (!ctx || muted) return;
+    if (ctx.state === 'suspended') ctx.resume();
+    const c = CFG[type] || CFG.click;
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.connect(g); g.connect(ctx.destination); o.type = c.w;
+    const t = ctx.currentTime;
+    g.gain.setValueAtTime(0, t);
+    c.f.forEach((f, i) => {
+      const at = t + (i * c.d / c.f.length);
+      o.frequency.setValueAtTime(f, at);
+      g.gain.setValueAtTime(c.v, at);
+    });
+    g.gain.linearRampToValueAtTime(0, t + c.d + .05);
+    o.start(t); o.stop(t + c.d + .12);
+    // Show wave indicator
+    const sw = document.getElementById('sw');
+    if (sw) {
+      sw.style.display = 'flex';
+      clearTimeout(sw._t);
+      sw._t = setTimeout(() => { sw.style.display = 'none'; }, 500);
+    }
+  }
+  return { play, toggle() { muted = !muted; return muted; } };
+})();
+
+function toggleSound() {
+  const m = SFX.toggle();
+  document.getElementById('soundBtn').textContent = m ? '🔇' : '🔊';
+}
+
+/* ══════════════════════════════════════════════════════════
+   STATISTICS (session-based, Supabase-ready structure)
+══════════════════════════════════════════════════════════ */
+const STATS = { games: 0, wins: 0, losses: 0 };
+
+function recordResult(playerWon) {
+  STATS.games++;
+  if (playerWon) STATS.wins++;
+  else STATS.losses++;
+  refreshStats();
+  // Future: DB.saveStats(STATS);
+}
+
+function refreshStats() {
+  const g = STATS.games || 1;
+  const wp = Math.round(STATS.wins   / g * 100);
+  const lp = Math.round(STATS.losses / g * 100);
+  document.getElementById('stG').textContent = STATS.games;
+  document.getElementById('stW').textContent = STATS.wins;
+  document.getElementById('stL').textContent = STATS.losses;
+  document.getElementById('stP').textContent = STATS.games > 0 ? wp + '%' : '0%';
+  document.getElementById('wBar').style.width = wp + '%';
+  document.getElementById('lBar').style.width = lp + '%';
+  document.getElementById('wPct').textContent = wp + '%';
+  document.getElementById('lPct').textContent = lp + '%';
+}
+
+function toggleStats() {
+  const body = document.getElementById('statsBody');
+  const arr  = document.getElementById('statsArr');
+  const open = body.classList.toggle('open');
+  arr.classList.toggle('open', open);
+  if (open) refreshStats();
+  SFX.play('click');
+}
+
+/* ══════════════════════════════════════════════════════════
+   GAME CONTROL — NEW & RESTART
+══════════════════════════════════════════════════════════ */
+function restartGame() {
+  if (aiLock) { aiLock = false; }
+  SFX.play('click');
+  initGame();
+}
+
+/* ══════════════════════════════════════════════════════════
+   SUPABASE-READY ADAPTER (swap localAdapter → supabaseAdapter)
+   Replace SUPABASE_URL & SUPABASE_KEY when ready.
+══════════════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════════
+   SUPABASE — real backend, same table as GeoChamp/Quiz-Game/
+   TicTacToe/Snake-Rush/Lucky-Spin
+══════════════════════════════════════════════════════════ */
+const SUPA_URL = 'https://tkdsvzumcribcmbsikwg.supabase.co';
+const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRrZHN2enVtY3JpYmNtYnNpa3dnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk2Mjg0NzMsImV4cCI6MjA5NTIwNDQ3M30.aKE22gf_yU-ybrI-CI05MZamuBG1-PXQd8OnuAYjMQU';
+let supa = null;
+try{
+  if(!window.supabase) throw new Error('Supabase SDK failed to load');
+  supa = window.supabase.createClient(SUPA_URL, SUPA_KEY);
+}catch(err){ console.error('Supabase init failed', err); }
+
+const WIN_POINTS = 25; // points added to study-zone total when the human player wins
+
+// Save round points via the add_game_points RPC — this safely ADDS to the
+// player's existing study-zone total (a raw insert fails after game 1,
+// since the table only allows one row per player per zone).
+//
+// PRIVACY: username is fetched from user_profiles.username — a safe,
+// unique handle generated at signup from the person's name + a
+// per-account suffix. This NEVER falls back to session.user.email — that
+// pattern leaked real email addresses onto the public leaderboard in an
+// earlier version of these games and has been removed for good.
+async function saveScoreToServer(points) {
+  if(!supa || points <= 0) return;
+  try{
+    const { data: { session } } = await supa.auth.getSession();
+    if(!session){ console.warn('Not logged in — points not saved'); return; }
+    const { data: profile, error: profileErr } = await supa
+      .from('user_profiles')
+      .select('username')
+      .eq('id', session.user.id)
+      .single();
+    if(profileErr || !profile?.username){
+      console.warn('No safe username on profile — points not saved (never falls back to email)', profileErr);
+      return;
+    }
+    const { error } = await supa.rpc('add_game_points', {
+      p_zone: 'study',
+      p_username: profile.username,
+      p_points: points,
+      p_game_id: 'ludo'
+    });
+    if(error) console.error('score save failed', error);
+  }catch(err){ console.error('score save exception', err); }
+}
+
+const localAdapter = {
+  async saveStats(s)     { try { localStorage.setItem('ludo_stats', JSON.stringify(s)); } catch {} },
+  async getStats()       { try { return JSON.parse(localStorage.getItem('ludo_stats')); } catch { return null; } },
+  async saveScore(n, s, d) { /* local no-op — real backend save happens via saveScoreToServer() at win time */ },
+  async getLeaderboard() { return []; },
+};
+const DB = localAdapter; // stats card still reads/writes local play-count history; real points go through saveScoreToServer()
+
+/* ══════════════════════════════════════════════════════════
+   ONLINE MULTIPLAYER STUB (future-ready)
+══════════════════════════════════════════════════════════ */
+const ONLINE = {
+  enabled: false,
+  roomId:  null,
+  userId:  null,
+  // Future: connect(roomId), sendMove(pid,tid), onMove(cb), onDice(val,cb)
+  async connect()           { console.log('[ONLINE] connect — Supabase Realtime goes here'); },
+  async sendMove(pid, tid)  { if (!this.enabled) return; /* broadcast via Realtime channel */ },
+  async sendDice(val)       { if (!this.enabled) return; /* broadcast dice roll */ },
+  onOpponentMove(cb)        { /* subscribe to Realtime channel, call cb(pid,tid) */ },
+};
+
+const DICE_FACES = ['','⚀','⚁','⚂','⚃','⚄','⚅'];
+const CF_COLS    = ['#e74c3c','#2ecc71','#3498db','#f0a500','#9b59b6','#e94560','#fff'];
+
+const PLAYERS = [
+  { id:'red',    name:'Red',    cls:'hlr', emoji:'🔴', isHuman:true  },
+  { id:'blue',   name:'Blue',   cls:'hlb', emoji:'🔵', isHuman:false },
+  { id:'green',  name:'Green',  cls:'hlg', emoji:'🟢', isHuman:false },
+  { id:'yellow', name:'Yellow', cls:'hly', emoji:'🟡', isHuman:false },
+];
+
+/* ── BOARD DATA (unchanged from previous version) ── */
+const TRACK = [
+  [6,1],[6,2],[6,3],[6,4],[6,5],
+  [5,6],[4,6],[3,6],[2,6],[1,6],[0,6],
+  [0,7],[0,8],
+  [1,8],[2,8],[3,8],[4,8],[5,8],
+  [6,9],[6,10],[6,11],[6,12],[6,13],[6,14],
+  [7,14],[8,14],
+  [8,13],[8,12],[8,11],[8,10],[8,9],
+  [9,8],[10,8],[11,8],[12,8],[13,8],[14,8],
+  [14,7],[14,6],
+  [13,6],[12,6],[11,6],[10,6],[9,6],
+  [8,6],
+  [8,5],[8,4],[8,3],[8,2],[8,1],[8,0],
+  [7,0],
+]; // 52 cells ✓
+
+const HOME_PATH = {
+  red:    [[7,1],[7,2],[7,3],[7,4],[7,5]],
+  blue:   [[1,7],[2,7],[3,7],[4,7],[5,7]],
+  yellow: [[7,13],[7,12],[7,11],[7,10],[7,9]],
+  green:  [[13,7],[12,7],[11,7],[10,7],[9,7]],
+};
+const START_IDX = { red:0, blue:12, yellow:25, green:38 };
+
+function buildPath(pid) {
+  const si = START_IDX[pid], path = [];
+  for (let i = 0; i < 52; i++) path.push(TRACK[(si + i) % 52]);
+  HOME_PATH[pid].forEach(c => path.push(c));
+  path.push([7, 7]);
+  return path;
+}
+const PATHS = {};
+PLAYERS.forEach(p => { PATHS[p.id] = buildPath(p.id); });
+
+const NESTS = {
+  red:    [[2,2],[2,4],[4,2],[4,4]],
+  blue:   [[2,10],[2,12],[4,10],[4,12]],
+  green:  [[10,2],[10,4],[12,2],[12,4]],
+  yellow: [[10,10],[10,12],[12,10],[12,12]],
+};
+
+const SAFE = new Set(['6,1','0,8','8,14','14,6','2,6','6,11','11,8','8,4']);
+
+const ON_HOME = {
+  red:    (r,c) => r===7 && c>=1 && c<=5,
+  blue:   (r,c) => c===7 && r>=1 && r<=5,
+  yellow: (r,c) => r===7 && c>=9 && c<=13,
+  green:  (r,c) => c===7 && r>=9 && r<=13,
+};
+
+/* ── STATE ── */
+let curPlayer = 0;
+let diceVal   = 0;
+let rolled    = false;
+let gameOver  = false;
+let tokens    = {};
+let difficulty = 'easy'; // 'easy' | 'medium'
+let aiLock    = false;   // prevents double-trigger during AI turn
+
+/* ── SETUP SCREEN ── */
+function selectDiff(d) {
+  difficulty = d;
+  document.getElementById('dcEasy').classList.toggle('active', d === 'easy');
+  document.getElementById('dcMedium').classList.toggle('active', d === 'medium');
+}
+
+function showSetup() {
+  if (aiLock) return;
+  document.getElementById('woverlay').classList.remove('show');
+  document.getElementById('setupScreen').classList.remove('hidden');
+}
+
+function startGame() {
+  document.getElementById('setupScreen').classList.add('hidden');
+  document.getElementById('woverlay').classList.remove('show');
+  const badge = document.getElementById('diffBadge');
+  badge.textContent = (difficulty === 'easy' ? 'Easy' : 'Medium') + ' 🔄';
+  initGame();
+}
+
+/* ── BOARD BUILDER ── */
+function buildBoard() {
+  const board = document.getElementById('board');
+  board.innerHTML = '';
+  for (let r = 0; r < 15; r++) {
+    for (let c = 0; c < 15; c++) {
+      const cell     = document.createElement('div');
+      cell.id        = `C${r}_${c}`;
+      cell.className = 'cell ' + cellClass(r, c);
+      board.appendChild(cell);
+    }
+  }
+}
+
+function cellClass(r, c) {
+  const key = `${r},${c}`;
+  if (r===7 && c===7) return 'center-cell';
+  if (r<=5 && c<=5)   return 'rh';
+  if (r<=5 && c>=9)   return 'bh';
+  if (r>=9 && c<=5)   return 'gh';
+  if (r>=9 && c>=9)   return 'yh';
+  if (r===7 && c>=1 && c<=5)  return 'rp safe-cell';
+  if (c===7 && r>=1 && r<=5)  return 'bp safe-cell';
+  if (r===7 && c>=9 && c<=13) return 'yp safe-cell';
+  if (c===7 && r>=9 && r<=13) return 'gp safe-cell';
+  if (SAFE.has(key)) return 'safe-cell';
+  return '';
+}
+
+/* ── RENDER ── */
+function render() {
+  document.querySelectorAll('.cell').forEach(cell => {
+    cell.querySelectorAll('.token,.stack-badge').forEach(el => el.remove());
+    cell.classList.remove('movable-target');
+    cell.onclick = null;
+  });
+
+  PLAYERS.forEach(p => {
+    NESTS[p.id].forEach(([r, c]) => {
+      const cell = $C(r, c);
+      if (cell && !cell.querySelector('.nest-bg')) {
+        const nb = document.createElement('div');
+        nb.className = `nest-bg ${p.id}`;
+        cell.appendChild(nb);
+      }
+    });
+  });
+
+  const cellMap = {};
+  PLAYERS.forEach(p => {
+    if (!tokens[p.id]) return; // guard: tokens not yet initialised
+    tokens[p.id].forEach(tok => {
+      if (tok.won) return;
+      let key;
+      if (tok.pathIdx < 0) {
+        const nc = NESTS[p.id][tok.id];
+        key = `${nc[0]},${nc[1]}`;
+      } else {
+        const [tr, tc] = PATHS[p.id][tok.pathIdx];
+        key = `${tr},${tc}`;
+      }
+      if (!cellMap[key]) cellMap[key] = [];
+      cellMap[key].push({ pid: p.id, tid: tok.id, tok });
+    });
+  });
+
+  Object.entries(cellMap).forEach(([key, list]) => {
+    const [r, c] = key.split(',').map(Number);
+    const cell   = $C(r, c);
+    if (!cell) return;
+    const sz = list.length > 2 ? '50%' : '65%';
+    list.slice(0, 4).forEach(({ pid, tid, tok }) => {
+      const t        = document.createElement('div');
+      t.className    = `token ${pid}${tok.pathIdx < 0 ? ' dim' : ''}`;
+      t.style.width  = sz;
+      t.style.height = sz;
+      t.dataset.pid  = pid;
+      t.dataset.tid  = tid;
+      t.textContent  = tid + 1;
+      cell.appendChild(t);
+    });
+    if (list.length > 1) {
+      const b       = document.createElement('div');
+      b.className   = 'stack-badge';
+      b.textContent = list.length;
+      cell.appendChild(b);
+    }
+  });
+
+  if (rolled && !gameOver && PLAYERS[curPlayer].isHuman) highlightMoves();
+}
+
+function $C(r, c) { return document.getElementById(`C${r}_${c}`); }
+
+/* ── MOVE VALIDATION ── */
+function getMovable(pid) {
+  return tokens[pid].filter(tok => {
+    if (tok.won) return false;
+    if (tok.pathIdx < 0) return diceVal === 6;
+    if (tok.pathIdx + diceVal > 57) return false;
+    return true;
+  });
+}
+
+function highlightMoves() {
+  const pid = PLAYERS[curPlayer].id;
+  getMovable(pid).forEach(tok => {
+    let cell;
+    if (tok.pathIdx < 0) {
+      const [nr, nc] = NESTS[pid][tok.id];
+      cell = $C(nr, nc);
+    } else {
+      const [tr, tc] = PATHS[pid][tok.pathIdx];
+      cell = $C(tr, tc);
+    }
+    if (!cell) return;
+    cell.classList.add('movable-target');
+    cell.querySelectorAll('.token').forEach(t => {
+      if (t.dataset.pid === pid && parseInt(t.dataset.tid) === tok.id)
+        t.classList.add('can-move');
+    });
+    cell.onclick = () => moveToken(pid, tok.id);
+  });
+}
+
+/* ── DICE ROLL ── */
+function rollDice() {
+  if (rolled || gameOver || aiLock) return;
+  const p = PLAYERS[curPlayer];
+  if (!p.isHuman) return; // safety guard
+  _doRoll();
+}
+
+function _doRoll() {
+  const val  = Math.floor(Math.random() * 6) + 1;
+  diceVal    = val;
+  rolled     = true;
+
+  SFX.play('roll');
+  const db = document.getElementById('diceBox');
+  db.className = 'dice-face rolling';
+  void db.offsetWidth;
+  db.textContent = DICE_FACES[val];
+  setTimeout(() => { db.className = `dice-face d${val}`; }, 480);
+  document.getElementById('rollBtn').disabled = true;
+  document.getElementById('diceInfo').textContent = `Rolled: ${val}`;
+
+  const p       = PLAYERS[curPlayer];
+  const movable = getMovable(p.id);
+
+  if (movable.length === 0) {
+    SFX.play('noMove');
+    setStatus('😔', `<span class="${p.cls}">${p.name}</span> rolled <span class="hl">${val}</span> — no moves!`);
+    setTimeout(() => nextTurn(val === 6), 1300);
+    return;
+  }
+
+  if (p.isHuman) {
+    setStatus('🎯', `<span class="${p.cls}">${p.name}</span> rolled <span class="hl">${val}</span> — tap a token!`);
+    render();
+    if (movable.length === 1) setTimeout(() => moveToken(p.id, movable[0].id), 420);
+  } else {
+    setStatus('🤖', `<span class="${p.cls}">${p.name}</span> rolled <span class="hl">${val}</span>…`);
+    render();
+    // AI picks after a short "thinking" pause
+    const delay = difficulty === 'medium' ? 700 : 480;
+    setTimeout(() => {
+      const choice = aiPickToken(p.id, movable);
+      if (choice !== null) moveToken(p.id, choice);
+    }, delay);
+  }
+}
+
+/* ── AI LOGIC ── */
+
+// Score a token move for Medium AI
+function scoreMove(pid, tok) {
+  const newIdx = tok.pathIdx < 0 ? 0 : tok.pathIdx + diceVal;
+
+  // Highest priority: reach center (win a token)
+  if (newIdx === 57) return 1000;
+
+  // High priority: enter home stretch (safe)
+  if (newIdx >= 52) return 500 + newIdx;
+
+  // Check if landing captures an opponent
+  const [nr, nc] = PATHS[pid][newIdx];
+  const landKey  = `${nr},${nc}`;
+  let captureScore = 0;
+  if (!SAFE.has(landKey)) {
+    const canCapture = PLAYERS.some(op => {
+      if (op.id === pid) return false;
+      return tokens[op.id].some(t =>
+        !t.won && t.pathIdx >= 0 && t.pathIdx <= 51 &&
+        PATHS[op.id][t.pathIdx][0] === nr &&
+        PATHS[op.id][t.pathIdx][1] === nc
+      );
+    });
+    if (canCapture) captureScore = 400;
+  }
+
+  // Prefer landing on safe square
+  const safeLand = SAFE.has(landKey) ? 100 : 0;
+
+  // Prefer moving token that is further along (closer to home)
+  const progress = tok.pathIdx < 0 ? 0 : tok.pathIdx;
+
+  // In medium, also avoid leaving nest unless 6 (already filtered)
+  return captureScore + safeLand + progress + newIdx;
+}
+
+function aiPickToken(pid, movable) {
+  if (movable.length === 0) return null;
+
+  if (difficulty === 'easy') {
+    // Easy: completely random valid move
+    return movable[Math.floor(Math.random() * movable.length)].id;
+  }
+
+  // Medium: score each move and pick the best
+  let best = null, bestScore = -Infinity;
+  movable.forEach(tok => {
+    const s = scoreMove(pid, tok);
+    if (s > bestScore) { bestScore = s; best = tok.id; }
+  });
+  return best;
+}
+
+/* ── TOKEN MOVEMENT ── */
+function moveToken(pid, tid) {
+  if (!rolled || gameOver) return;
+  if (PLAYERS[curPlayer].id !== pid) return;
+
+  const tok = tokens[pid].find(t => t.id === tid);
+  if (!tok || tok.won) return;
+  if (tok.pathIdx < 0 && diceVal !== 6) return;
+  if (tok.pathIdx >= 0 && tok.pathIdx + diceVal > 57) return;
+
+  let extra = (diceVal === 6);
+
+  if (tok.pathIdx < 0) {
+    tok.pathIdx = 0;
+    SFX.play('unlock');
+    toast(`🔓 ${PLAYERS[curPlayer].name} — Token ${tid + 1} entered the track!`);
+  } else {
+    tok.pathIdx += diceVal;
+    if (tok.pathIdx === 57) {
+      tok.won = true;
+      SFX.play('home');
+      toast(`🏠 ${PLAYERS[curPlayer].name} — Token ${tid + 1} reached home! 🎉`);
+      extra = true;
+      if (checkWin(pid)) return;
+    } else if (tok.pathIdx <= 51) {
+      const captured = checkCapture(pid, tok);
+      if (captured) { SFX.play('capture'); extra = true; }
+      else SFX.play('move');
+    } else {
+      SFX.play('move'); // home stretch move
+    }
+  }
+
+  rolled = false;
+  render();
+  if (extra && diceVal === 6) SFX.play('bonus');
+  const bonus = extra ? ' <span class="hl">Bonus turn!</span>' : '';
+  setStatus('✅', `<span class="${PLAYERS[curPlayer].cls}">${PLAYERS[curPlayer].name}</span> moved!${bonus}`);
+  nextTurn(extra);
+}
+
+/* ── CAPTURE LOGIC ── */
+function checkCapture(atkPid, atkTok) {
+  if (atkTok.pathIdx < 0 || atkTok.pathIdx > 51) return false;
+  const [ar, ac] = PATHS[atkPid][atkTok.pathIdx];
+  const key      = `${ar},${ac}`;
+  if (SAFE.has(key)) return false;
+  for (const pid of Object.keys(ON_HOME)) {
+    if (ON_HOME[pid](ar, ac)) return false;
+  }
+  let captured = false;
+  PLAYERS.forEach(p => {
+    if (p.id === atkPid) return;
+    const onCell = tokens[p.id].filter(t =>
+      !t.won && t.pathIdx >= 0 && t.pathIdx <= 51 &&
+      PATHS[p.id][t.pathIdx][0] === ar &&
+      PATHS[p.id][t.pathIdx][1] === ac
+    );
+    if (onCell.length === 0 || onCell.length >= 2) return;
+    onCell.forEach(tok => { tok.pathIdx = -1; });
+    toast(`💥 ${PLAYERS[curPlayer].name} captured ${p.name}'s token!`, '#e74c3c');
+    captured = true;
+  });
+  return captured;
+}
+
+/* ── WIN CHECK ── */
+function checkWin(pid) {
+  if (!tokens[pid].every(t => t.won)) return false;
+  gameOver = true; aiLock = false;
+  showThinking(false);
+  const p = PLAYERS.find(x => x.id === pid);
+  // Record stats
+  recordResult(p.isHuman);
+  DB.saveScore(p.name, STATS.wins, difficulty);
+  if (p.isHuman) saveScoreToServer(WIN_POINTS);
+  SFX.play(p.isHuman ? 'win' : 'lose');
+  document.getElementById('wemo').textContent   = p.isHuman ? '🏆' : '🤖';
+  document.getElementById('wtitle').textContent = `${p.name} Wins!`;
+  document.getElementById('wsub').textContent   = p.isHuman
+    ? `${p.emoji} You beat all 3 CPU opponents!`
+    : `${p.emoji} ${p.name} (CPU) won. Try again!`;
+  const dt = document.getElementById('wdiffTag');
+  dt.textContent = difficulty === 'easy' ? '🟢 Easy Mode' : '🟡 Medium Mode';
+  dt.className   = `wdiff-tag ${difficulty}`;
+  if (p.isHuman) confetti();
+  setTimeout(() => document.getElementById('woverlay').classList.add('show'), 700);
+
+  // ── Tournament mode: Ludo is win/lose based (win = actually finished
+  // 1st), not accuracy based ──
+  if (new URLSearchParams(location.search).get('tournament') === '1') {
+    const tournamentScore = p.isHuman ? 100 : 30;
+    setTimeout(() => reportScoreToTournament(tournamentScore, p.isHuman?1:0, 1, p.isHuman), 1800);
+  }
+  return true;
+}
+
+function reportScoreToTournament(finalScore, correctAnswers, totalQuestions, isWin) {
+  const params = new URLSearchParams(location.search);
+  if (params.get('tournament') !== '1') return;
+  const returnUrl = params.get('return') || 'tournaments.html';
+  let url = returnUrl + '?score=' + encodeURIComponent(finalScore)
+    + '&correct=' + encodeURIComponent(correctAnswers || 0)
+    + '&total=' + encodeURIComponent(totalQuestions || 0);
+  if (typeof isWin === 'boolean') url += '&win=' + (isWin ? '1' : '0');
+  location.href = url;
+}
+
+/* ── TURN MANAGEMENT ── */
+function nextTurn(extra = false) {
+  if (gameOver) return;
+  rolled = false; diceVal = 0;
+
+  if (!extra) {
+    let safety = 0;
+    do {
+      curPlayer = (curPlayer + 1) % 4;
+      safety++;
+    } while (tokens[PLAYERS[curPlayer].id].every(t => t.won) && safety < 4);
+  }
+
+  updateTurnUI();
+  const p = PLAYERS[curPlayer];
+
+  if (p.isHuman) {
+    aiLock = false;
+    showThinking(false);
+    document.getElementById('rollBtn').disabled  = false;
+    document.getElementById('diceInfo').textContent = 'Your roll!';
+    render();
+  } else {
+    // CPU turn — auto roll after short delay with thinking animation
+    aiLock = true;
+    showThinking(true);
+    document.getElementById('rollBtn').disabled  = true;
+    document.getElementById('diceInfo').textContent = 'CPU rolling…';
+    const rollDelay = difficulty === 'medium' ? 900 : 700;
+    setTimeout(() => {
+      if (gameOver) return;
+      showThinking(false);
+      _doRoll();
+    }, rollDelay);
+  }
+}
+
+function showThinking(on) {
+  document.getElementById('thinkAnim').classList.toggle('show', on);
+  if (on) {
+    document.getElementById('boardOuter').classList.add('ai-thinking');
+  } else {
+    document.getElementById('boardOuter').classList.remove('ai-thinking');
+  }
+}
+
+function updateTurnUI() {
+  const p = PLAYERS[curPlayer];
+  document.getElementById('turnPill').className = `turn-pill ${p.id}`;
+  document.getElementById('turnTxt').textContent = `${p.name}${p.isHuman ? "'s Turn" : ' (CPU)'}`;
+  const ico = p.isHuman ? '🎲' : '🤖';
+  const verb = p.isHuman ? 'roll the dice!' : 'thinking…';
+  setStatus(ico, `<span class="${p.cls}">${p.name}</span>'s turn — ${verb}`);
+}
+
+/* ── UI HELPERS ── */
+function setStatus(ico, msg) {
+  document.getElementById('sico').textContent = ico;
+  document.getElementById('smsg').innerHTML   = msg;
+}
+
+function toast(msg, color = '') {
+  document.querySelectorAll('.toast').forEach(t => t.remove());
+  const el     = document.createElement('div');
+  el.className = 'toast'; el.textContent = msg;
+  if (color) el.style.borderColor = color + '55';
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 2400);
+}
+
+function confetti() {
+  for (let i = 0; i < 75; i++) {
+    setTimeout(() => {
+      const el = document.createElement('div');
+      el.className = 'cf';
+      el.style.cssText =
+        `left:${Math.random()*100}vw;top:-30px;`+
+        `width:${7+Math.random()*9}px;height:${7+Math.random()*9}px;`+
+        `background:${CF_COLS[Math.floor(Math.random()*CF_COLS.length)]};`+
+        `border-radius:${Math.random()>.5?'50%':'3px'};`+
+        `animation-duration:${2.2+Math.random()*2.5}s;`+
+        `animation-delay:${Math.random()*.35}s;`;
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 5500);
+    }, i * 28);
+  }
+}
+
+/* ── INIT ── */
+function initGame() {
+  curPlayer = 0; diceVal = 0; rolled = false; gameOver = false; aiLock = false;
+  showThinking(false);
+
+  PLAYERS.forEach(p => {
+    tokens[p.id] = [0, 1, 2, 3].map(id => ({ id, pid: p.id, pathIdx: -1, won: false }));
+  });
+
+  buildBoard();
+  updateTurnUI();
+  document.getElementById('rollBtn').disabled    = false;
+  const db2=document.getElementById('diceBox');db2.className='dice-face';db2.textContent='⚀';
+  document.getElementById('diceInfo').textContent = 'Your roll!';
+  render();
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  buildBoard(); // render board cells only — no tokens yet, setup screen is on top
+  // Load persisted stats
+  DB.getStats().then(s => {
+    if (s) { Object.assign(STATS, s); refreshStats(); }
+  }).catch(() => {});
+});
+</script>
+</body>
+</html>

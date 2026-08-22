@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>Leaderboard | GyanIQ</title>
+<style>
+  :root{
+    --bg-0:#07070d;
+    --panel:#11131f;
+    --panel-2:#161a2b;
+    --border:#252a41;
+    --border-soft:#1d2036;
+    --text:#eef0fb;
+    --muted:#8a90b3;
+    --accent:#7c5cff;
+    --accent-2:#22d3c9;
+    --gold:#ffcf5c;
+    --silver:#c9cbe0;
+    --bronze:#ff9f4d;
+    --danger:#ff5c7a;
+    --success:#3ee08a;
+    --radius:18px;
+    --glow-accent:0 0 24px rgba(124,92,255,.35);
+    --glass-bg: rgba(255,255,255,.04);
+    --glass-border: rgba(255,255,255,.09);
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0;padding:0;
+    background:
+      radial-gradient(1200px 800px at 15% -10%, rgba(124,92,255,.2), transparent 60%),
+      radial-gradient(1000px 700px at 110% 10%, rgba(34,211,201,.16), transparent 55%),
+      radial-gradient(900px 600px at 50% 120%, rgba(255,207,92,.08), transparent 60%),
+      var(--bg-0);
+    color:var(--text);
+    font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    min-height:100vh;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .app{
+    max-width:1280px;
+    margin:0 auto;
+    padding:clamp(12px,3vw,18px) clamp(12px,4vw,16px) clamp(30px,6vw,50px);
+    display:flex;
+    flex-direction:column;
+    gap:clamp(18px,3vw,26px);
+    animation:fadeInApp .5s ease;
+  }
+  @keyframes fadeInApp{
+    from{opacity:0; transform:translateY(8px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+
+  /* HEADER */
+  header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:clamp(10px,2.4vw,14px) clamp(12px,3vw,18px);
+    background:linear-gradient(135deg, rgba(124,92,255,.18), rgba(34,211,201,.1));
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    backdrop-filter:blur(10px);
+    box-shadow:0 8px 30px rgba(0,0,0,.3);
+    flex-wrap:wrap;
+  }
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand .logo{
+    width:clamp(32px,5vw,38px);height:clamp(32px,5vw,38px);border-radius:10px;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:clamp(15px,2.2vw,18px);color:#0a0a12;
+    box-shadow:0 4px 18px rgba(124,92,255,.45);
+    flex-shrink:0;
+    animation:logoGlow 3.2s ease-in-out infinite;
+  }
+  @keyframes logoGlow{
+    0%,100%{box-shadow:0 4px 18px rgba(124,92,255,.45);}
+    50%{box-shadow:0 4px 26px rgba(34,211,201,.55);}
+  }
+  .brand .titles{display:flex;flex-direction:column;line-height:1.15;}
+  .brand .titles .name{
+    font-size:clamp(16px,2.4vw,19px);font-weight:800;letter-spacing:.3px;
+    background:linear-gradient(90deg,#fff,#c9c6ff);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .brand .titles .tag{font-size:11px;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;}
+  .header-right{display:flex;align-items:center;gap:10px;}
+  .live-badge{
+    display:flex;align-items:center;gap:6px;
+    font-size:11px;font-weight:800;
+    color:var(--success);
+    background:rgba(62,224,138,.12);
+    border:1px solid rgba(62,224,138,.35);
+    padding:6px 12px;border-radius:999px;
+    text-transform:uppercase;letter-spacing:.4px;
+  }
+  .live-badge .dot{width:7px;height:7px;border-radius:50%;background:var(--success);animation:pulseDot 1.3s infinite;}
+  @keyframes pulseDot{
+    0%{box-shadow:0 0 0 0 rgba(62,224,138,.6);}
+    70%{box-shadow:0 0 0 7px rgba(62,224,138,0);}
+    100%{box-shadow:0 0 0 0 rgba(62,224,138,0);}
+  }
+  .gyaniq-badge{
+    font-size:12px;color:var(--muted);
+    padding:6px 12px;border:1px solid var(--border);border-radius:999px;
+    background:rgba(255,255,255,.02);
+    text-decoration:none;
+    display:flex;align-items:center;gap:6px;
+    transition:.2s;
+    flex-shrink:0;
+  }
+  .gyaniq-badge:hover{border-color:var(--accent);color:var(--text);box-shadow:var(--glow-accent);}
+  .gyaniq-badge b{color:var(--accent-2);}
+
+  /* PAGE NAV — back button + section tabs, shared across games/tournaments/leaderboard */
+  .page-nav{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+    padding:10px 14px;
+    background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:14px;
+  }
+  .nav-back{
+    display:flex;align-items:center;gap:6px;
+    font-size:13px;font-weight:700;color:var(--text);text-decoration:none;
+    padding:8px 14px;border-radius:999px;border:1px solid var(--border);
+    background:var(--panel);transition:.2s;flex-shrink:0;
+  }
+  .nav-back:hover{border-color:var(--accent);box-shadow:var(--glow-accent);}
+  .nav-tabs{display:flex;gap:8px;flex-wrap:wrap;}
+  .nav-tab{
+    font-size:12.5px;font-weight:700;color:var(--muted);text-decoration:none;
+    padding:8px 14px;border-radius:999px;border:1px solid transparent;
+    background:rgba(255,255,255,.02);transition:.2s;
+  }
+  .nav-tab:hover{color:var(--text);border-color:var(--border);}
+  .nav-tab.active{
+    color:#0a0a12;background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    box-shadow:var(--glow-accent);
+  }
+
+  /* PAGE INTRO */
+  .page-intro{display:flex;flex-direction:column;gap:6px;padding:4px 4px 0;}
+  .page-intro h1{
+    margin:0;
+    font-size:clamp(22px,4vw,30px);
+    font-weight:800;
+    background:linear-gradient(90deg,#fff,#c9c6ff,#8ff5e6);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .page-intro p{margin:0;color:var(--muted);font-size:13.5px;}
+
+  /* ZONE JUMP NAV */
+  .zone-nav{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .zone-nav-btn{
+    flex:1;
+    min-width:180px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:12px 16px;
+    border-radius:14px;
+    background:var(--glass-bg);
+    border:1px solid var(--glass-border);
+    backdrop-filter:blur(10px);
+    cursor:pointer;
+    transition:.2s;
+    color:var(--text);
+    text-decoration:none;
+  }
+  .zone-nav-btn:hover{transform:translateY(-2px); border-color:var(--accent); box-shadow:var(--glow-accent);}
+  .zone-nav-btn .zn-ico{font-size:20px;}
+  .zone-nav-btn .zn-text{display:flex;flex-direction:column;line-height:1.2;}
+  .zone-nav-btn .zn-text b{font-size:13.5px;font-weight:800;}
+  .zone-nav-btn .zn-text span{font-size:10.5px;color:var(--muted);}
+
+  /* ZONE SECTION */
+  .zone-sec{display:flex;flex-direction:column;gap:18px;scroll-margin-top:16px;}
+  .zone-hdr{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    padding:16px 18px;
+    background:var(--glass-bg);
+    border:1px solid var(--glass-border);
+    border-radius:var(--radius);
+    backdrop-filter:blur(14px);
+    box-shadow:0 10px 30px rgba(0,0,0,.3);
+    flex-wrap:wrap;
+  }
+  .zone-hdr-left{display:flex;align-items:center;gap:14px;}
+  .zone-ico{
+    width:48px;height:48px;
+    border-radius:14px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:22px;
+    flex-shrink:0;
+  }
+  .zone-sec.study .zone-ico{background:linear-gradient(135deg, rgba(124,92,255,.35), rgba(124,92,255,.08)); box-shadow:0 0 22px rgba(124,92,255,.3);}
+  .zone-sec.fun .zone-ico{background:linear-gradient(135deg, rgba(255,159,77,.35), rgba(255,159,77,.08)); box-shadow:0 0 22px rgba(255,159,77,.3);}
+  .zone-meta h2{margin:0 0 2px;font-size:18px;font-weight:800;}
+  .zone-meta p{margin:0;font-size:12px;color:var(--muted);}
+  .zone-champion{
+    font-size:11px;font-weight:700;
+    color:var(--gold);
+    background:rgba(255,207,92,.1);
+    border:1px solid rgba(255,207,92,.3);
+    padding:6px 12px;border-radius:999px;
+    white-space:nowrap;
+  }
+
+  /* GAME CATALOG STRIP */
+  .game-catalog{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .game-chip{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size:11.5px;
+    font-weight:600;
+    color:var(--muted);
+    background:var(--glass-bg);
+    border:1px solid var(--glass-border);
+    padding:6px 12px;
+    border-radius:999px;
+    backdrop-filter:blur(8px);
+  }
+  .game-chip .gc-ico{font-size:13px;}
+
+  /* PODIUM — explicit Gold / Silver / Bronze cards */
+  .podium{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:clamp(8px,2vw,14px);
+    align-items:end;
+  }
+  .podium-card{
+    position:relative;
+    background:var(--glass-bg);
+    border:1px solid var(--glass-border);
+    border-radius:var(--radius);
+    padding:clamp(14px,3vw,22px) clamp(8px,2vw,14px) clamp(12px,2.5vw,18px);
+    text-align:center;
+    backdrop-filter:blur(14px);
+    box-shadow:0 14px 40px rgba(0,0,0,.35);
+    transition:transform .2s ease, box-shadow .2s ease;
+    animation:podiumIn .5s ease both;
+    overflow:hidden;
+  }
+  .podium-card:hover{transform:translateY(-4px);}
+  @keyframes podiumIn{
+    from{opacity:0; transform:translateY(16px) scale(.95);}
+    to{opacity:1; transform:translateY(0) scale(1);}
+  }
+  .podium-card.rank-1{
+    order:2;
+    padding-top:30px;
+    background:linear-gradient(160deg, rgba(255,207,92,.16), rgba(255,207,92,.03));
+    border-color:rgba(255,207,92,.55);
+    box-shadow:0 18px 50px rgba(255,207,92,.22), 0 14px 40px rgba(0,0,0,.35);
+  }
+  .podium-card.rank-2{
+    order:1;
+    background:linear-gradient(160deg, rgba(201,203,224,.14), rgba(201,203,224,.02));
+    border-color:rgba(201,203,224,.4);
+    box-shadow:0 14px 40px rgba(201,203,224,.12), 0 14px 40px rgba(0,0,0,.35);
+  }
+  .podium-card.rank-3{
+    order:3;
+    background:linear-gradient(160deg, rgba(255,159,77,.14), rgba(255,159,77,.02));
+    border-color:rgba(255,159,77,.4);
+    box-shadow:0 14px 40px rgba(255,159,77,.12), 0 14px 40px rgba(0,0,0,.35);
+  }
+  .podium-card::before{
+    content:'';
+    position:absolute; top:0; left:0; right:0; height:3px;
+  }
+  .podium-card.rank-1::before{background:linear-gradient(90deg,var(--gold),#fff3d1,var(--gold));}
+  .podium-card.rank-2::before{background:linear-gradient(90deg,var(--silver),#fff,var(--silver));}
+  .podium-card.rank-3::before{background:linear-gradient(90deg,var(--bronze),#ffd2a8,var(--bronze));}
+  .podium-medal{font-size:clamp(22px,4vw,30px);margin-bottom:6px;}
+  .podium-card.rank-1 .podium-medal{font-size:clamp(28px,5vw,38px);filter:drop-shadow(0 4px 10px rgba(255,207,92,.5));}
+  .podium-avatar{
+    width:clamp(42px,7vw,52px);height:clamp(42px,7vw,52px);
+    margin:0 auto 8px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:clamp(17px,3vw,22px);
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  }
+  .podium-card.rank-1 .podium-avatar{width:clamp(50px,8vw,62px);height:clamp(50px,8vw,62px);font-size:clamp(20px,3.6vw,26px);box-shadow:0 0 0 3px rgba(255,207,92,.5);}
+  .podium-card.rank-2 .podium-avatar{box-shadow:0 0 0 3px rgba(201,203,224,.4);}
+  .podium-card.rank-3 .podium-avatar{box-shadow:0 0 0 3px rgba(255,159,77,.4);}
+  .podium-name{font-size:clamp(11.5px,2vw,13.5px);font-weight:800;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .podium-points{font-size:clamp(14px,2.6vw,17px);font-weight:900;color:var(--gold);}
+  .podium-card.rank-2 .podium-points{color:var(--silver);}
+  .podium-card.rank-3 .podium-points{color:var(--bronze);}
+  .podium-points-lbl{font-size:9.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-top:2px;}
+  .podium-tier-tag{
+    display:inline-block;
+    margin-top:8px;
+    font-size:9px;font-weight:800;
+    padding:3px 9px;border-radius:999px;
+    text-transform:uppercase;letter-spacing:.4px;
+  }
+  .podium-card.rank-1 .podium-tier-tag{background:rgba(255,207,92,.18); color:var(--gold); border:1px solid rgba(255,207,92,.4);}
+  .podium-card.rank-2 .podium-tier-tag{background:rgba(201,203,224,.18); color:var(--silver); border:1px solid rgba(201,203,224,.4);}
+  .podium-card.rank-3 .podium-tier-tag{background:rgba(255,159,77,.18); color:var(--bronze); border:1px solid rgba(255,159,77,.4);}
+
+  /* PLAYER INFORMATION CARD */
+  .player-card{
+    background:linear-gradient(150deg, rgba(124,92,255,.1), rgba(34,211,201,.04));
+    border:1px solid rgba(124,92,255,.3);
+    border-radius:var(--radius);
+    padding:18px;
+    backdrop-filter:blur(14px);
+    box-shadow:0 12px 36px rgba(0,0,0,.3);
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+  }
+  .player-card-hdr{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+  .player-card-avatar{
+    width:48px;height:48px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:22px;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    box-shadow:0 0 0 3px rgba(124,92,255,.3);
+    flex-shrink:0;
+  }
+  .player-card-id{display:flex;flex-direction:column;line-height:1.25;flex:1;min-width:120px;}
+  .player-card-id .pc-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;}
+  .player-card-id .pc-username{font-size:16px;font-weight:800;}
+  .player-card-rank-badge{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 16px;
+    border-radius:999px;
+    background:rgba(255,207,92,.12);
+    border:1px solid rgba(255,207,92,.4);
+  }
+  .player-card-rank-badge .pcr-num{font-size:18px;font-weight:900;color:var(--gold);}
+  .player-card-rank-badge .pcr-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;}
+  .jump-to-me-btn{
+    border:1px solid rgba(124,92,255,.4);
+    cursor:pointer;
+    font-size:11px;font-weight:700;
+    padding:8px 14px;
+    border-radius:999px;
+    background:rgba(124,92,255,.15);
+    color:#c9c1ff;
+    transition:.2s;
+    white-space:nowrap;
+  }
+  .jump-to-me-btn:hover{background:rgba(124,92,255,.28); transform:translateY(-1px);}
+
+  .player-card-stats{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:10px;
+  }
+  .pc-stat{
+    background:rgba(255,255,255,.04);
+    border:1px solid var(--glass-border);
+    border-radius:12px;
+    padding:12px 8px;
+    text-align:center;
+    transition:transform .18s ease, border-color .18s ease;
+  }
+  .pc-stat:hover{transform:translateY(-3px); border-color:var(--accent);}
+  .pc-stat-val{display:block;font-size:18px;font-weight:800;color:var(--accent-2);}
+  .pc-stat.points .pc-stat-val{color:var(--gold);}
+  .pc-stat-lbl{display:block;font-size:9.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-top:3px;}
+
+  /* LEADERBOARD CONTROLS: search, view toggle, refresh, last updated */
+  .lb-controls{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-bottom:6px;
+  }
+  .lb-controls-left{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .lb-controls-left h3{margin:0;font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);}
+  .lb-view-toggle{
+    display:flex;
+    gap:4px;
+    background:rgba(255,255,255,.03);
+    border:1px solid var(--glass-border);
+    border-radius:10px;
+    padding:3px;
+  }
+  .lb-view-btn{
+    border:none;
+    background:transparent;
+    color:var(--muted);
+    font-size:11px;
+    font-weight:700;
+    padding:6px 12px;
+    border-radius:8px;
+    cursor:pointer;
+    transition:.15s;
+  }
+  .lb-view-btn.active{background:linear-gradient(135deg,var(--accent),var(--accent-2)); color:#0a0a12;}
+  .lb-view-btn:hover:not(.active){color:var(--text);}
+  .lb-controls-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .lb-search-wrap{position:relative;display:flex;align-items:center;}
+  .lb-search-ico{position:absolute;left:10px;font-size:12px;color:var(--muted);pointer-events:none;}
+  .lb-search-input{
+    background:rgba(255,255,255,.04);
+    border:1px solid var(--glass-border);
+    border-radius:10px;
+    padding:8px 12px 8px 30px;
+    color:var(--text);
+    font-size:12.5px;
+    outline:none;
+    width:170px;
+    transition:.2s;
+  }
+  .lb-search-input::placeholder{color:var(--muted);}
+  .lb-search-input:focus{border-color:var(--accent); box-shadow:var(--glow-accent); width:200px;}
+  .lb-refresh-btn{
+    display:flex;align-items:center;gap:6px;
+    border:1px solid var(--glass-border);
+    background:rgba(255,255,255,.03);
+    color:var(--text);
+    font-size:11.5px;font-weight:700;
+    padding:8px 14px;border-radius:10px;
+    cursor:pointer;transition:.2s;
+  }
+  .lb-refresh-btn:hover{border-color:var(--accent); box-shadow:var(--glow-accent);}
+  .lb-refresh-btn .rf-ico{display:inline-block;transition:transform .3s;}
+  .lb-refresh-btn.spinning .rf-ico{animation:spin360 .6s linear;}
+  @keyframes spin360{ to{transform:rotate(360deg);} }
+  .lb-last-updated{
+    font-size:10.5px;
+    color:var(--muted);
+    white-space:nowrap;
+    margin-bottom:10px;
+    display:flex;
+    align-items:center;
+    gap:5px;
+  }
+  .lb-last-updated .lu-dot{width:5px;height:5px;border-radius:50%;background:var(--success);flex-shrink:0;}
+  .lb-no-results{padding:26px 12px;text-align:center;color:var(--muted);font-size:12.5px;}
+
+  /* LEADERBOARD TABLE */
+  .lb-card{
+    background:var(--glass-bg);
+    border:1px solid var(--glass-border);
+    border-radius:var(--radius);
+    padding:18px;
+    backdrop-filter:blur(14px);
+    box-shadow:0 12px 36px rgba(0,0,0,.3);
+  }
+  .lb-table-wrap{overflow-x:auto;}
+  .lb-table{width:100%;border-collapse:collapse;min-width:700px;}
+  .lb-table thead th{
+    text-align:left;
+    font-size:10.5px;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+    color:var(--muted);
+    font-weight:700;
+    padding:10px 12px;
+    border-bottom:1px solid var(--border-soft);
+  }
+  .lb-table tbody td{
+    padding:11px 12px;
+    font-size:13px;
+    border-bottom:1px solid rgba(255,255,255,.03);
+  }
+  .lb-table tbody tr{transition:background .15s, transform .15s; animation:rowIn .3s ease both;}
+  @keyframes rowIn{
+    from{opacity:0; transform:translateX(-8px);}
+    to{opacity:1; transform:translateX(0);}
+  }
+  .lb-table tbody tr:hover{background:rgba(255,255,255,.03);}
+  .lb-table tbody tr.you-row{background:rgba(124,92,255,.1); box-shadow:inset 0 0 0 1px rgba(124,92,255,.35);}
+  .lb-table tbody tr.you-row td{font-weight:700;}
+  .lb-table tbody tr.top1-row{background:rgba(255,207,92,.08);}
+  .lb-table tbody tr.top2-row{background:rgba(201,203,224,.06);}
+  .lb-table tbody tr.top3-row{background:rgba(255,159,77,.06);}
+  .lb-table tbody tr.you-row.highlight-pulse{animation:youPulse 1.4s ease 2;}
+  @keyframes youPulse{
+    0%,100%{box-shadow:inset 0 0 0 1px rgba(124,92,255,.35), inset 0 0 0 9999px rgba(124,92,255,.08);}
+    50%{box-shadow:inset 0 0 0 1px rgba(124,92,255,.6), inset 0 0 0 9999px rgba(124,92,255,.25);}
+  }
+  .lb-rank{font-weight:800;}
+  .lb-rank.top1{color:var(--gold);}
+  .lb-rank.top2{color:var(--silver);}
+  .lb-rank.top3{color:var(--bronze);}
+  .lb-player{display:flex;align-items:center;gap:9px;}
+  .lb-player-avatar{
+    width:28px;height:28px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:13px;flex-shrink:0;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  }
+  .you-tag{
+    font-size:9px;font-weight:800;color:#0a0a12;
+    background:var(--accent-2);
+    padding:2px 7px;border-radius:999px;margin-left:6px;
+  }
+  .lb-points{font-weight:800;color:var(--gold);}
+  .lb-game{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:12px;white-space:nowrap;}
+
+  /* CURRENT POSITION BADGE (per row) */
+  .pos-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    font-size:10px;
+    font-weight:800;
+    padding:4px 10px;
+    border-radius:999px;
+    white-space:nowrap;
+    text-transform:uppercase;
+    letter-spacing:.3px;
+  }
+  .pos-badge.champion{background:rgba(255,207,92,.16); color:var(--gold); border:1px solid rgba(255,207,92,.45);}
+  .pos-badge.runner-up{background:rgba(201,203,224,.14); color:var(--silver); border:1px solid rgba(201,203,224,.4);}
+  .pos-badge.third{background:rgba(255,159,77,.14); color:var(--bronze); border:1px solid rgba(255,159,77,.4);}
+  .pos-badge.top10{background:rgba(124,92,255,.14); color:#c9c1ff; border:1px solid rgba(124,92,255,.4);}
+  .pos-badge.contender{background:rgba(255,255,255,.04); color:var(--muted); border:1px solid var(--border-soft);}
+
+  .your-pos-row{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    padding:12px;
+    border-radius:12px;
+    background:rgba(124,92,255,.1);
+    border:1px dashed rgba(124,92,255,.45);
+    font-size:12.5px;
+    font-weight:700;
+    color:#c9c1ff;
+    margin-top:12px;
+  }
+
+  footer{text-align:center;color:var(--muted);font-size:12px;padding-top:10px;}
+  footer a{color:var(--accent-2);text-decoration:none;font-weight:600;}
+
+  /* RESPONSIVE */
+  @media (max-width:699px){
+    .player-card-stats{grid-template-columns:repeat(2, 1fr);}
+    .zone-nav-btn{min-width:100%;}
+    .lb-controls{flex-direction:column;align-items:stretch;}
+    .lb-controls-right{justify-content:space-between;}
+    .lb-search-input{width:100%;}
+    .lb-search-input:focus{width:100%;}
+  }
+  @media (min-width:700px) and (max-width:1024px){
+    .player-card-stats{grid-template-columns:repeat(4, 1fr);}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header>
+    <div class="brand">
+      <div class="logo">GQ</div>
+      <div class="titles">
+        <span class="name">Leaderboard</span>
+        <span class="tag">Top Players Across GyanIQ</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <span class="live-badge"><span class="dot"></span>Live</span>
+      <a class="gyaniq-badge" href="https://gyaniq.netlify.app" target="_blank" rel="noopener">
+        Built for <b>GyanIQ</b>
+      </a>
+    </div>
+  </header>
+
+  <nav class="page-nav">
+    <a class="nav-back" href="games.html">← Back</a>
+    <div class="nav-tabs">
+      <a class="nav-tab" href="games.html">🎮 Games</a>
+      <a class="nav-tab" href="tournaments.html">🏆 Tournaments</a>
+      <a class="nav-tab active" href="leaderboard.html">📊 Leaderboard</a>
+    </div>
+  </nav>
+
+  <div class="page-intro">
+    <h1>🏆 Global Leaderboard</h1>
+    <p>Study Zone aur Fun Zone ke top players — tournament points ke hisaab se real-time rankings, dono zones independently calculated.</p>
+  </div>
+
+  <div class="zone-nav">
+    <a class="zone-nav-btn" href="#study-leaderboard">
+      <span class="zn-ico">📚</span>
+      <span class="zn-text"><b>Study Zone</b><span>Jump to rankings</span></span>
+    </a>
+    <a class="zone-nav-btn" href="#fun-leaderboard">
+      <span class="zn-ico">🎮</span>
+      <span class="zn-text"><b>Fun Zone</b><span>Jump to rankings</span></span>
+    </a>
+  </div>
+
+  <!-- STUDY ZONE -->
+  <section class="zone-sec study" id="study-leaderboard">
+    <div class="zone-hdr">
+      <div class="zone-hdr-left">
+        <div class="zone-ico">📚</div>
+        <div class="zone-meta">
+          <h2>Study Zone Leaderboard</h2>
+          <p>GK, Math, Science & Reasoning tournaments — top score bano.</p>
+        </div>
+      </div>
+      <span class="zone-champion" id="studyChampion">No champion yet</span>
+    </div>
+
+    <div class="game-catalog" id="studyGameCatalog"></div>
+
+    <div class="podium" id="studyPodium"></div>
+
+    <!-- PLAYER INFORMATION CARD -->
+    <div class="player-card">
+      <div class="player-card-hdr">
+        <div class="player-card-avatar" id="studyPcAvatar">🧑</div>
+        <div class="player-card-id">
+          <span class="pc-label">Username</span>
+          <span class="pc-username" id="studyPcUsername">You</span>
+        </div>
+        <div class="player-card-rank-badge">
+          <span class="pcr-num" id="studyPcRank">—</span>
+          <span class="pcr-lbl">Rank</span>
+        </div>
+        <button class="jump-to-me-btn" id="studyJumpBtn">📍 Jump to Me</button>
+      </div>
+      <div class="player-card-stats">
+        <div class="pc-stat points"><span class="pc-stat-val" id="studyPcPoints">0</span><span class="pc-stat-lbl">Tournament Points</span></div>
+        <div class="pc-stat"><span class="pc-stat-val" id="studyPcGames">0</span><span class="pc-stat-lbl">Games Played</span></div>
+        <div class="pc-stat"><span class="pc-stat-val" id="studyPcWins">0</span><span class="pc-stat-lbl">Wins</span></div>
+      </div>
+    </div>
+
+    <div class="lb-card">
+      <div class="lb-controls">
+        <div class="lb-controls-left">
+          <h3>Full Rankings</h3>
+          <div class="lb-view-toggle">
+            <button class="lb-view-btn active" id="studyViewTop10Btn" data-zone="study" data-view="top10">Top 10</button>
+            <button class="lb-view-btn" id="studyViewAllBtn" data-zone="study" data-view="all">View All</button>
+          </div>
+        </div>
+        <div class="lb-controls-right">
+          <div class="lb-search-wrap">
+            <span class="lb-search-ico">🔍</span>
+            <input type="text" class="lb-search-input" id="studySearchInput" placeholder="Search player...">
+          </div>
+          <button class="lb-refresh-btn" id="studyRefreshBtn"><span class="rf-ico">🔄</span>Refresh</button>
+        </div>
+      </div>
+      <div class="lb-last-updated" id="studyLastUpdated"><span class="lu-dot"></span>Last updated: just now</div>
+      <div class="lb-table-wrap">
+        <table class="lb-table">
+          <thead>
+            <tr><th>Rank</th><th>Username</th><th>Tournament Points</th><th>Games Points</th><th>Games Played</th><th>Wins</th><th>Position</th></tr>
+          </thead>
+          <tbody id="studyLbBody"></tbody>
+        </table>
+      </div>
+      <div class="your-pos-row" id="studyYourPosRow" style="display:none;">
+        <span id="studyYourPosText">Your Position: —</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FUN ZONE -->
+  <section class="zone-sec fun" id="fun-leaderboard">
+    <div class="zone-hdr">
+      <div class="zone-hdr-left">
+        <div class="zone-ico">🎮</div>
+        <div class="zone-meta">
+          <h2>Fun Zone Leaderboard</h2>
+          <p>Cards, puzzles & luck-based games — masti ke saath top rank paao.</p>
+        </div>
+      </div>
+      <span class="zone-champion" id="funChampion">No champion yet</span>
+    </div>
+
+    <div class="game-catalog" id="funGameCatalog"></div>
+
+    <div class="podium" id="funPodium"></div>
+
+    <!-- PLAYER INFORMATION CARD -->
+    <div class="player-card">
+      <div class="player-card-hdr">
+        <div class="player-card-avatar" id="funPcAvatar">🧑</div>
+        <div class="player-card-id">
+          <span class="pc-label">Username</span>
+          <span class="pc-username" id="funPcUsername">You</span>
+        </div>
+        <div class="player-card-rank-badge">
+          <span class="pcr-num" id="funPcRank">—</span>
+          <span class="pcr-lbl">Rank</span>
+        </div>
+        <button class="jump-to-me-btn" id="funJumpBtn">📍 Jump to Me</button>
+      </div>
+      <div class="player-card-stats">
+        <div class="pc-stat points"><span class="pc-stat-val" id="funPcPoints">0</span><span class="pc-stat-lbl">Tournament Points</span></div>
+        <div class="pc-stat"><span class="pc-stat-val" id="funPcGames">0</span><span class="pc-stat-lbl">Games Played</span></div>
+        <div class="pc-stat"><span class="pc-stat-val" id="funPcWins">0</span><span class="pc-stat-lbl">Wins</span></div>
+      </div>
+    </div>
+
+    <div class="lb-card">
+      <div class="lb-controls">
+        <div class="lb-controls-left">
+          <h3>Full Rankings</h3>
+          <div class="lb-view-toggle">
+            <button class="lb-view-btn active" id="funViewTop10Btn" data-zone="fun" data-view="top10">Top 10</button>
+            <button class="lb-view-btn" id="funViewAllBtn" data-zone="fun" data-view="all">View All</button>
+          </div>
+        </div>
+        <div class="lb-controls-right">
+          <div class="lb-search-wrap">
+            <span class="lb-search-ico">🔍</span>
+            <input type="text" class="lb-search-input" id="funSearchInput" placeholder="Search player...">
+          </div>
+          <button class="lb-refresh-btn" id="funRefreshBtn"><span class="rf-ico">🔄</span>Refresh</button>
+        </div>
+      </div>
+      <div class="lb-last-updated" id="funLastUpdated"><span class="lu-dot"></span>Last updated: just now</div>
+      <div class="lb-table-wrap">
+        <table class="lb-table">
+          <thead>
+            <tr><th>Rank</th><th>Username</th><th>Tournament Points</th><th>Games Points</th><th>Games Played</th><th>Wins</th><th>Position</th></tr>
+          </thead>
+          <tbody id="funLbBody"></tbody>
+        </table>
+      </div>
+      <div class="your-pos-row" id="funYourPosRow" style="display:none;">
+        <span id="funYourPosText">Your Position: —</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Leaderboard &copy; <span id="year"></span> — Crafted for <a href="https://gyaniq.netlify.app" target="_blank" rel="noopener">GyanIQ</a>
+  </footer>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+(function(){
+  "use strict";
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  function safeLog(...args){
+    try{ if(typeof console!=='undefined' && typeof console.log==='function') console.log(...args); }
+    catch(e){}
+  }
+
+  /* ============================
+     SUPABASE CLIENT — LIVE CONNECTION
+     ============================
+     Reads/writes now go straight to a `leaderboard_players` table
+     (columns: id uuid default gen_random_uuid(), player_id uuid/text,
+     zone text, username text, points int default 0, games_played int
+     default 0, wins int default 0, favorite_game_id text, updated_at
+     timestamptz default now()). A unique constraint on (player_id, zone)
+     is required so upsert() works correctly — see SQL below.
+     A Realtime subscription on this table re-fetches + re-renders
+     whenever any row changes, so other players' score updates appear
+     live without a page refresh.
+
+     Run this once in the Supabase SQL editor before using the page:
+
+       create table if not exists leaderboard_players (
+         id uuid primary key default gen_random_uuid(),
+         player_id uuid not null references auth.users(id),
+         zone text not null check (zone in ('study','fun')),
+         username text not null,
+         points int not null default 0,
+         games_played int not null default 0,
+         wins int not null default 0,
+         favorite_game_id text,
+         updated_at timestamptz not null default now(),
+         unique (player_id, zone)
+       );
+
+       alter table leaderboard_players enable row level security;
+
+       create policy "Leaderboard is publicly readable"
+         on leaderboard_players for select
+         using (true);
+
+       create policy "Users can upsert their own row"
+         on leaderboard_players for insert
+         with check (auth.uid() = player_id);
+
+       create policy "Users can update their own row"
+         on leaderboard_players for update
+         using (auth.uid() = player_id);
+
+       alter publication supabase_realtime add table leaderboard_players;
+  */
+  const SUPABASE_URL = 'https://tkdsvzumcribcmbsikwg.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRrZHN2enVtY3JpYmNtYnNpa3dnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk2Mjg0NzMsImV4cCI6MjA5NTIwNDQ3M30.aKE22gf_yU-ybrI-CI05MZamuBG1-PXQd8OnuAYjMQU';
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  /* ============================
+     USER ACCOUNT — REAL SUPABASE AUTH
+     ============================
+     Pulls the actual signed-in user from the same Supabase project that
+     already handles login. Username preference order: user_metadata.username
+     -> user_metadata.full_name -> email prefix -> fallback "Player".
+     If nobody is signed in, id stays null and score-writes are skipped
+     (a signed-out visitor can still VIEW the leaderboard, just can't be
+     recorded on it).
+  */
+  const UserAccount = {
+    _current: { id:null, username:'Guest' },
+    async init(){
+      try{
+        const { data:{ user }, error } = await supabase.auth.getUser();
+        if(error) safeLog('Supabase auth error', error);
+        if(user){
+          const meta = user.user_metadata || {};
+          this._current = {
+            id: user.id,
+            username: meta.username || meta.name || meta.full_name || ('Player' + user.id.slice(0,6))
+          };
+        }
+      }catch(e){ safeLog('Supabase auth exception', e); }
+      return this._current;
+    },
+    getCurrentUser(){ return this._current; }
+  };
+
+  /* ============================
+     TOURNAMENT SYSTEM — FUTURE COMPATIBILITY STUB
+     ============================
+     Once the Tournaments page's scoring system is connected here, each
+     tournament cycle completion should call TournamentSystemBridge.reportResult()
+     for every participant instead of (or in addition to) manual test calls,
+     keeping this leaderboard perpetually in sync with live tournaments.
+  */
+  const TournamentSystemBridge = {
+    reportResult(zone, playerId, username, pointsEarned, isWin, gameId){
+      return LeaderboardService.recordGameResult(zone, playerId, username, pointsEarned, isWin, gameId);
+    }
+  };
+
+  /* ============================
+     REWARD DISTRIBUTION — FUTURE COMPATIBILITY STUB
+     ============================
+     Once Supabase is connected, this should be a scheduled edge function
+     that reads the top N rows of each zone's leaderboard at cycle-end and
+     credits winners' wallets via a `reward_ledger` table.
+  */
+  const RewardDistribution = {
+    enabled:false,
+    distributeToTopPlayers(zone, count){
+      const top = LeaderboardService.getLeaderboard(zone).slice(0, count || 3);
+      safeLog('Reward distribution not active yet — would distribute rewards to', top.map(p=>p.username));
+      return top;
+    }
+  };
+
+  const ZONES = ['study','fun'];
+
+  /* ============================
+     GAME CATALOG — JSON structure defining which games belong to each
+     zone. Study Zone points and Fun Zone points are kept fully separate;
+     a player's tournament results in either zone's games all roll up into
+     that SAME zone's points pool only (see recordGameResult below), which
+     is what keeps the two leaderboards independent while still letting one
+     user appear on both.
+  */
+  const GAME_CATALOG = {
+    study: [
+      { id:'current-affairs', name:'Current Affairs Champion', icon:'📰' },
+      { id:'science-warrior', name:'Science Warrior',           icon:'⚗️' },
+      { id:'geochamp',        name:'GeoChamp',                  icon:'🌍' },
+      { id:'mind-matrix',     name:'Mind Matrix',                icon:'🧩' },
+      { id:'mathrush',        name:'MathRush',                   icon:'🔢' },
+      { id:'wordrush',        name:'WordRush',                   icon:'🔤' },
+      { id:'socho-zara',      name:'Socho Zara',                 icon:'🧠' }
+    ],
+    fun: [
+      { id:'snake-rush',      name:'Snake Rush',        icon:'🐍' },
+      { id:'ludo-legends',    name:'Ludo Legends',      icon:'🎲' },
+      { id:'uno',             name:'UNO',                icon:'🌈' },
+      { id:'rummy-royale',    name:'Rummy Royale',      icon:'🃏' },
+      { id:'puzzle-master',   name:'Puzzle Master',     icon:'🧩' },
+      { id:'royal-checkmate', name:'Royal Checkmate',   icon:'♟️' }
+    ]
+  };
+
+  function getGameById(zone, id){
+    return GAME_CATALOG[zone].find(g => g.id === id) || GAME_CATALOG[zone][0];
+  }
+
+  /* ============================
+     LEADERBOARD ARCHITECTURE
+     ============================
+     Core design goal: tournament points from ANY game result — now or in
+     the future — flow through ONE public entry point:
+
+         LeaderboardService.recordGameResult(zone, playerId, username,
+                                              pointsEarned, isWin, gameId)
+
+     Any game listed in GAME_CATALOG (or added later) can call this —
+     directly if running on the same page, or indirectly via the
+     postMessage bridge below if the game runs in an iframe/new tab, or via
+     TournamentSystemBridge.reportResult() once the Tournaments page is wired
+     up. Study Zone and Fun Zone points are stored in fully separate objects
+     (state.study / state.fun) and ranked independently, but both are keyed
+     by the SAME playerId, so one user naturally appears on both
+     leaderboards with two independent point totals. Because rendering
+     always re-reads from this one service (and always re-derives ranks
+     fresh from points), adding new score sources later requires ZERO
+     changes to the page structure or render functions below — only a new
+     caller of recordGameResult().
+     localStorage is used now; load()/save() are the only two methods that
+     need to change to move this to Supabase (see stub above).
+  */
+  const LeaderboardService = {
+    TABLE: 'leaderboard_players',
+
+    // In-memory cache of the last fetch per zone, kept in sync via
+    // fetchZone() (initial load / refresh / realtime callback). Render
+    // functions read this synchronously through getLeaderboard().
+    _cache: { study:[], fun:[] },
+
+    /* Pulls the current real rows for a zone straight from Supabase and
+       refreshes the local cache. Call this on init, on manual refresh,
+       and whenever the realtime subscription fires. */
+    async fetchZone(zone){
+      const { data, error } = await supabase
+        .from(this.TABLE)
+        .select('*')
+        .eq('zone', zone);
+      if(error){ safeLog('Supabase fetch error', error); return this._cache[zone]; }
+      this._cache[zone] = data || [];
+      return this._cache[zone];
+    },
+
+    /* THE public entry point every game result should call. gameId should
+       be one of GAME_CATALOG[zone][*].id so the "Top Game" column and
+       future analytics stay accurate. Calls the SAME add_game_points RPC
+       every game file uses directly — a single atomic database operation,
+       so two results arriving close together (two tabs, a slow network)
+       can never clobber each other the way a manual read-then-write
+       could. No local-only state, so every real player who plays and
+       earns points shows up here immediately for everyone. */
+    async recordGameResult(zone, playerId, username, pointsEarned, isWin, gameId){
+      if(ZONES.indexOf(zone) === -1 || !playerId){
+        safeLog('recordGameResult: missing zone or signed-in playerId, skipped');
+        return null;
+      }
+      const { error } = await supabase.rpc('add_game_points', {
+        p_zone: zone,
+        p_username: username || 'Player',
+        p_points: pointsEarned,
+        p_game_id: gameId || null,
+        p_is_win: !!isWin
+      });
+      if(error){ safeLog('add_game_points RPC error', error); return null; }
+      await this.fetchZone(zone);
+      return true;
+    },
+
+    /* ---------- RANKING RULES ----------
+       - Sorted purely by Tournament Points, highest first (Rank #1 = most points).
+       - Wins act as a tie-break for DISPLAY ORDER only (who appears first
+         among equal-point players), never for the RANK NUMBER itself.
+       - Standard competition ("1224") ranking: players with identical
+         points share the identical rank number, and the next distinct
+         point total's rank accounts for how many players preceded it.
+       - Ranks are always recomputed fresh from current points, so any
+         point change automatically updates every rank on next render.
+       - Study Zone and Fun Zone are ranked completely independently
+         (separate cached arrays), satisfying "Rankings must be calculated
+         independently." */
+    getLeaderboard(zone){
+      const list = (this._cache[zone] || []).map(p=>({
+        id: p.player_id,
+        username: p.username,
+        avatar: '🧑',
+        points: p.points,
+        gamesPlayed: p.games_played,
+        wins: p.wins,
+        favoriteGameId: p.favorite_game_id,
+        tournamentPoints: p.tournament_points || 0,
+        gamePoints: p.points - (p.tournament_points || 0)
+      }));
+
+      list.sort((a,b)=> b.points - a.points || b.wins - a.wins);
+
+      let currentRank = 0;
+      let lastPoints = null;
+      list.forEach((p, i)=>{
+        if(lastPoints === null || p.points !== lastPoints){
+          currentRank = i + 1;
+          lastPoints = p.points;
+        }
+        p.rank = currentRank;
+      });
+
+      return list;
+    },
+
+    getPlayerEntry(zone, playerId){
+      return this.getLeaderboard(zone).find(p => p.id === playerId) || null;
+    },
+
+    /* Subscribes to live Postgres changes on leaderboard_players so every
+       visitor's leaderboard updates the instant any real player's row
+       changes — no polling, no page refresh needed. */
+    subscribeRealtime(onChange){
+      supabase
+        .channel('leaderboard_players_changes')
+        .on('postgres_changes', { event:'*', schema:'public', table:this.TABLE }, onChange)
+        .subscribe();
+    }
+  };
+
+  /* ============================
+     POSTMESSAGE BRIDGE — lets any game page (iframe, popup, or same-tab
+     redirect that posts back) report a result without this page changing.
+     Example call from a game:
+       window.opener.postMessage({
+         type:'gyaniq:gameResult', zone:'fun', gameId:'rummy-royale',
+         points:75, isWin:true
+       }, 'https://gyaniq.netlify.app');
+  */
+  window.addEventListener('message', async function(e){
+    const data = e && e.data;
+    if(!data || data.type !== 'gyaniq:gameResult') return;
+    const me = UserAccount.getCurrentUser();
+    if(!me.id){ safeLog('gyaniq:gameResult ignored — no signed-in user'); return; }
+    await LeaderboardService.recordGameResult(
+      data.zone, me.id, me.username,
+      Number(data.points) || 0, !!data.isWin, data.gameId
+    );
+    lastUpdated[data.zone] = Date.now();
+    renderZone(data.zone);
+  });
+
+  /* ---------- UI STATE (search / view mode / last-updated timestamps) ---------- */
+  const viewState = {
+    study: { view:'top10', search:'' },
+    fun:   { view:'top10', search:'' }
+  };
+  const lastUpdated = { study: Date.now(), fun: Date.now() };
+
+  /* ---------- RENDERING ---------- */
+  function rankBadge(rank){
+    if(rank===1) return '🥇';
+    if(rank===2) return '🥈';
+    if(rank===3) return '🥉';
+    return '#' + rank;
+  }
+  function rankClass(rank){
+    if(rank===1) return 'top1';
+    if(rank===2) return 'top2';
+    if(rank===3) return 'top3';
+    return '';
+  }
+  function rowTierClass(rank){
+    if(rank===1) return 'top1-row';
+    if(rank===2) return 'top2-row';
+    if(rank===3) return 'top3-row';
+    return '';
+  }
+
+  /* Current Position Badge — a quick-glance tier indicator per player,
+     always derived from their live rank so it updates automatically. */
+  function positionBadge(rank){
+    if(rank===1) return '<span class="pos-badge champion">🥇 Champion</span>';
+    if(rank===2) return '<span class="pos-badge runner-up">🥈 Runner-up</span>';
+    if(rank===3) return '<span class="pos-badge third">🥉 Third Place</span>';
+    if(rank<=10) return '<span class="pos-badge top10">🔥 Top 10</span>';
+    return '<span class="pos-badge contender">Contender</span>';
+  }
+
+  function formatRelativeTime(ts){
+    const diff = Math.floor((Date.now() - ts) / 1000);
+    if(diff < 5) return 'just now';
+    if(diff < 60) return diff + 's ago';
+    const m = Math.floor(diff / 60);
+    if(m < 60) return m + 'm ago';
+    const h = Math.floor(m / 60);
+    return h + 'h ago';
+  }
+
+  function renderGameCatalog(zone){
+    const el = document.getElementById(zone + 'GameCatalog');
+    el.innerHTML = '';
+    GAME_CATALOG[zone].forEach(g=>{
+      const chip = document.createElement('span');
+      chip.className = 'game-chip';
+      chip.innerHTML = `<span class="gc-ico">${g.icon}</span>${g.name}`;
+      el.appendChild(chip);
+    });
+  }
+
+  function renderPodium(zone, list){
+    const el = document.getElementById(zone + 'Podium');
+    const top3 = list.slice(0,3);
+    el.innerHTML = '';
+    const tierLabels = ['Champion','Runner-up','Third Place'];
+    top3.forEach((p, i)=>{
+      const displayRank = i + 1; // podium slot position (1st/2nd/3rd card), independent of tied rank numbers
+      const card = document.createElement('div');
+      card.className = 'podium-card rank-' + displayRank;
+      card.innerHTML = `
+        <div class="podium-medal">${rankBadge(p.rank)}</div>
+        <div class="podium-avatar">${p.avatar || '🧑'}</div>
+        <div class="podium-name">${p.username}</div>
+        <div class="podium-points">${p.points}</div>
+        <div class="podium-points-lbl">Tournament Points</div>
+        <span class="podium-tier-tag">${tierLabels[i]}</span>
+      `;
+      el.appendChild(card);
+    });
+    // fill placeholders if fewer than 3 players exist yet
+    while(el.children.length < 3){
+      const displayRank = el.children.length + 1;
+      const card = document.createElement('div');
+      card.className = 'podium-card rank-' + displayRank;
+      card.innerHTML = `
+        <div class="podium-medal">${rankBadge(displayRank)}</div>
+        <div class="podium-avatar">❔</div>
+        <div class="podium-name">—</div>
+        <div class="podium-points">0</div>
+        <div class="podium-points-lbl">Tournament Points</div>
+        <span class="podium-tier-tag">${tierLabels[displayRank-1]}</span>
+      `;
+      el.appendChild(card);
+    }
+  }
+
+  /* Applies Search Player and Top 10 / View All to the full ranked list.
+     When a search query is active, it always shows ALL matches (ignoring
+     the Top 10 / View All toggle) so a lower-ranked player can still be found. */
+  function getDisplayList(zone, fullList){
+    const state = viewState[zone];
+    const q = (state.search || '').trim().toLowerCase();
+    if(q){
+      return fullList.filter(p => p.username.toLowerCase().includes(q));
+    }
+    return state.view === 'top10' ? fullList.slice(0, 10) : fullList;
+  }
+
+  function renderTable(zone, fullList){
+    const me = UserAccount.getCurrentUser();
+    const bodyEl = document.getElementById(zone + 'LbBody');
+    bodyEl.innerHTML = '';
+
+    const displayList = getDisplayList(zone, fullList);
+
+    if(displayList.length === 0){
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td colspan="7" class="lb-no-results">No players found matching your search.</td>`;
+      bodyEl.appendChild(tr);
+      return;
+    }
+
+    displayList.forEach((p, idx)=>{
+      const tr = document.createElement('tr');
+      const tierRowCls = rowTierClass(p.rank);
+      const isYou = p.id === me.id;
+      tr.className = [tierRowCls, isYou ? 'you-row' : ''].filter(Boolean).join(' ');
+      if(isYou) tr.id = zone + '-you-row';
+      tr.style.animationDelay = (idx * 0.03) + 's';
+      tr.innerHTML = `
+        <td class="lb-rank ${rankClass(p.rank)}">${rankBadge(p.rank)}</td>
+        <td>
+          <span class="lb-player">
+            <span class="lb-player-avatar">${p.avatar || '🧑'}</span>
+            ${p.username}${isYou ? '<span class="you-tag">You</span>' : ''}
+          </span>
+        </td>
+        <td class="lb-points">${p.tournamentPoints}</td>
+        <td class="lb-points">${p.gamePoints}</td>
+        <td>${p.gamesPlayed}</td>
+        <td>${p.wins}</td>
+        <td>${positionBadge(p.rank)}</td>
+      `;
+      bodyEl.appendChild(tr);
+    });
+  }
+
+  function renderPlayerCard(zone, list){
+    const me = UserAccount.getCurrentUser();
+    const myEntry = list.find(p => p.id === me.id);
+
+    document.getElementById(zone+'PcAvatar').textContent = (myEntry && myEntry.avatar) || '🧑';
+    document.getElementById(zone+'PcUsername').textContent = me.username;
+    document.getElementById(zone+'PcRank').textContent = myEntry ? ('#' + myEntry.rank) : '—';
+    document.getElementById(zone+'PcPoints').textContent = myEntry ? myEntry.points : 0;
+    document.getElementById(zone+'PcGames').textContent = myEntry ? myEntry.gamesPlayed : 0;
+    document.getElementById(zone+'PcWins').textContent = myEntry ? myEntry.wins : 0;
+
+    const posRow = document.getElementById(zone+'YourPosRow');
+    const posText = document.getElementById(zone+'YourPosText');
+    if(myEntry && myEntry.rank > 10){
+      posRow.style.display = '';
+      posText.textContent = 'Your Position: #' + myEntry.rank + ' — ' + myEntry.points + ' pts';
+    } else {
+      posRow.style.display = 'none';
+    }
+  }
+
+  function renderChampion(zone, list){
+    const champEl = document.getElementById(zone + 'Champion');
+    const top = list[0];
+    champEl.textContent = top ? ('🏅 Leading: ' + top.username + ' — ' + top.points + ' pts') : 'No champion yet';
+  }
+
+  function renderLastUpdated(zone){
+    const el = document.getElementById(zone + 'LastUpdated');
+    if(el) el.querySelector('.lu-dot') && (el.innerHTML = `<span class="lu-dot"></span>Last updated: ${formatRelativeTime(lastUpdated[zone])}`);
+  }
+
+  function updateViewToggleUI(zone){
+    const top10Btn = document.getElementById(zone + 'ViewTop10Btn');
+    const allBtn = document.getElementById(zone + 'ViewAllBtn');
+    top10Btn.classList.toggle('active', viewState[zone].view === 'top10');
+    allBtn.classList.toggle('active', viewState[zone].view === 'all');
+  }
+
+  function renderZone(zone){
+    const fullList = LeaderboardService.getLeaderboard(zone);
+    renderGameCatalog(zone);
+    renderPodium(zone, fullList);
+    renderPlayerCard(zone, fullList);
+    renderTable(zone, fullList);
+    renderChampion(zone, fullList);
+    renderLastUpdated(zone);
+  }
+
+  function renderAllZones(){
+    ZONES.forEach(renderZone);
+  }
+
+  /* ---------- SEARCH PLAYER ---------- */
+  ZONES.forEach(zone=>{
+    const input = document.getElementById(zone + 'SearchInput');
+    input.addEventListener('input', ()=>{
+      viewState[zone].search = input.value;
+      renderZone(zone);
+    });
+  });
+
+  /* ---------- TOP 10 / VIEW ALL TOGGLE ---------- */
+  document.querySelectorAll('.lb-view-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const zone = btn.dataset.zone;
+      const view = btn.dataset.view;
+      viewState[zone].view = view;
+      updateViewToggleUI(zone);
+      renderZone(zone);
+    });
+  });
+
+  /* ---------- REFRESH LEADERBOARD BUTTON ---------- */
+  ZONES.forEach(zone=>{
+    const btn = document.getElementById(zone + 'RefreshBtn');
+    btn.addEventListener('click', async ()=>{
+      btn.classList.add('spinning');
+      btn.disabled = true;
+      await LeaderboardService.fetchZone(zone);
+      lastUpdated[zone] = Date.now();
+      renderZone(zone);
+      btn.classList.remove('spinning');
+      btn.disabled = false;
+    });
+  });
+
+  /* ---------- CURRENT USER HIGHLIGHT / JUMP TO ME ---------- */
+  ZONES.forEach(zone=>{
+    const btn = document.getElementById(zone + 'JumpBtn');
+    btn.addEventListener('click', ()=>{
+      const state = viewState[zone];
+      state.search = '';
+      document.getElementById(zone + 'SearchInput').value = '';
+      state.view = 'all';
+      updateViewToggleUI(zone);
+      renderZone(zone);
+      setTimeout(()=>{
+        const row = document.getElementById(zone + '-you-row');
+        if(row){
+          row.scrollIntoView({ behavior:'smooth', block:'center' });
+          row.classList.add('highlight-pulse');
+          setTimeout(()=> row.classList.remove('highlight-pulse'), 2900);
+        }
+      }, 60);
+    });
+  });
+
+  /* ---------- INIT ---------- */
+  async function initApp(){
+    await UserAccount.init();
+    await Promise.all(ZONES.map(z => LeaderboardService.fetchZone(z)));
+    renderAllZones();
+
+    // Live updates: whenever ANY real player's row changes in Supabase
+    // (theirs or someone else's), re-fetch that zone and re-render — no
+    // page refresh, no polling interval needed.
+    LeaderboardService.subscribeRealtime(async (payload)=>{
+      const zone = payload?.new?.zone || payload?.old?.zone;
+      const zonesToRefresh = zone ? [zone] : ZONES;
+      await Promise.all(zonesToRefresh.map(z => LeaderboardService.fetchZone(z)));
+      zonesToRefresh.forEach(z => { lastUpdated[z] = Date.now(); });
+      zonesToRefresh.forEach(renderZone);
+    });
+  }
+  initApp();
+
+  // Keep "Last updated: Xs ago" text ticking without re-rendering the
+  // whole table every second.
+  setInterval(()=>{
+    ZONES.forEach(renderLastUpdated);
+  }, 1000);
+
+  // Expose a small public API so other pages/games on the same origin can
+  // report results directly (same-tab integration) without this page's
+  // structure changing.
+  window.GyanIQLeaderboard = {
+    async recordResult(zone, pointsEarned, isWin, gameId){
+      const me = UserAccount.getCurrentUser();
+      if(!me.id){ safeLog('recordResult: no signed-in user, skipped'); return null; }
+      const result = await LeaderboardService.recordGameResult(zone, me.id, me.username, pointsEarned, isWin, gameId);
+      lastUpdated[zone] = Date.now();
+      renderZone(zone);
+      return result;
+    },
+    getGameCatalog(zone){
+      return GAME_CATALOG[zone] || [];
+    },
+    async refresh(zone){
+      await LeaderboardService.fetchZone(zone);
+      lastUpdated[zone] = Date.now();
+      renderZone(zone);
+    }
+  };
+
+})();
+</script>
+</body>
+</html>

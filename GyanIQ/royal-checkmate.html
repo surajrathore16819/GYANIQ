@@ -1,0 +1,1723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>Royal Checkmate | GyanIQ</title>
+<style>
+  :root{
+    --bg-0:#07070d;
+    --panel:#11131f;
+    --panel-2:#161a2b;
+    --border:#252a41;
+    --border-soft:#1d2036;
+    --text:#eef0fb;
+    --muted:#8a90b3;
+    --accent:#7c5cff;
+    --accent-2:#22d3c9;
+    --gold:#ffcf5c;
+    --danger:#ff5c7a;
+    --success:#3ee08a;
+    --light-sq:#e8e1d0;
+    --dark-sq:#2b2540;
+    --light-sq-hi:#f4e9b8;
+    --dark-sq-hi:#4a3f6e;
+    --radius:16px;
+    --glow-accent:0 0 24px rgba(124,92,255,.35);
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0;padding:0;
+    background:
+      radial-gradient(1200px 800px at 15% -10%, rgba(124,92,255,.18), transparent 60%),
+      radial-gradient(1000px 700px at 110% 10%, rgba(34,211,201,.14), transparent 55%),
+      radial-gradient(900px 600px at 50% 120%, rgba(255,159,77,.06), transparent 60%),
+      var(--bg-0);
+    color:var(--text);
+    font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    min-height:100vh;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .app{
+    max-width:1220px;
+    margin:0 auto;
+    padding:18px 16px 40px;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+    animation:fadeInApp .5s ease;
+  }
+  @keyframes fadeInApp{
+    from{opacity:0; transform:translateY(6px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+
+  /* HEADER */
+  header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:14px 18px;
+    background:linear-gradient(135deg, rgba(124,92,255,.16), rgba(34,211,201,.09));
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    backdrop-filter:blur(8px);
+    box-shadow:0 8px 30px rgba(0,0,0,.3);
+  }
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand .logo{
+    width:38px;height:38px;border-radius:10px;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:18px;color:#0a0a12;
+    box-shadow:0 4px 18px rgba(124,92,255,.45);
+    flex-shrink:0;
+  }
+  .brand .titles{display:flex;flex-direction:column;line-height:1.15;}
+  .brand .titles .name{
+    font-size:19px;font-weight:800;letter-spacing:.3px;
+    background:linear-gradient(90deg,#fff,#c9c6ff);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .brand .titles .tag{font-size:11px;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;}
+  .gyaniq-badge{
+    font-size:12px;color:var(--muted);
+    padding:6px 12px;border:1px solid var(--border);border-radius:999px;
+    background:rgba(255,255,255,.02);
+    text-decoration:none;
+    display:flex;align-items:center;gap:6px;
+    transition:.2s;
+  }
+  .gyaniq-badge:hover{border-color:var(--accent);color:var(--text);box-shadow:var(--glow-accent);}
+  .gyaniq-badge b{color:var(--accent-2);}
+  .mode-pill{
+    font-size:12px;color:var(--text);
+    padding:6px 12px;border:1px solid var(--border);border-radius:999px;
+    background:rgba(124,92,255,.12);
+    display:flex;align-items:center;gap:6px;
+    cursor:pointer;
+    transition:.2s;
+  }
+  .mode-pill:hover{border-color:var(--accent);box-shadow:var(--glow-accent);}
+
+  /* LAYOUT */
+  .layout{
+    display:flex;
+    gap:18px;
+    align-items:flex-start;
+  }
+  .board-wrap{
+    flex:1 1 620px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+    position:relative;
+  }
+  .board-outer{
+    position:relative;
+    width:min(92vw, 600px);
+    padding:26px;
+    background:linear-gradient(160deg, var(--panel), var(--panel-2));
+    border:1px solid var(--border);
+    border-radius:20px;
+    box-shadow:0 20px 60px rgba(0,0,0,.5), inset 0 0 0 1px rgba(255,255,255,.02);
+    transition:filter .2s;
+  }
+  .board-outer.thinking{filter:saturate(.85);}
+  .board-inner{
+    position:relative;
+    width:100%;
+    aspect-ratio:1/1;
+    border-radius:8px;
+    overflow:hidden;
+    box-shadow:0 0 0 3px var(--border-soft), 0 14px 40px rgba(0,0,0,.5);
+  }
+  #board{
+    position:relative;
+    width:100%;
+    height:100%;
+    display:grid;
+    grid-template-columns:repeat(8,1fr);
+    grid-template-rows:repeat(8,1fr);
+  }
+  .sq{
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    user-select:none;
+    font-size:clamp(22px,5.6vw,44px);
+    line-height:1;
+    transition:filter .15s;
+  }
+  .sq.light{background:var(--light-sq);}
+  .sq.dark{background:var(--dark-sq);}
+  .sq .piece{
+    pointer-events:none;
+    filter:drop-shadow(0 2px 3px rgba(0,0,0,.45));
+    transition:transform .15s cubic-bezier(.34,1.2,.64,1);
+    animation:pieceLand .18s ease;
+  }
+  .piece.piece-w{
+    color:#fbf6e8;
+    -webkit-text-stroke:1.4px #b9862f;
+    text-shadow:0 0 10px rgba(255,207,92,.35), 0 2px 2px rgba(0,0,0,.5);
+  }
+  .piece.piece-b{
+    color:#1b1730;
+    -webkit-text-stroke:1.4px #a48cff;
+    text-shadow:0 0 10px rgba(124,92,255,.45), 0 2px 2px rgba(0,0,0,.6);
+  }
+  @keyframes pieceLand{
+    from{transform:scale(.7);}
+    to{transform:scale(1);}
+  }
+  .sq.selected{box-shadow:inset 0 0 0 3px var(--accent-2);}
+  .sq.selected.light{background:var(--light-sq-hi);}
+  .sq.selected.dark{background:var(--dark-sq-hi);}
+  .sq.last-from, .sq.last-to{box-shadow:inset 0 0 0 3px rgba(255,207,92,.55);}
+  .sq.check-king{box-shadow:inset 0 0 0 3px var(--danger); animation:kingPulse 1s infinite;}
+  @keyframes kingPulse{
+    0%,100%{box-shadow:inset 0 0 0 3px rgba(255,92,122,.9);}
+    50%{box-shadow:inset 0 0 0 3px rgba(255,92,122,.35);}
+  }
+  .sq .dot{
+    position:absolute;
+    width:26%;height:26%;
+    border-radius:50%;
+    background:rgba(62,224,138,.65);
+    pointer-events:none;
+    animation:dotPop .15s ease;
+  }
+  .sq .ring{
+    position:absolute;
+    inset:8%;
+    border-radius:50%;
+    border:4px solid rgba(255,92,122,.7);
+    pointer-events:none;
+    animation:dotPop .15s ease;
+  }
+  @keyframes dotPop{
+    from{transform:scale(.4); opacity:0;}
+    to{transform:scale(1); opacity:1;}
+  }
+  .files-row{
+    display:flex;
+    justify-content:space-around;
+    width:100%;
+    margin-top:4px;
+    padding:0 4px;
+    font-size:11px;
+    color:var(--muted);
+    font-weight:700;
+    letter-spacing:1px;
+  }
+
+  /* SIDE PANEL */
+  .panel{
+    flex:0 0 320px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .card{
+    background:linear-gradient(160deg, var(--panel), var(--panel-2));
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:16px;
+    box-shadow:0 12px 36px rgba(0,0,0,.35);
+    transition:box-shadow .2s ease;
+  }
+  .card:hover{box-shadow:0 14px 40px rgba(0,0,0,.45);}
+  .card h3{
+    margin:0 0 12px;
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:.8px;
+    color:var(--muted);
+  }
+
+  .turn-indicator{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:12px 14px;
+    border-radius:14px;
+    border:1px solid var(--border);
+    background:rgba(255,255,255,.02);
+    transition:border-color .25s, background .25s, box-shadow .25s;
+  }
+  .turn-indicator.white-turn{border-color:rgba(232,225,208,.5); background:rgba(232,225,208,.08); box-shadow:0 0 24px rgba(232,225,208,.15);}
+  .turn-indicator.black-turn{border-color:rgba(124,92,255,.5); background:rgba(124,92,255,.08); box-shadow:0 0 24px rgba(124,92,255,.25);}
+  .turn-avatar{
+    width:40px;height:40px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:22px;
+    flex-shrink:0;
+    box-shadow:0 4px 12px rgba(0,0,0,.35);
+  }
+  .turn-indicator.white-turn .turn-avatar{background:radial-gradient(circle at 30% 30%, #fff, var(--light-sq) 60%, #b5ac93 100%); color:#222;}
+  .turn-indicator.black-turn .turn-avatar{background:radial-gradient(circle at 30% 30%, #6d5fd6, var(--dark-sq) 60%, #0f0d1c 100%); color:#fff;}
+  .turn-text{display:flex;flex-direction:column;line-height:1.2;}
+  .turn-text .who{font-size:15px;font-weight:800;}
+  .turn-text .sub{font-size:11.5px;color:var(--muted);}
+  .think-dot{
+    width:8px;height:8px;border-radius:50%;
+    background:var(--gold);
+    margin-left:auto;
+    box-shadow:0 0 0 0 rgba(255,207,92,.6);
+    animation:pulseDot 1.1s infinite;
+    flex-shrink:0;
+    display:none;
+  }
+  .turn-indicator.cpu-thinking .think-dot{display:block;}
+  @keyframes pulseDot{
+    0%{box-shadow:0 0 0 0 rgba(255,207,92,.55);}
+    70%{box-shadow:0 0 0 8px rgba(255,207,92,0);}
+    100%{box-shadow:0 0 0 0 rgba(255,207,92,0);}
+  }
+
+  .status-line{
+    font-size:14px;
+    font-weight:600;
+    min-height:22px;
+    color:var(--text);
+    margin-top:10px;
+  }
+  .status-line.check{color:var(--danger);}
+  .status-line.mate{color:var(--gold);}
+
+  .captured-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:4px;
+    min-height:30px;
+    font-size:20px;
+  }
+  .captured-row span{
+    animation:dotPop .2s ease;
+  }
+  .captured-label{font-size:11px;color:var(--muted); margin-bottom:4px; display:flex; align-items:center; justify-content:space-between;}
+  .captured-value{font-size:11px;color:var(--accent-2);font-weight:700;}
+
+  .btn{
+    border:none;
+    cursor:pointer;
+    font-weight:700;
+    font-size:14px;
+    padding:13px 22px;
+    border-radius:12px;
+    color:#0a0a12;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    box-shadow:0 10px 24px rgba(124,92,255,.4);
+    transition:transform .15s, box-shadow .15s, opacity .2s;
+    width:100%;
+  }
+  .btn:active{transform:scale(.97);}
+  .btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
+  .btn.secondary{
+    background:transparent;
+    color:var(--text);
+    border:1px solid var(--border);
+    box-shadow:none;
+  }
+  .btn.secondary:hover{border-color:var(--accent);box-shadow:var(--glow-accent);}
+  .btn-row{display:flex;gap:10px;}
+  .btn-row .btn{flex:1;}
+
+  .mode-info{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:10px 12px;
+    border-radius:12px;
+    background:rgba(255,255,255,.03);
+    border:1px solid var(--border);
+    font-size:13px;
+    margin-bottom:10px;
+  }
+  .mode-info .badge{
+    font-size:11px;
+    font-weight:800;
+    padding:4px 10px;
+    border-radius:999px;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+  }
+  .badge.human{background:rgba(34,211,201,.18); color:var(--accent-2);}
+  .badge.easy{background:rgba(62,224,138,.18); color:var(--success);}
+  .badge.medium{background:rgba(255,207,92,.18); color:var(--gold);}
+
+  /* MOVE HISTORY TABLE */
+  .history-wrap{
+    max-height:190px;
+    overflow-y:auto;
+    padding-right:4px;
+  }
+  .history-table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:12.5px;
+  }
+  .history-table th{
+    text-align:left;
+    color:var(--muted);
+    font-weight:600;
+    font-size:10.5px;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+    padding:4px 6px;
+    border-bottom:1px solid var(--border-soft);
+    position:sticky;
+    top:0;
+    background:var(--panel);
+  }
+  .history-table td{
+    padding:5px 6px;
+    color:var(--text);
+    border-bottom:1px solid rgba(255,255,255,.02);
+  }
+  .history-table td.moveno{color:var(--muted); width:28px;}
+  .history-table tr.current-row{background:rgba(124,92,255,.08);}
+  .history-wrap::-webkit-scrollbar{width:5px;}
+  .history-wrap::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+
+  /* STATISTICS CARD */
+  .stats-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+  .stat-box{
+    background:linear-gradient(150deg, rgba(255,255,255,.035), rgba(255,255,255,.01));
+    border:1px solid var(--border-soft);
+    border-radius:14px;
+    padding:14px 10px;
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:4px;
+    transition:transform .18s ease, border-color .18s ease;
+  }
+  .stat-box:hover{transform:translateY(-3px); border-color:var(--accent);}
+  .stat-box .icon{font-size:16px;margin-bottom:2px;}
+  .stat-box .val{
+    font-size:22px;
+    font-weight:800;
+    background:linear-gradient(90deg,#fff,#c9c6ff);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .stat-box.won .val{background:linear-gradient(90deg,var(--success),#c9ffe4);-webkit-background-clip:text;background-clip:text;}
+  .stat-box.lost .val{background:linear-gradient(90deg,var(--danger),#ffd6de);-webkit-background-clip:text;background-clip:text;}
+  .stat-box.draw .val{background:linear-gradient(90deg,var(--gold),#fff3d1);-webkit-background-clip:text;background-clip:text;}
+  .stat-box .lbl{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;}
+  .stat-reset{
+    margin-top:10px;
+    text-align:center;
+    font-size:11px;
+    color:var(--muted);
+    cursor:pointer;
+    text-decoration:underline;
+    opacity:.7;
+    transition:opacity .2s;
+  }
+  .stat-reset:hover{opacity:1;color:var(--danger);}
+
+  .log{
+    max-height:170px;
+    overflow-y:auto;
+    display:flex;
+    flex-direction:column-reverse;
+    gap:6px;
+    font-size:12.5px;
+    color:var(--muted);
+    padding-right:4px;
+  }
+  .log div{
+    padding:6px 8px;
+    border-radius:8px;
+    background:rgba(255,255,255,.02);
+    border-left:2px solid var(--accent);
+    animation:logIn .2s ease;
+  }
+  @keyframes logIn{
+    from{opacity:0; transform:translateX(-6px);}
+    to{opacity:1; transform:translateX(0);}
+  }
+  .log div.capture{border-left-color:var(--danger);}
+  .log div.check{border-left-color:var(--gold); color:var(--gold); font-weight:700;}
+  .log div.cpu{border-left-color:#ff9f4d;}
+  .log::-webkit-scrollbar{width:5px;}
+  .log::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+
+  footer{
+    text-align:center;
+    color:var(--muted);
+    font-size:12px;
+    padding-top:6px;
+  }
+  footer a{color:var(--accent-2);text-decoration:none;font-weight:600;}
+
+  /* PROMOTION MODAL */
+  .promo-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(4,4,10,.72);
+    backdrop-filter:blur(6px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:100;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .25s ease;
+    padding:20px;
+  }
+  .promo-overlay.show{opacity:1; pointer-events:auto;}
+  .promo-card{
+    background:linear-gradient(160deg, var(--panel), var(--panel-2));
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:24px;
+    text-align:center;
+    box-shadow:0 30px 80px rgba(0,0,0,.6);
+    transform:scale(.9);
+    transition:transform .3s cubic-bezier(.34,1.56,.64,1);
+  }
+  .promo-overlay.show .promo-card{transform:scale(1);}
+  .promo-card h3{margin:0 0 14px;font-size:14px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;}
+  .promo-choices{display:flex;gap:10px;}
+  .promo-choice{
+    width:64px;height:64px;
+    font-size:36px;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(255,255,255,.04);
+    border:1px solid var(--border);
+    border-radius:14px;
+    cursor:pointer;
+    transition:transform .15s, border-color .15s;
+  }
+  .promo-choice:hover{transform:translateY(-3px); border-color:var(--accent);}
+
+  /* END GAME OVERLAY */
+  .end-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(4,4,10,.75);
+    backdrop-filter:blur(6px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:100;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .35s ease;
+    padding:20px;
+  }
+  .end-overlay.show{opacity:1;pointer-events:auto;}
+  .end-card{
+    width:min(92vw,380px);
+    background:linear-gradient(160deg, var(--panel), var(--panel-2));
+    border:1px solid var(--border);
+    border-radius:22px;
+    padding:32px 26px 28px;
+    text-align:center;
+    box-shadow:0 30px 80px rgba(0,0,0,.6), 0 0 0 1px rgba(255,207,92,.15);
+    transform:scale(.85) translateY(10px);
+    transition:transform .4s cubic-bezier(.34,1.56,.64,1);
+  }
+  .end-overlay.show .end-card{transform:scale(1) translateY(0);}
+  .end-card .crown{font-size:52px;margin-bottom:6px;filter:drop-shadow(0 6px 14px rgba(255,207,92,.5));}
+  .end-card h2{
+    margin:6px 0 6px;font-size:23px;font-weight:800;
+    background:linear-gradient(90deg,var(--gold),#fff8dd,var(--gold));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .end-card p{margin:0 0 22px;font-size:13.5px;color:var(--muted);}
+
+  /* DIFFICULTY SELECTION SCREEN */
+  .setup-overlay{
+    position:fixed;
+    inset:0;
+    background:
+      radial-gradient(1200px 800px at 15% -10%, rgba(124,92,255,.22), transparent 60%),
+      radial-gradient(1000px 700px at 110% 10%, rgba(34,211,201,.16), transparent 55%),
+      rgba(4,4,10,.92);
+    backdrop-filter:blur(10px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:200;
+    padding:20px;
+    opacity:1;
+    transition:opacity .35s ease;
+  }
+  .setup-overlay.hide{opacity:0; pointer-events:none;}
+  .setup-card{
+    width:min(94vw,460px);
+    background:linear-gradient(160deg, var(--panel), var(--panel-2));
+    border:1px solid var(--border);
+    border-radius:22px;
+    padding:30px 26px 28px;
+    text-align:center;
+    box-shadow:0 30px 90px rgba(0,0,0,.6);
+  }
+  .setup-card .crown-top{font-size:44px;margin-bottom:8px;filter:drop-shadow(0 6px 14px rgba(124,92,255,.5));}
+  .setup-card h2{
+    margin:0 0 6px;font-size:22px;font-weight:800;
+    background:linear-gradient(90deg,#fff,#c9c6ff);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .setup-card p{margin:0 0 22px;font-size:13px;color:var(--muted);}
+  .setup-section{margin-bottom:20px;text-align:left;}
+  .setup-section .label{font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:10px;display:block;}
+  .opt-row{display:flex;gap:10px;flex-wrap:wrap;}
+  .opt-btn{
+    flex:1;
+    min-width:120px;
+    padding:14px 10px;
+    border-radius:14px;
+    border:1px solid var(--border);
+    background:rgba(255,255,255,.03);
+    color:var(--text);
+    font-weight:700;
+    font-size:13px;
+    cursor:pointer;
+    transition:transform .15s, border-color .15s, background .15s;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:4px;
+  }
+  .opt-btn .opt-icon{font-size:22px;}
+  .opt-btn .opt-sub{font-size:10.5px;color:var(--muted);font-weight:500;}
+  .opt-btn:hover{transform:translateY(-3px);border-color:var(--accent);}
+  .opt-btn.active{
+    border-color:var(--accent-2);
+    background:rgba(34,211,201,.12);
+    box-shadow:0 0 0 1px rgba(34,211,201,.4);
+  }
+  .setup-start-btn{margin-top:6px;}
+
+  /* RESPONSIVE */
+  @media (max-width:860px){
+    .layout{flex-direction:column;align-items:center;}
+    .panel{flex:1 1 auto;width:100%;max-width:600px;}
+    .board-wrap{width:100%;}
+  }
+  @media (max-width:599px){
+    .board-outer{padding:14px;}
+    .brand .titles .name{font-size:16px;}
+    header{padding:12px 14px;flex-wrap:wrap;}
+    .opt-row{flex-direction:column;}
+    .btn-row{flex-direction:column;}
+  }
+  @media (min-width:600px) and (max-width:1024px){
+    .board-outer{width:min(80vw,520px);}
+  }
+  @media (min-width:1441px){
+    .app{max-width:1360px;}
+    .layout{gap:26px;}
+    .panel{flex:0 0 340px;}
+    .board-outer{width:min(50vw,660px);}
+  }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+<div class="app">
+
+  <header>
+    <div class="brand">
+      <div class="logo">GQ</div>
+      <div class="titles">
+        <span class="name">Royal Checkmate</span>
+        <span class="tag">Classic Chess</span>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <div class="mode-pill" id="changeModeBtn">⚙️ <span id="modeLabel">Change Mode</span></div>
+      <a class="gyaniq-badge" href="https://gyaniq.netlify.app" target="_blank" rel="noopener">
+        Built for <b>GyanIQ</b>
+      </a>
+    </div>
+  </header>
+
+  <div class="layout">
+
+    <div class="board-wrap">
+      <div class="board-outer" id="boardOuter">
+        <div class="board-inner">
+          <div id="board"></div>
+        </div>
+        <div class="files-row" id="filesRow"></div>
+      </div>
+    </div>
+
+    <div class="panel">
+
+      <div class="card">
+        <div class="mode-info" id="modeInfo">
+          <span>Opponent</span>
+          <span class="badge human" id="opponentBadge">Human</span>
+        </div>
+        <h3>Turn</h3>
+        <div class="turn-indicator white-turn" id="turnIndicator">
+          <div class="turn-avatar" id="turnAvatar">♔</div>
+          <div class="turn-text">
+            <span class="who" id="turnWho">White to Move</span>
+            <span class="sub" id="turnSub">Select a piece to begin</span>
+          </div>
+          <div class="think-dot"></div>
+        </div>
+        <div class="status-line" id="statusLine">Good luck — White moves first.</div>
+      </div>
+
+      <div class="card">
+        <h3>Captured Pieces</h3>
+        <div class="captured-label"><span>Captured by White</span><span class="captured-value" id="whiteCapVal">0 pts</span></div>
+        <div class="captured-row" id="capturedByWhite"></div>
+        <div class="captured-label" style="margin-top:10px;"><span>Captured by Black</span><span class="captured-value" id="blackCapVal">0 pts</span></div>
+        <div class="captured-row" id="capturedByBlack"></div>
+      </div>
+
+      <div class="card">
+        <h3>Move History</h3>
+        <div class="history-wrap">
+          <table class="history-table">
+            <thead>
+              <tr><th>#</th><th>White</th><th>Black</th></tr>
+            </thead>
+            <tbody id="historyBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- STATISTICS CARD -->
+      <div class="card">
+        <h3>Statistics</h3>
+        <div class="stats-grid">
+          <div class="stat-box played">
+            <span class="icon">🎮</span>
+            <span class="val" id="statPlayed">0</span>
+            <span class="lbl">Games Played</span>
+          </div>
+          <div class="stat-box won">
+            <span class="icon">🏆</span>
+            <span class="val" id="statWon">0</span>
+            <span class="lbl">Games Won</span>
+          </div>
+          <div class="stat-box lost">
+            <span class="icon">💀</span>
+            <span class="val" id="statLost">0</span>
+            <span class="lbl">Games Lost</span>
+          </div>
+          <div class="stat-box draw">
+            <span class="icon">🤝</span>
+            <span class="val" id="statDraw">0</span>
+            <span class="lbl">Draws</span>
+          </div>
+        </div>
+        <div class="stat-reset" id="statResetLink">Reset statistics</div>
+      </div>
+
+      <div class="card">
+        <h3>Move Log</h3>
+        <div class="log" id="log"></div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn" id="newGameBtn">✨ New Game</button>
+        <button class="btn secondary" id="resetBtn">↺ Restart Game</button>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    Royal Checkmate &copy; <span id="year"></span> — Crafted for <a href="https://gyaniq.netlify.app" target="_blank" rel="noopener">GyanIQ</a>
+  </footer>
+
+</div>
+
+<!-- PROMOTION MODAL -->
+<div class="promo-overlay" id="promoOverlay">
+  <div class="promo-card">
+    <h3>Promote Pawn To</h3>
+    <div class="promo-choices" id="promoChoices"></div>
+  </div>
+</div>
+
+<!-- END GAME OVERLAY -->
+<div class="end-overlay" id="endOverlay">
+  <div class="end-card">
+    <div class="crown" id="endCrown">♚</div>
+    <h2 id="endTitle">Checkmate!</h2>
+    <p id="endSub">White wins the game.</p>
+    <button class="btn" id="playAgainBtn">🔄 Play Again</button>
+  </div>
+</div>
+
+<!-- DIFFICULTY / MODE SELECTION SCREEN -->
+<div class="setup-overlay" id="setupOverlay">
+  <div class="setup-card">
+    <div class="crown-top">♔</div>
+    <h2>Royal Checkmate</h2>
+    <p>Choose how you want to play before the game begins.</p>
+
+    <div class="setup-section">
+      <span class="label">Opponent</span>
+      <div class="opt-row" id="opponentOptions">
+        <div class="opt-btn active" data-opponent="human">
+          <span class="opt-icon">🧑‍🤝‍🧑</span>
+          Human
+          <span class="opt-sub">Pass & play</span>
+        </div>
+        <div class="opt-btn" data-opponent="cpu">
+          <span class="opt-icon">🤖</span>
+          Computer
+          <span class="opt-sub">Play vs AI</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="setup-section" id="difficultySection" style="display:none;">
+      <span class="label">AI Difficulty</span>
+      <div class="opt-row" id="difficultyOptions">
+        <div class="opt-btn active" data-difficulty="easy">
+          <span class="opt-icon">🙂</span>
+          Easy
+          <span class="opt-sub">Random legal moves</span>
+        </div>
+        <div class="opt-btn" data-difficulty="medium">
+          <span class="opt-icon">🧠</span>
+          Medium
+          <span class="opt-sub">Captures & checks</span>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn setup-start-btn" id="startGameBtn">▶ Start Game</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const MULTIPLAYER_CONFIG = {
+    enabled:false,
+    mode:'local',
+    roomId:null,
+    localColor:'w'
+  };
+
+  /* ══ SUPABASE — real backend, same table/RPC as GeoChamp/Quiz-Game/Mind-Matrix/Current-Affairs ══ */
+  const SUPA_URL = 'https://tkdsvzumcribcmbsikwg.supabase.co';
+  const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRrZHN2enVtY3JpYmNtYnNpa3dnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk2Mjg0NzMsImV4cCI6MjA5NTIwNDQ3M30.aKE22gf_yU-ybrI-CI05MZamuBG1-PXQd8OnuAYjMQU';
+  let supa = null;
+  try{
+    if(!window.supabase) throw new Error('Supabase SDK failed to load');
+    supa = window.supabase.createClient(SUPA_URL, SUPA_KEY);
+  }catch(err){ console.error('Supabase init failed', err); }
+
+  // Saves points via the add_game_points RPC — safely ADDS to the
+  // player's existing Fun-zone total (never overwrites it).
+  async function saveScoreToServer(score) {
+    if(!supa || score <= 0) return;
+    try{
+      const { data: { session } } = await supa.auth.getSession();
+      if(!session){ console.warn('Not logged in — score not saved'); return; }
+      const username = session.user.user_metadata?.username || session.user.user_metadata?.name || ('Player' + session.user.id.slice(0,6));
+      const { error } = await supa.rpc('add_game_points', {
+        p_zone: 'fun',
+        p_username: username,
+        p_points: score,
+        p_game_id: 'royal-checkmate'
+      });
+      if(error) console.error('score save failed', error);
+    }catch(err){ console.error('score save exception', err); }
+  }
+
+  const FILES = ['a','b','c','d','e','f','g','h'];
+  const UNICODE = {
+    wK:'♔', wQ:'♕', wR:'♖', wB:'♗', wN:'♘', wP:'♙',
+    bK:'♚', bQ:'♛', bR:'♜', bB:'♝', bN:'♞', bP:'♟'
+  };
+  const PIECE_VALUE = { P:1, N:3, B:3, R:5, Q:9, K:0 };
+
+  const boardEl = document.getElementById('board');
+  const boardOuter = document.getElementById('boardOuter');
+  const filesRowEl = document.getElementById('filesRow');
+  const turnIndicator = document.getElementById('turnIndicator');
+  const turnAvatar = document.getElementById('turnAvatar');
+  const turnWho = document.getElementById('turnWho');
+  const turnSub = document.getElementById('turnSub');
+  const statusLine = document.getElementById('statusLine');
+  const logEl = document.getElementById('log');
+  const capturedByWhiteEl = document.getElementById('capturedByWhite');
+  const capturedByBlackEl = document.getElementById('capturedByBlack');
+  const whiteCapVal = document.getElementById('whiteCapVal');
+  const blackCapVal = document.getElementById('blackCapVal');
+  const historyBody = document.getElementById('historyBody');
+  const newGameBtn = document.getElementById('newGameBtn');
+  const resetBtn = document.getElementById('resetBtn');
+  const changeModeBtn = document.getElementById('changeModeBtn');
+  const opponentBadge = document.getElementById('opponentBadge');
+
+  const promoOverlay = document.getElementById('promoOverlay');
+  const promoChoices = document.getElementById('promoChoices');
+  const endOverlay = document.getElementById('endOverlay');
+  const endCrown = document.getElementById('endCrown');
+  const endTitle = document.getElementById('endTitle');
+  const endSub = document.getElementById('endSub');
+  const playAgainBtn = document.getElementById('playAgainBtn');
+
+  const setupOverlay = document.getElementById('setupOverlay');
+  const opponentOptions = document.getElementById('opponentOptions');
+  const difficultySection = document.getElementById('difficultySection');
+  const difficultyOptions = document.getElementById('difficultyOptions');
+  const startGameBtn = document.getElementById('startGameBtn');
+
+  const statPlayed = document.getElementById('statPlayed');
+  const statWon = document.getElementById('statWon');
+  const statLost = document.getElementById('statLost');
+  const statDraw = document.getElementById('statDraw');
+  const statResetLink = document.getElementById('statResetLink');
+
+  FILES.forEach(f=>{
+    const span = document.createElement('span');
+    span.textContent = f;
+    filesRowEl.appendChild(span);
+  });
+
+  const STATS_KEY = 'royalCheckmateStats_gyaniq';
+
+  function loadStats(){
+    try{
+      const raw = localStorage.getItem(STATS_KEY);
+      if(raw) return JSON.parse(raw);
+    }catch(e){}
+    return { played:0, won:0, lost:0, draws:0 };
+  }
+
+  let stats = loadStats();
+
+  function saveStats(){
+    try{ localStorage.setItem(STATS_KEY, JSON.stringify(stats)); }
+    catch(e){}
+  }
+
+  function renderStats(){
+    statPlayed.textContent = stats.played;
+    statWon.textContent = stats.won;
+    statLost.textContent = stats.lost;
+    statDraw.textContent = stats.draws;
+  }
+
+  function recordResult(result){
+    stats.played++;
+    if(result==='win') stats.won++;
+    else if(result==='loss') stats.lost++;
+    else stats.draws++;
+    saveStats();
+    renderStats();
+  }
+
+  function resetStats(){
+    stats = { played:0, won:0, lost:0, draws:0 };
+    saveStats();
+    renderStats();
+    addLog('Statistics have been reset.');
+  }
+
+  statResetLink.addEventListener('click', ()=>{
+    if(confirm('Reset all Royal Checkmate statistics? This cannot be undone.')){
+      resetStats();
+    }
+  });
+
+  renderStats();
+
+  let gameMode = { opponent:'human', difficulty:'easy', cpuColor:'b' };
+
+  opponentOptions.querySelectorAll('.opt-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      opponentOptions.querySelectorAll('.opt-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      const val = btn.dataset.opponent;
+      difficultySection.style.display = val==='cpu' ? 'block' : 'none';
+    });
+  });
+  difficultyOptions.querySelectorAll('.opt-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      difficultyOptions.querySelectorAll('.opt-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+
+  function readSetupSelection(){
+    const opponent = opponentOptions.querySelector('.opt-btn.active').dataset.opponent;
+    const difficulty = difficultyOptions.querySelector('.opt-btn.active').dataset.difficulty;
+    return { opponent, difficulty };
+  }
+
+  function applyModeBadge(){
+    if(gameMode.opponent==='human'){
+      opponentBadge.textContent = 'Human';
+      opponentBadge.className = 'badge human';
+    } else if(gameMode.difficulty==='easy'){
+      opponentBadge.textContent = 'CPU · Easy';
+      opponentBadge.className = 'badge easy';
+    } else {
+      opponentBadge.textContent = 'CPU · Medium';
+      opponentBadge.className = 'badge medium';
+    }
+  }
+
+  startGameBtn.addEventListener('click', ()=>{
+    const sel = readSetupSelection();
+    gameMode.opponent = sel.opponent;
+    gameMode.difficulty = sel.difficulty;
+    gameMode.cpuColor = 'b';
+    applyModeBadge();
+    setupOverlay.classList.add('hide');
+    newGame();
+  });
+
+  changeModeBtn.addEventListener('click', ()=>{
+    setupOverlay.classList.remove('hide');
+  });
+
+  let board, turn, selected, legalTargets, enPassant, castling, kingPos,
+      gameOver, pendingPromotion, lastMove, capturedByWhite, capturedByBlack, cpuBusy, moveHistory, fullMoveNo;
+
+  function initState(){
+    board = [
+      ['bR','bN','bB','bQ','bK','bB','bN','bR'],
+      ['bP','bP','bP','bP','bP','bP','bP','bP'],
+      [null,null,null,null,null,null,null,null],
+      [null,null,null,null,null,null,null,null],
+      [null,null,null,null,null,null,null,null],
+      [null,null,null,null,null,null,null,null],
+      ['wP','wP','wP','wP','wP','wP','wP','wP'],
+      ['wR','wN','wB','wQ','wK','wB','wN','wR']
+    ];
+    turn = 'w';
+    selected = null;
+    legalTargets = [];
+    enPassant = null;
+    castling = { wK:true, wQ:true, bK:true, bQ:true };
+    kingPos = { w:{r:7,c:4}, b:{r:0,c:4} };
+    gameOver = false;
+    pendingPromotion = null;
+    lastMove = null;
+    capturedByWhite = [];
+    capturedByBlack = [];
+    cpuBusy = false;
+    moveHistory = [];
+    fullMoveNo = 1;
+  }
+
+  const inb = (r,c)=> r>=0 && r<8 && c>=0 && c<8;
+
+  function isSquareAttacked(bd, attackerColor, r, c){
+    if(attackerColor==='w'){
+      if(inb(r+1,c-1) && bd[r+1][c-1]==='wP') return true;
+      if(inb(r+1,c+1) && bd[r+1][c+1]==='wP') return true;
+    } else {
+      if(inb(r-1,c-1) && bd[r-1][c-1]==='bP') return true;
+      if(inb(r-1,c+1) && bd[r-1][c+1]==='bP') return true;
+    }
+    const knOffs = [[1,2],[2,1],[-1,2],[-2,1],[1,-2],[2,-1],[-1,-2],[-2,-1]];
+    for(const [dr,dc] of knOffs){
+      const rr=r+dr, cc=c+dc;
+      if(inb(rr,cc) && bd[rr][cc]===attackerColor+'N') return true;
+    }
+    const kOffs = [[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]];
+    for(const [dr,dc] of kOffs){
+      const rr=r+dr, cc=c+dc;
+      if(inb(rr,cc) && bd[rr][cc]===attackerColor+'K') return true;
+    }
+    const rookDirs = [[1,0],[-1,0],[0,1],[0,-1]];
+    for(const [dr,dc] of rookDirs){
+      let rr=r+dr, cc=c+dc;
+      while(inb(rr,cc)){
+        const p = bd[rr][cc];
+        if(p){
+          if(p[0]===attackerColor && (p[1]==='R' || p[1]==='Q')) return true;
+          break;
+        }
+        rr+=dr; cc+=dc;
+      }
+    }
+    const bishopDirs = [[1,1],[1,-1],[-1,1],[-1,-1]];
+    for(const [dr,dc] of bishopDirs){
+      let rr=r+dr, cc=c+dc;
+      while(inb(rr,cc)){
+        const p = bd[rr][cc];
+        if(p){
+          if(p[0]===attackerColor && (p[1]==='B' || p[1]==='Q')) return true;
+          break;
+        }
+        rr+=dr; cc+=dc;
+      }
+    }
+    return false;
+  }
+
+  function pseudoMoves(bd, r, c){
+    const piece = bd[r][c];
+    if(!piece) return [];
+    const color = piece[0], type = piece[1];
+    const enemy = color==='w' ? 'b' : 'w';
+    const moves = [];
+    const add = (rr,cc,extra)=> moves.push(Object.assign({from:{r,c}, to:{r:rr,c:cc}}, extra||{}));
+
+    if(type==='P'){
+      const dir = color==='w' ? -1 : 1;
+      const startRow = color==='w' ? 6 : 1;
+      const promRow = color==='w' ? 0 : 7;
+      if(inb(r+dir,c) && !bd[r+dir][c]){
+        add(r+dir,c, r+dir===promRow ? {promotion:true} : null);
+        if(r===startRow && !bd[r+2*dir][c]){
+          add(r+2*dir,c,{doubleStep:true});
+        }
+      }
+      for(const dc of [-1,1]){
+        const rr=r+dir, cc=c+dc;
+        if(!inb(rr,cc)) continue;
+        if(bd[rr][cc] && bd[rr][cc][0]===enemy){
+          add(rr,cc, rr===promRow ? {promotion:true, capture:true} : {capture:true});
+        } else if(enPassant && enPassant.r===rr && enPassant.c===cc){
+          add(rr,cc,{enPassantCapture:{r, c:cc}, capture:true});
+        }
+      }
+    } else if(type==='N'){
+      const offs = [[1,2],[2,1],[-1,2],[-2,1],[1,-2],[2,-1],[-1,-2],[-2,-1]];
+      for(const [dr,dc] of offs){
+        const rr=r+dr, cc=c+dc;
+        if(inb(rr,cc) && (!bd[rr][cc] || bd[rr][cc][0]===enemy)) add(rr,cc, bd[rr][cc] ? {capture:true} : null);
+      }
+    } else if(type==='K'){
+      const offs = [[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]];
+      for(const [dr,dc] of offs){
+        const rr=r+dr, cc=c+dc;
+        if(inb(rr,cc) && (!bd[rr][cc] || bd[rr][cc][0]===enemy)) add(rr,cc, bd[rr][cc] ? {capture:true} : null);
+      }
+      const homeRow = color==='w' ? 7 : 0;
+      if(r===homeRow && c===4){
+        const rightsK = color==='w' ? castling.wK : castling.bK;
+        const rightsQ = color==='w' ? castling.wQ : castling.bQ;
+        if(rightsK && !bd[r][5] && !bd[r][6] && bd[r][7]===color+'R'){
+          if(!isSquareAttacked(bd,enemy,r,4) && !isSquareAttacked(bd,enemy,r,5) && !isSquareAttacked(bd,enemy,r,6)){
+            add(r,6,{castle:'K'});
+          }
+        }
+        if(rightsQ && !bd[r][3] && !bd[r][2] && !bd[r][1] && bd[r][0]===color+'R'){
+          if(!isSquareAttacked(bd,enemy,r,4) && !isSquareAttacked(bd,enemy,r,3) && !isSquareAttacked(bd,enemy,r,2)){
+            add(r,2,{castle:'Q'});
+          }
+        }
+      }
+    } else {
+      let dirs = [];
+      if(type==='R') dirs = [[1,0],[-1,0],[0,1],[0,-1]];
+      else if(type==='B') dirs = [[1,1],[1,-1],[-1,1],[-1,-1]];
+      else if(type==='Q') dirs = [[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]];
+      for(const [dr,dc] of dirs){
+        let rr=r+dr, cc=c+dc;
+        while(inb(rr,cc)){
+          if(!bd[rr][cc]){ add(rr,cc); }
+          else { if(bd[rr][cc][0]===enemy) add(rr,cc,{capture:true}); break; }
+          rr+=dr; cc+=dc;
+        }
+      }
+    }
+    return moves;
+  }
+
+  function simulateBoard(move, color, boardRef, kingPosRef){
+    const bd = boardRef.map(row=>row.slice());
+    const {from,to} = move;
+    const piece = bd[from.r][from.c];
+    bd[from.r][from.c] = null;
+    if(move.enPassantCapture){
+      bd[move.enPassantCapture.r][move.enPassantCapture.c] = null;
+    }
+    bd[to.r][to.c] = piece;
+    if(move.castle){
+      const homeRow = from.r;
+      if(move.castle==='K'){ bd[homeRow][5] = color+'R'; bd[homeRow][7] = null; }
+      else { bd[homeRow][3] = color+'R'; bd[homeRow][0] = null; }
+    }
+    let kr = kingPosRef[color].r, kc = kingPosRef[color].c;
+    if(piece[1]==='K'){ kr = to.r; kc = to.c; }
+    return {bd, kr, kc};
+  }
+
+  function computeLegalMovesFor(bd, kp, r, c){
+    const piece = bd[r][c];
+    if(!piece) return [];
+    const color = piece[0];
+    const pseudo = pseudoMoves(bd, r, c);
+    const legal = [];
+    for(const m of pseudo){
+      const {bd:bd2,kr,kc} = simulateBoard(m, color, bd, kp);
+      const enemy = color==='w' ? 'b' : 'w';
+      if(!isSquareAttacked(bd2, enemy, kr, kc)) legal.push(m);
+    }
+    return legal;
+  }
+
+  function computeLegalMoves(r,c){
+    return computeLegalMovesFor(board, kingPos, r, c);
+  }
+
+  function colorHasAnyLegalMoveFor(bd, kp, color){
+    for(let r=0;r<8;r++){
+      for(let c=0;c<8;c++){
+        const p = bd[r][c];
+        if(p && p[0]===color){
+          if(computeLegalMovesFor(bd, kp, r, c).length>0) return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  function colorHasAnyLegalMove(color){
+    return colorHasAnyLegalMoveFor(board, kingPos, color);
+  }
+
+  function allLegalMovesFor(color){
+    const all = [];
+    for(let r=0;r<8;r++){
+      for(let c=0;c<8;c++){
+        const p = board[r][c];
+        if(p && p[0]===color){
+          const moves = computeLegalMoves(r,c);
+          moves.forEach(m=> all.push(m));
+        }
+      }
+    }
+    return all;
+  }
+
+  function kingInCheck(color){
+    const enemy = color==='w' ? 'b' : 'w';
+    return isSquareAttacked(board, enemy, kingPos[color].r, kingPos[color].c);
+  }
+
+  /* ---------- INSUFFICIENT MATERIAL (auto-draw when checkmate is impossible) ---------- */
+  function isInsufficientMaterial(){
+    const pieces = [];
+    for(let r=0;r<8;r++){
+      for(let c=0;c<8;c++){
+        const p = board[r][c];
+        if(p && p[1]!=='K') pieces.push({p, r, c});
+      }
+    }
+    // Any pawn, rook, or queen on the board means mate is still possible.
+    if(pieces.some(x=> x.p[1]==='P' || x.p[1]==='R' || x.p[1]==='Q')) return false;
+
+    // King vs King
+    if(pieces.length===0) return true;
+
+    // King + single minor piece (bishop or knight) vs King
+    if(pieces.length===1 && (pieces[0].p[1]==='B' || pieces[0].p[1]==='N')) return true;
+
+    // King + Bishop vs King + Bishop, both bishops on same square color
+    if(pieces.length===2 && pieces[0].p[1]==='B' && pieces[1].p[1]==='B' && pieces[0].p[0]!==pieces[1].p[0]){
+      const colorOf = (r,c)=> (r+c)%2;
+      if(colorOf(pieces[0].r,pieces[0].c) === colorOf(pieces[1].r,pieces[1].c)) return true;
+    }
+
+    return false;
+  }
+
+  function addLog(text, cls){
+    const div = document.createElement('div');
+    if(cls) div.className = cls;
+    div.textContent = text;
+    logEl.appendChild(div);
+    logEl.scrollTop = logEl.scrollHeight;
+  }
+
+  function sqName(r,c){ return FILES[c] + (8-r); }
+
+  function buildNotation(move, color, piece, capturedPiece, finalPiece, checkAfter, mateAfter){
+    if(move.castle){
+      let note = move.castle==='K' ? 'O-O' : 'O-O-O';
+      if(mateAfter) note += '#'; else if(checkAfter) note += '+';
+      return note;
+    }
+    const type = piece[1];
+    let note = '';
+    if(type==='P'){
+      if(capturedPiece){
+        note = FILES[move.from.c] + 'x' + sqName(move.to.r, move.to.c);
+      } else {
+        note = sqName(move.to.r, move.to.c);
+      }
+      if(move.promotion) note += '=' + (finalPiece ? finalPiece[1] : 'Q');
+    } else {
+      note = type + (capturedPiece ? 'x' : '') + sqName(move.to.r, move.to.c);
+    }
+    if(mateAfter) note += '#'; else if(checkAfter) note += '+';
+    return note;
+  }
+
+  function pushHistory(color, notation){
+    if(color==='w'){
+      moveHistory.push({ no: fullMoveNo, white: notation, black: '' });
+    } else {
+      if(moveHistory.length && moveHistory[moveHistory.length-1].black===''){
+        moveHistory[moveHistory.length-1].black = notation;
+      } else {
+        moveHistory.push({ no: fullMoveNo, white: '', black: notation });
+      }
+      fullMoveNo++;
+    }
+    renderHistory();
+  }
+
+  function renderHistory(){
+    historyBody.innerHTML = '';
+    moveHistory.forEach((row, idx)=>{
+      const tr = document.createElement('tr');
+      if(idx===moveHistory.length-1) tr.className = 'current-row';
+      tr.innerHTML = `<td class="moveno">${row.no}</td><td>${row.white||''}</td><td>${row.black||''}</td>`;
+      historyBody.appendChild(tr);
+    });
+    const wrap = historyBody.closest('.history-wrap');
+    if(wrap) wrap.scrollTop = wrap.scrollHeight;
+  }
+
+  function finalizeMove(move, color, promoType){
+    const piece = board[move.from.r][move.from.c];
+    const captured = board[move.to.r][move.to.c];
+    let capturedPiece = captured;
+
+    board[move.from.r][move.from.c] = null;
+
+    if(move.enPassantCapture){
+      capturedPiece = board[move.enPassantCapture.r][move.enPassantCapture.c];
+      board[move.enPassantCapture.r][move.enPassantCapture.c] = null;
+    }
+
+    let finalPiece = piece;
+    if(move.promotion){
+      finalPiece = color + (promoType || 'Q');
+    }
+    board[move.to.r][move.to.c] = finalPiece;
+
+    if(move.castle){
+      const homeRow = move.from.r;
+      if(move.castle==='K'){ board[homeRow][5] = color+'R'; board[homeRow][7] = null; }
+      else { board[homeRow][3] = color+'R'; board[homeRow][0] = null; }
+    }
+
+    if(piece[1]==='K'){
+      kingPos[color] = {r:move.to.r, c:move.to.c};
+      if(color==='w'){ castling.wK=false; castling.wQ=false; }
+      else { castling.bK=false; castling.bQ=false; }
+    }
+    if(piece[1]==='R'){
+      const homeRow = color==='w' ? 7 : 0;
+      if(move.from.r===homeRow && move.from.c===0){ if(color==='w') castling.wQ=false; else castling.bQ=false; }
+      if(move.from.r===homeRow && move.from.c===7){ if(color==='w') castling.wK=false; else castling.bK=false; }
+    }
+    if(move.to.r===0 && move.to.c===0) castling.bQ=false;
+    if(move.to.r===0 && move.to.c===7) castling.bK=false;
+    if(move.to.r===7 && move.to.c===0) castling.wQ=false;
+    if(move.to.r===7 && move.to.c===7) castling.wK=false;
+
+    enPassant = move.doubleStep ? {r:(move.from.r+move.to.r)/2, c:move.to.c} : null;
+
+    if(capturedPiece){
+      if(color==='w') capturedByWhite.push(capturedPiece); else capturedByBlack.push(capturedPiece);
+    }
+
+    let logText = `${color==='w'?'White':'Black'}: ${piece[1]==='P'?'':piece[1]} ${sqName(move.from.r,move.from.c)} → ${sqName(move.to.r,move.to.c)}`;
+    if(move.castle) logText = `${color==='w'?'White':'Black'} castled ${move.castle==='K'?'king-side':'queen-side'}`;
+    if(move.promotion) logText += ` (promoted to ${finalPiece[1]})`;
+    if(gameMode.opponent==='cpu' && color===gameMode.cpuColor){
+      addLog('🤖 ' + logText, capturedPiece ? 'capture cpu' : 'cpu');
+    } else {
+      addLog(logText, capturedPiece ? 'capture' : null);
+    }
+
+    lastMove = { from:move.from, to:move.to };
+
+    turn = color==='w' ? 'b' : 'w';
+    renderCaptured();
+
+    const inCheckNow = kingInCheck(turn);
+    const hasMovesNow = colorHasAnyLegalMove(turn);
+    const mateNow = inCheckNow && !hasMovesNow;
+    pushHistory(color, buildNotation(move, color, piece, capturedPiece, finalPiece, inCheckNow, mateNow));
+
+    afterMove(inCheckNow, hasMovesNow);
+  }
+
+  function afterMove(inCheck, hasMoves){
+    if(!hasMoves){
+      gameOver = true;
+      if(inCheck){
+        addLog(`Checkmate! ${turn==='w'?'White':'Black'} has no legal moves.`, 'check');
+        const winnerColor = turn==='w' ? 'b' : 'w';
+        showEndScreen('checkmate', winnerColor);
+        recordGameResult('checkmate', winnerColor);
+      } else {
+        addLog('Stalemate! The game is a draw.', 'check');
+        showEndScreen('stalemate', null);
+        recordGameResult('stalemate', null);
+      }
+      updateTurnUI();
+      render();
+      return;
+    }
+
+    if(isInsufficientMaterial()){
+      gameOver = true;
+      addLog('Draw by insufficient material — checkmate is no longer possible.', 'check');
+      showEndScreen('insufficient', null);
+      recordGameResult('insufficient', null);
+      updateTurnUI();
+      render();
+      return;
+    }
+
+    if(inCheck){
+      addLog(`${turn==='w'?'White':'Black'} is in check!`, 'check');
+    }
+
+    updateTurnUI();
+    render();
+
+    maybeTriggerCpuMove();
+  }
+
+  function recordGameResult(kind, winnerColor){
+    let outcome;
+    if(kind==='stalemate' || kind==='insufficient'){
+      recordResult('draw');
+      outcome = 'draw';
+    } else if(gameMode.opponent==='cpu'){
+      if(winnerColor===gameMode.cpuColor){ recordResult('loss'); outcome='loss'; }
+      else { recordResult('win'); outcome='win'; }
+    } else {
+      outcome = winnerColor==='w' ? 'win' : 'loss';
+      recordResult(outcome);
+    }
+
+    // Award Fun-zone leaderboard points based on outcome
+    const points = outcome==='win' ? 20 : outcome==='draw' ? 10 : 5;
+    saveScoreToServer(points);
+
+    // ── Tournament mode: chess is win/draw/loss based, not accuracy based ──
+    if (new URLSearchParams(location.search).get('tournament') === '1') {
+      const tournamentScore = outcome==='win' ? 100 : outcome==='draw' ? 50 : 30;
+      setTimeout(() => reportScoreToTournament(tournamentScore, outcome==='win'?1:0, 1, outcome==='win'), 1800);
+    }
+  }
+
+  function reportScoreToTournament(finalScore, correctAnswers, totalQuestions, isWin) {
+    const params = new URLSearchParams(location.search);
+    if (params.get('tournament') !== '1') return;
+    const returnUrl = params.get('return') || 'tournaments.html';
+    let url = returnUrl + '?score=' + encodeURIComponent(finalScore)
+      + '&correct=' + encodeURIComponent(correctAnswers || 0)
+      + '&total=' + encodeURIComponent(totalQuestions || 0);
+    if (typeof isWin === 'boolean') url += '&win=' + (isWin ? '1' : '0');
+    location.href = url;
+  }
+
+  function maybeTriggerCpuMove(){
+    if(gameOver) return;
+    if(gameMode.opponent!=='cpu') return;
+    if(turn!==gameMode.cpuColor) return;
+    cpuBusy = true;
+    boardOuter.classList.add('thinking');
+    turnIndicator.classList.add('cpu-thinking');
+    turnSub.textContent = 'Computer is thinking...';
+    const delay = 500 + Math.random()*500;
+    setTimeout(runCpuMove, delay);
+  }
+
+  function pickCpuMove(){
+    const cpuColor = gameMode.cpuColor;
+    const moves = allLegalMovesFor(cpuColor);
+    if(moves.length===0) return null;
+
+    if(gameMode.difficulty==='easy'){
+      return moves[Math.floor(Math.random()*moves.length)];
+    }
+
+    let best = [];
+    let bestScore = -Infinity;
+
+    for(const m of moves){
+      let score = 0;
+      const targetPiece = board[m.to.r][m.to.c];
+      if(m.enPassantCapture){
+        const epPiece = board[m.enPassantCapture.r][m.enPassantCapture.c];
+        if(epPiece) score += PIECE_VALUE[epPiece[1]] * 10;
+      } else if(targetPiece){
+        score += PIECE_VALUE[targetPiece[1]] * 10;
+      }
+      if(m.promotion) score += 8;
+
+      const {bd:bd2} = simulateBoard(m, cpuColor, board, kingPos);
+      const enemyColor = cpuColor==='w' ? 'b' : 'w';
+      const ekr = kingPos[enemyColor].r;
+      const ekc = kingPos[enemyColor].c;
+      if(isSquareAttacked(bd2, cpuColor, ekr, ekc)) score += 3;
+
+      score += Math.random()*1.5;
+
+      if(score>bestScore){
+        bestScore = score;
+        best = [m];
+      } else if(score===bestScore){
+        best.push(m);
+      }
+    }
+    return best[Math.floor(Math.random()*best.length)];
+  }
+
+  function runCpuMove(){
+    if(gameOver){ cpuBusy=false; boardOuter.classList.remove('thinking'); turnIndicator.classList.remove('cpu-thinking'); return; }
+    const move = pickCpuMove();
+    cpuBusy = false;
+    boardOuter.classList.remove('thinking');
+    turnIndicator.classList.remove('cpu-thinking');
+
+    if(!move) return;
+
+    const color = gameMode.cpuColor;
+    if(move.promotion){
+      finalizeMove(move, color, 'Q');
+    } else {
+      finalizeMove(move, color);
+    }
+  }
+
+  function askPromotion(move, color, onDone){
+    pendingPromotion = { move, color, onDone };
+    promoChoices.innerHTML = '';
+    const options = [['Q','Queen'],['R','Rook'],['B','Bishop'],['N','Knight']];
+    options.forEach(([code])=>{
+      const div = document.createElement('div');
+      div.className = 'promo-choice';
+      div.textContent = UNICODE[color+code];
+      div.addEventListener('click', ()=>{
+        promoOverlay.classList.remove('show');
+        const pm = pendingPromotion;
+        pendingPromotion = null;
+        pm.onDone(code);
+      });
+      promoChoices.appendChild(div);
+    });
+    promoOverlay.classList.add('show');
+  }
+
+  function isHumanTurn(){
+    if(gameMode.opponent!=='cpu') return true;
+    return turn !== gameMode.cpuColor;
+  }
+
+  function selectSquare(r,c){
+    selected = {r,c};
+    legalTargets = computeLegalMoves(r,c);
+    render();
+  }
+
+  function deselect(){
+    selected = null;
+    legalTargets = [];
+    render();
+  }
+
+  function onSquareClick(r,c){
+    if(gameOver || pendingPromotion || cpuBusy) return;
+    if(!isHumanTurn()) return;
+    const piece = board[r][c];
+
+    if(selected){
+      const move = legalTargets.find(m=>m.to.r===r && m.to.c===c);
+      if(move){
+        const color = turn;
+        if(move.promotion){
+          askPromotion(move, color, (promoType)=>{
+            finalizeMove(move, color, promoType);
+          });
+          selected = null; legalTargets = [];
+          render();
+        } else {
+          selected = null; legalTargets = [];
+          finalizeMove(move, color);
+        }
+        return;
+      }
+      if(piece && piece[0]===turn){ selectSquare(r,c); return; }
+      deselect();
+      return;
+    }
+    if(piece && piece[0]===turn){ selectSquare(r,c); }
+  }
+
+  function updateTurnUI(){
+    turnIndicator.classList.remove('cpu-thinking');
+    if(turn==='w'){
+      turnIndicator.classList.remove('black-turn');
+      turnIndicator.classList.add('white-turn');
+      turnAvatar.textContent = '♔';
+      turnWho.textContent = 'White to Move';
+    } else {
+      turnIndicator.classList.remove('white-turn');
+      turnIndicator.classList.add('black-turn');
+      turnAvatar.textContent = '♚';
+      turnWho.textContent = 'Black to Move';
+    }
+    if(gameOver){
+      turnSub.textContent = 'Game over';
+      statusLine.textContent = '';
+      return;
+    }
+    const inCheck = kingInCheck(turn);
+    const isCpu = gameMode.opponent==='cpu' && turn===gameMode.cpuColor;
+    turnSub.textContent = inCheck ? 'King is in check!' : (isCpu ? 'Computer is about to move' : 'Select a piece to move');
+    statusLine.className = 'status-line' + (inCheck ? ' check' : '');
+    statusLine.textContent = inCheck ? `${turn==='w'?'White':'Black'} must respond to check.` : `${turn==='w'?'White':'Black'} to move.`;
+  }
+
+  function renderCaptured(){
+    capturedByWhiteEl.innerHTML = capturedByWhite.map(p=>`<span class="piece ${p[0]==='w'?'piece-w':'piece-b'}">${UNICODE[p]}</span>`).join(' ');
+    capturedByBlackEl.innerHTML = capturedByBlack.map(p=>`<span class="piece ${p[0]==='w'?'piece-w':'piece-b'}">${UNICODE[p]}</span>`).join(' ');
+    const whitePts = capturedByWhite.reduce((s,p)=> s + PIECE_VALUE[p[1]], 0);
+    const blackPts = capturedByBlack.reduce((s,p)=> s + PIECE_VALUE[p[1]], 0);
+    whiteCapVal.textContent = whitePts + ' pts';
+    blackCapVal.textContent = blackPts + ' pts';
+  }
+
+  function showEndScreen(kind, winnerColor){
+    if(kind==='checkmate'){
+      endCrown.textContent = winnerColor==='w' ? '♔' : '♚';
+      endTitle.textContent = 'Checkmate!';
+      let winnerLabel = winnerColor==='w' ? 'White' : 'Black';
+      if(gameMode.opponent==='cpu'){
+        winnerLabel = winnerColor===gameMode.cpuColor ? 'Computer' : 'You';
+      }
+      endSub.textContent = `${winnerLabel} win${winnerLabel==='You'?'':'s'} the game.`;
+    } else if(kind==='insufficient'){
+      endCrown.textContent = '🤝';
+      endTitle.textContent = 'Draw';
+      endSub.textContent = 'Insufficient material — neither side can checkmate.';
+    } else {
+      endCrown.textContent = '🤝';
+      endTitle.textContent = 'Stalemate';
+      endSub.textContent = 'No legal moves remain — the game is a draw.';
+    }
+    endOverlay.classList.add('show');
+  }
+
+  function hideEndScreen(){
+    endOverlay.classList.remove('show');
+  }
+
+  function render(){
+    boardEl.innerHTML = '';
+    for(let r=0;r<8;r++){
+      for(let c=0;c<8;c++){
+        const sq = document.createElement('div');
+        const isLight = (r+c)%2===0;
+        sq.className = 'sq ' + (isLight ? 'light' : 'dark');
+
+        if(selected && selected.r===r && selected.c===c) sq.classList.add('selected');
+        if(lastMove && ((lastMove.from.r===r && lastMove.from.c===c) )) sq.classList.add('last-from');
+        if(lastMove && lastMove.to.r===r && lastMove.to.c===c) sq.classList.add('last-to');
+
+        const piece = board[r][c];
+        if(piece && piece[1]==='K'){
+          const col = piece[0];
+          if(!gameOver && kingInCheck(col) && kingPos[col].r===r && kingPos[col].c===c){
+            sq.classList.add('check-king');
+          }
+        }
+
+        if(piece){
+          const span = document.createElement('span');
+          span.className = 'piece ' + (piece[0]==='w' ? 'piece-w' : 'piece-b');
+          span.textContent = UNICODE[piece];
+          sq.appendChild(span);
+        }
+
+        const targetMove = legalTargets.find(m=>m.to.r===r && m.to.c===c);
+        if(targetMove){
+          if(targetMove.capture){
+            const ring = document.createElement('div');
+            ring.className = 'ring';
+            sq.appendChild(ring);
+          } else {
+            const dot = document.createElement('div');
+            dot.className = 'dot';
+            sq.appendChild(dot);
+          }
+        }
+
+        sq.addEventListener('click', ()=> onSquareClick(r,c));
+        boardEl.appendChild(sq);
+      }
+    }
+  }
+
+  function newGame(){
+    initState();
+    logEl.innerHTML = '';
+    historyBody.innerHTML = '';
+    if(gameMode.opponent==='cpu'){
+      addLog(`New game started vs Computer (${gameMode.difficulty==='easy'?'Easy':'Medium'}). You play White.`);
+    } else {
+      addLog('New game started. White moves first — good luck!');
+    }
+    renderCaptured();
+    updateTurnUI();
+    hideEndScreen();
+    render();
+    maybeTriggerCpuMove();
+  }
+
+  function confirmRestart(){
+    if(!gameOver && moveHistory.length>0){
+      if(!confirm('Restart the current game? Progress will be lost.')) return;
+    }
+    newGame();
+  }
+
+  newGameBtn.addEventListener('click', ()=>{
+    setupOverlay.classList.remove('hide');
+  });
+  resetBtn.addEventListener('click', confirmRestart);
+  playAgainBtn.addEventListener('click', ()=>{
+    hideEndScreen();
+    newGame();
+  });
+
+  applyModeBadge();
+  initState();
+  render();
+  updateTurnUI();
+
+})();
+</script>
+</body>
+</html>

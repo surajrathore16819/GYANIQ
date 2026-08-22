@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GyanIQ — Login</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#05080F;color:#F0F4FF;font-family:'Space Grotesk',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;background-image:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(0,229,195,0.06),transparent);}
+.logo{font-family:'Baloo 2',cursive;font-size:26px;font-weight:900;background:linear-gradient(135deg,#F7B731,#00E5C3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px;cursor:pointer;}
+.tagline{font-size:13px;color:#6B7A99;margin-bottom:28px;}
+.card{background:#0E1524;border:1px solid rgba(255,255,255,0.07);border-radius:24px;padding:36px;width:100%;max-width:420px;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#00E5C3,#F7B731,#FF6B9D);}
+.card-title{font-family:'Baloo 2',cursive;font-size:24px;font-weight:900;margin-bottom:4px;text-align:center;}
+.card-sub{font-size:13px;color:#6B7A99;text-align:center;margin-bottom:22px;}
+.field{margin-bottom:14px;}
+.field label{display:block;font-size:11px;font-weight:600;color:#6B7A99;margin-bottom:5px;letter-spacing:.08em;text-transform:uppercase;}
+.field input{width:100%;padding:12px 14px;background:#05080F;border:1px solid #3D4F6E;border-radius:10px;color:#F0F4FF;font-size:14px;font-family:'Space Grotesk',sans-serif;outline:none;transition:border-color .2s;}
+.field input:focus{border-color:#F7B731;}
+.field input::placeholder{color:#3D4F6E;}
+.btn{width:100%;padding:13px;border-radius:12px;background:linear-gradient(135deg,#F7B731,#e8a020);border:none;color:#0A0D14;font-size:15px;font-weight:800;cursor:pointer;font-family:'Baloo 2',cursive;box-shadow:0 4px 20px rgba(247,183,49,0.3);transition:all .2s;margin-top:4px;}
+.btn:hover{transform:translateY(-2px);}
+.btn:disabled{opacity:.6;transform:none;cursor:not-allowed;}
+.switch{text-align:center;margin-top:18px;font-size:13px;color:#6B7A99;}
+.switch a{color:#00E5C3;cursor:pointer;font-weight:600;}
+.back{text-align:center;margin-top:14px;font-size:12px;color:#6B7A99;cursor:pointer;}
+.back:hover{color:#F0F4FF;}
+.msg{font-size:12px;margin-top:10px;text-align:center;padding:8px;border-radius:8px;display:none;}
+.msg.error{background:rgba(239,71,111,0.1);color:#EF476F;display:block;}
+.msg.success{background:rgba(0,229,195,0.1);color:#00E5C3;display:block;}
+.pass-wrap{position:relative;}
+.pass-wrap input{padding-right:44px;}
+.pass-toggle{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:#6B7A99;cursor:pointer;font-size:16px;padding:4px;line-height:1;}
+.pass-toggle:hover{color:#F0F4FF;}
+</style>
+</head>
+<body>
+<div class="logo" onclick="window.location.href='index.html'">🧠 GyanIQ</div>
+<div class="tagline">Wapas Aa Gaye! 🎯</div>
+<div class="card">
+  <div class="card-title">Login Karo 🔓</div>
+  <div class="card-sub">Games ready hain — seedha khelo!</div>
+  <div class="field"><label>Email</label><input type="email" id="email" placeholder="tumhara@email.com" autocomplete="email"></div>
+  <div class="field">
+    <label>Password</label>
+    <div class="pass-wrap">
+      <input type="password" id="pass" placeholder="Tumhara password" autocomplete="current-password">
+      <button type="button" class="pass-toggle" id="passToggle" tabindex="-1">👁️</button>
+    </div>
+  </div>
+  <button class="btn" id="btn">🔓 Login Karo</button>
+  <div class="msg" id="msg"></div>
+  <div class="switch">Naya user ho? <a onclick="window.location.href='signup.html'">Free mein join karo →</a></div>
+</div>
+<div class="back" onclick="window.location.href='index.html'">← Homepage pe wapas jao</div>
+
+<script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+  const SUPABASE_URL = 'https://tkdsvzumcribcmbsikwg.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRrZHN2enVtY3JpYmNtYnNpa3dnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk2Mjg0NzMsImV4cCI6MjA5NTIwNDQ3M30.aKE22gf_yU-ybrI-CI05MZamuBG1-PXQd8OnuAYjMQU';
+
+  const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  function showMsg(text, type) {
+    const el = document.getElementById('msg');
+    el.textContent = text;
+    el.className = 'msg ' + type;
+  }
+
+  /* ══════════════════════════════════════════
+     UNIQUE USERNAME — this is where it actually gets created.
+     At signup, Supabase requires email verification before a real
+     session exists, so we can't safely create it there. The FIRST
+     successful login (right here) is the earliest point a session is
+     guaranteed to exist — so that's where we permanently generate and
+     save a database-guaranteed-unique username (e.g. "rahul4821"),
+     built from the name they gave at signup. Once saved here, every
+     other page (games, tournaments, leaderboard) just reads it back —
+     nothing else needs to generate it again.
+  ══════════════════════════════════════════ */
+  async function ensureUniqueUsername(){
+    try{
+      const { data:{ user } } = await supabase.auth.getUser();
+      if(!user) return null;
+
+      const { data: existing } = await supabase.from('user_profiles').select('username').eq('id', user.id).maybeSingle();
+      if(existing && existing.username){
+        if(user.user_metadata?.username !== existing.username){
+          await supabase.auth.updateUser({ data:{ username: existing.username } });
+        }
+        return existing.username;
+      }
+
+      const rawName = (user.user_metadata?.name || 'player').toLowerCase().replace(/[^a-z0-9]/g,'').slice(0,14) || 'player';
+
+      // Try the exact id that was previewed on the signup page first, so
+      // it matches what the person was already shown there.
+      let reserved = null;
+      try{ reserved = localStorage.getItem('gyaniq_reserved_username'); }catch(e){}
+      if(reserved){
+        const { error } = await supabase.from('user_profiles').insert({ id:user.id, username:reserved, full_name:user.user_metadata?.name || null });
+        try{ localStorage.removeItem('gyaniq_reserved_username'); }catch(e){}
+        if(!error){
+          await supabase.auth.updateUser({ data:{ username: reserved } });
+          return reserved;
+        }
+        // someone else grabbed it in the meantime (rare) — fall through to fresh generation
+      }
+
+      for(let attempt=0; attempt<8; attempt++){
+        const candidate = rawName + Math.floor(1000 + Math.random()*9000); // 4-digit random
+        const { error } = await supabase.from('user_profiles').insert({ id:user.id, username:candidate, full_name:user.user_metadata?.name || null });
+        if(!error){
+          await supabase.auth.updateUser({ data:{ username: candidate } });
+          return candidate;
+        }
+        if(error.code !== '23505') break; // not a duplicate-username error — stop retrying
+      }
+      // Extremely unlikely fallback: guarantee uniqueness via the user's own id.
+      const fallback = rawName + user.id.slice(0,6);
+      await supabase.from('user_profiles').upsert({ id:user.id, username:fallback, full_name:user.user_metadata?.name || null });
+      await supabase.auth.updateUser({ data:{ username: fallback } });
+      return fallback;
+    }catch(err){ console.error('GyanIQ: ensureUniqueUsername failed', err); return null; }
+  }
+
+  async function doLogin() {
+    const email = document.getElementById('email').value.trim();
+    const pass  = document.getElementById('pass').value;
+    const btn   = document.getElementById('btn');
+
+    if (!email || !pass) { showMsg('Dono fields bharo!', 'error'); return; }
+
+    btn.disabled = true;
+    btn.textContent = 'Login ho raha hai...';
+
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password: pass });
+
+    if (error) {
+      let msg = 'Email ya password galat hai!';
+      if (error.message.includes('Email not confirmed')) msg = 'Pehle email verify karo! Inbox check karo.';
+      showMsg(msg, 'error');
+      btn.disabled = false;
+      btn.textContent = '🔓 Login Karo';
+    } else {
+      btn.textContent = '✅ Login ho gaya...';
+      const username = await ensureUniqueUsername();
+      showMsg(username ? ('✅ Login ho gaya! Tumhari User ID: ' + username) : '✅ Login ho gaya!', 'success');
+      setTimeout(() => window.location.href = 'games.html', 1200);
+    }
+  }
+
+  document.getElementById('btn').addEventListener('click', doLogin);
+
+  document.getElementById('passToggle').addEventListener('click', ()=>{
+    const inp = document.getElementById('pass');
+    const btn2 = document.getElementById('passToggle');
+    if(inp.type === 'password'){ inp.type = 'text'; btn2.textContent = '🙈'; }
+    else{ inp.type = 'password'; btn2.textContent = '👁️'; }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GyanIQ — Join Karo</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#05080F;color:#F0F4FF;font-family:'Space Grotesk',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;background-image:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(247,183,49,0.07),transparent);}
+.logo{font-family:'Baloo 2',cursive;font-size:26px;font-weight:900;background:linear-gradient(135deg,#F7B731,#00E5C3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px;cursor:pointer;}
+.tagline{font-size:13px;color:#6B7A99;margin-bottom:28px;}
+.card{background:#0E1524;border:1px solid rgba(255,255,255,0.07);border-radius:24px;padding:36px;width:100%;max-width:420px;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#F7B731,#00E5C3,#FF6B9D);}
+.card-title{font-family:'Baloo 2',cursive;font-size:24px;font-weight:900;margin-bottom:4px;text-align:center;}
+.card-sub{font-size:13px;color:#6B7A99;text-align:center;margin-bottom:22px;}
+.field{margin-bottom:14px;}
+.field label{display:block;font-size:11px;font-weight:600;color:#6B7A99;margin-bottom:5px;letter-spacing:.08em;text-transform:uppercase;}
+.field input{width:100%;padding:12px 14px;background:#05080F;border:1px solid #3D4F6E;border-radius:10px;color:#F0F4FF;font-size:14px;font-family:'Space Grotesk',sans-serif;outline:none;transition:border-color .2s;}
+.field input:focus{border-color:#00E5C3;}
+.field input::placeholder{color:#3D4F6E;}
+.btn{width:100%;padding:13px;border-radius:12px;background:linear-gradient(135deg,#F7B731,#e8a020);border:none;color:#0A0D14;font-size:15px;font-weight:800;cursor:pointer;font-family:'Baloo 2',cursive;box-shadow:0 4px 20px rgba(247,183,49,0.3);transition:all .2s;margin-top:4px;}
+.btn:hover{transform:translateY(-2px);}
+.btn:disabled{opacity:.6;transform:none;cursor:not-allowed;}
+.switch{text-align:center;margin-top:18px;font-size:13px;color:#6B7A99;}
+.switch a{color:#00E5C3;cursor:pointer;font-weight:600;}
+.back{text-align:center;margin-top:14px;font-size:12px;color:#6B7A99;cursor:pointer;}
+.back:hover{color:#F0F4FF;}
+.msg{font-size:12px;margin-top:10px;text-align:center;padding:8px;border-radius:8px;display:none;}
+.msg.error{background:rgba(239,71,111,0.1);color:#EF476F;display:block;}
+.msg.success{background:rgba(0,229,195,0.1);color:#00E5C3;display:block;}
+.userid-preview{font-size:12px;color:#6B7A99;margin-top:6px;min-height:16px;}
+.userid-preview b{color:#00E5C3;font-weight:700;}
+.pass-wrap{position:relative;}
+.pass-wrap input{padding-right:44px;}
+.pass-toggle{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:#6B7A99;cursor:pointer;font-size:16px;padding:4px;line-height:1;}
+.pass-toggle:hover{color:#F0F4FF;}
+.pass-hint{font-size:11.5px;margin-top:6px;min-height:14px;color:#6B7A99;}
+.pass-hint.ok{color:#00E5C3;}
+.pass-hint.bad{color:#EF476F;}
+</style>
+</head>
+<body>
+<div class="logo" onclick="window.location.href='index.html'">🧠 GyanIQ</div>
+<div class="tagline">Khelo. Seekho. Aage Badho.</div>
+<div class="card">
+  <div class="card-title">Join GyanIQ 🚀</div>
+  <div class="card-sub">Free account banao — abhi shuru karo</div>
+  <div class="field">
+    <label>Poora Naam</label>
+    <input type="text" id="naam" placeholder="Jaise: Rahul Sharma" autocomplete="name">
+    <div class="userid-preview" id="useridPreview"></div>
+  </div>
+  <div class="field"><label>Email</label><input type="email" id="email" placeholder="tumhara@email.com" autocomplete="email"></div>
+  <div class="field">
+    <label>Naya Password Banao</label>
+    <div class="pass-wrap">
+      <input type="password" id="pass" placeholder="Password" autocomplete="new-password">
+      <button type="button" class="pass-toggle" id="passToggle" tabindex="-1">👁️</button>
+    </div>
+    <div class="pass-hint" id="passHint">Kam se kam 6 characters ka koi bhi naya password banao.</div>
+  </div>
+  <button class="btn" id="btn">🚀 Free Mein Join Karo</button>
+  <div class="msg" id="msg"></div>
+  <div class="switch">Pehle se account hai? <a onclick="window.location.href='login.html'">Login karo →</a></div>
+</div>
+<div class="back" onclick="window.location.href='index.html'">← Homepage pe wapas jao</div>
+
+<!-- ES Module style — sabse reliable tarika, koi window.supabase issue nahi -->
+<script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+  const SUPABASE_URL = 'https://tkdsvzumcribcmbsikwg.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRrZHN2enVtY3JpYmNtYnNpa3dnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk2Mjg0NzMsImV4cCI6MjA5NTIwNDQ3M30.aKE22gf_yU-ybrI-CI05MZamuBG1-PXQd8OnuAYjMQU';
+
+  const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  function showMsg(text, type) {
+    const el = document.getElementById('msg');
+    el.textContent = text;
+    el.className = 'msg ' + type;
+  }
+
+  /* ══════════════════════════════════════════
+     LIVE USER ID PREVIEW
+     ══════════════════════════════════════════
+     Shows what the account's unique User ID will be, right on this page,
+     by actually checking real availability against user_profiles
+     (publicly readable) — not just a random guess. We remember the
+     chosen candidate in localStorage so login.html (where the account
+     truly gets created, since Supabase needs email verification first)
+     tries this EXACT id first, so what's shown here matches what the
+     user ends up with in the vast majority of cases.
+  ══════════════════════════════════════════ */
+  let previewUsername = null;
+
+  async function updateUseridPreview(){
+    const el = document.getElementById('useridPreview');
+    const naam = document.getElementById('naam').value.trim();
+    if(!naam){ el.textContent=''; previewUsername=null; return; }
+
+    el.textContent = 'Check kar rahe hain...';
+    const base = naam.toLowerCase().replace(/[^a-z0-9]/g,'').slice(0,14) || 'player';
+
+    for(let attempt=0; attempt<6; attempt++){
+      const candidate = base + Math.floor(1000 + Math.random()*9000);
+      try{
+        const { data } = await supabase.from('user_profiles').select('username').eq('username', candidate).maybeSingle();
+        if(!data){
+          previewUsername = candidate;
+          el.innerHTML = 'Tumhari User ID hogi: <b>' + candidate + '</b>';
+          try{ localStorage.setItem('gyaniq_reserved_username', candidate); }catch(e){}
+          return;
+        }
+      }catch(err){ break; } // network/RLS issue — silently skip preview, login.html will still assign one
+    }
+    el.textContent = ''; // couldn't confirm one — not a blocker, login.html generates it regardless
+  }
+
+  let previewDebounce;
+  document.getElementById('naam').addEventListener('input', ()=>{
+    clearTimeout(previewDebounce);
+    previewDebounce = setTimeout(updateUseridPreview, 500);
+  });
+
+  /* Normally no session exists yet right after signUp() (email
+     verification required) — the real, permanent unique username gets
+     generated at first LOGIN instead (see login.html). This is just a
+     defensive fallback in case email verification is ever turned off for
+     this project, so a session DOES exist immediately after signup. */
+  async function ensureUniqueUsername(){
+    try{
+      const { data:{ user } } = await supabase.auth.getUser();
+      if(!user) return;
+
+      const { data: existing } = await supabase.from('user_profiles').select('username').eq('id', user.id).maybeSingle();
+      if(existing && existing.username) return;
+
+      const rawName = (user.user_metadata?.name || 'player').toLowerCase().replace(/[^a-z0-9]/g,'').slice(0,14) || 'player';
+      for(let attempt=0; attempt<8; attempt++){
+        const candidate = rawName + Math.floor(1000 + Math.random()*9000);
+        const { error } = await supabase.from('user_profiles').insert({ id:user.id, username:candidate, full_name:user.user_metadata?.name || null });
+        if(!error){ await supabase.auth.updateUser({ data:{ username: candidate } }); return; }
+        if(error.code !== '23505') break;
+      }
+      const fallback = rawName + user.id.slice(0,6);
+      await supabase.from('user_profiles').upsert({ id:user.id, username:fallback, full_name:user.user_metadata?.name || null });
+      await supabase.auth.updateUser({ data:{ username: fallback } });
+    }catch(err){ console.error('GyanIQ: ensureUniqueUsername failed', err); }
+  }
+
+  async function doSignup() {
+    const naam  = document.getElementById('naam').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const pass  = document.getElementById('pass').value;
+    const btn   = document.getElementById('btn');
+
+    if (!naam || !email || !pass) { showMsg('Sab fields bharo!', 'error'); return; }
+    if (pass.length < 6) { showMsg('Password kam se kam 6 characters ka hona chahiye!', 'error'); return; }
+
+    btn.disabled = true;
+    btn.textContent = 'Ho raha hai...';
+
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password: pass,
+      options: { data: { name: naam } }
+    });
+
+    if (error) {
+      let msg = error.message;
+      if (msg.includes('already registered')) msg = 'Yeh email pehle se registered hai! Login karo.';
+      showMsg(msg, 'error');
+      btn.disabled = false;
+      btn.textContent = '🚀 Free Mein Join Karo';
+    } else {
+      showMsg('🎉 Account ban gaya! Email verify karo phir login karo.', 'success');
+      btn.textContent = '✅ Done!';
+      await ensureUniqueUsername(); // no-op if email verification is required (usual case)
+      setTimeout(() => window.location.href = 'login.html', 3000);
+    }
+  }
+
+  // Button ko directly JS se connect karo — onclick attribute nahi
+  document.getElementById('btn').addEventListener('click', doSignup);
+
+  document.getElementById('passToggle').addEventListener('click', ()=>{
+    const inp = document.getElementById('pass');
+    const btn2 = document.getElementById('passToggle');
+    if(inp.type === 'password'){ inp.type = 'text'; btn2.textContent = '🙈'; }
+    else{ inp.type = 'password'; btn2.textContent = '👁️'; }
+  });
+
+  document.getElementById('pass').addEventListener('input', (e)=>{
+    const hint = document.getElementById('passHint');
+    const len = e.target.value.length;
+    if(len === 0){
+      hint.textContent = 'Kam se kam 6 characters ka koi bhi naya password banao.';
+      hint.className = 'pass-hint';
+    } else if(len < 6){
+      hint.textContent = '❌ Abhi ' + len + ' characters hain — kam se kam 6 chahiye (' + (6-len) + ' aur likho).';
+      hint.className = 'pass-hint bad';
+    } else {
+      hint.textContent = '✅ Password ki length theek hai.';
+      hint.className = 'pass-hint ok';
+    }
+  });
+</script>
+</body>
+</html>

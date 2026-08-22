@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GyanIQ — Khelo. Seekho. Aage Badho.</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#05080F;--bg2:#090D18;--surface:#0E1524;--surface2:#131C30;
+  --gold:#F7B731;--teal:#00E5C3;--blue:#4D8CFF;--pink:#FF6B9D;
+  --white:#F0F4FF;--muted:#6B7A99;--muted2:#3D4F6E;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Space Grotesk',sans-serif;overflow-x:hidden;}
+
+/* NAV */
+nav{display:flex;align-items:center;justify-content:space-between;padding:0 clamp(14px,4vw,40px);height:64px;background:rgba(5,8,15,0.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06);position:sticky;top:0;z-index:100;gap:10px;}
+.logo{font-family:'Baloo 2',cursive;font-size:clamp(17px,2.4vw,22px);font-weight:900;background:linear-gradient(135deg,var(--gold),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;cursor:pointer;flex-shrink:0;}
+.nav-links{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;min-width:0;}
+.nav-links::-webkit-scrollbar{display:none;}
+.nav-link{padding:6px clamp(9px,1.4vw,13px);border-radius:8px;color:var(--muted);font-size:clamp(12px,1.3vw,13px);font-weight:500;cursor:pointer;border:none;background:none;font-family:'Space Grotesk',sans-serif;transition:all .2s;white-space:nowrap;}
+.nav-link:hover{color:var(--white);background:var(--surface);}
+.nav-link.active{color:var(--gold);background:rgba(247,183,49,0.08);}
+.nav-btns{display:flex;gap:10px;}
+.btn-nav-login{padding:clamp(6px,1.3vw,8px) clamp(11px,2vw,18px);border-radius:10px;border:1px solid var(--muted2);color:var(--white);background:none;font-size:clamp(11.5px,1.3vw,13px);font-weight:600;cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:all .2s;white-space:nowrap;}
+.btn-nav-login:hover{border-color:var(--teal);color:var(--teal);}
+.btn-nav-signup{padding:clamp(6px,1.3vw,8px) clamp(12px,2.2vw,20px);border-radius:10px;background:linear-gradient(135deg,var(--gold),#e8a020);border:none;color:#0A0D14;font-size:clamp(11.5px,1.3vw,13px);font-weight:700;cursor:pointer;font-family:'Baloo 2',cursive;box-shadow:0 4px 16px rgba(247,183,49,0.3);transition:all .2s;white-space:nowrap;}
+.btn-nav-signup:hover{transform:translateY(-1px);}
+
+/* HERO */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:clamp(24px,5vw,60px) clamp(16px,6vw,60px);gap:clamp(24px,5vw,60px);position:relative;overflow:hidden;}
+.hero-glow{position:absolute;inset:0;background:radial-gradient(ellipse 60% 70% at 20% 50%,rgba(247,183,49,0.06),transparent),radial-gradient(ellipse 50% 60% at 80% 30%,rgba(0,229,195,0.05),transparent);pointer-events:none;}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(77,140,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(77,140,255,0.04) 1px,transparent 1px);background-size:50px 50px;mask-image:linear-gradient(to top,rgba(0,0,0,0.5),transparent 70%);pointer-events:none;}
+.hero-left{position:relative;z-index:2;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,229,195,0.08);border:1px solid rgba(0,229,195,0.2);color:var(--teal);padding:5px clamp(10px,2vw,14px);border-radius:20px;font-size:clamp(9.5px,1.1vw,11px);font-weight:600;margin-bottom:24px;letter-spacing:.06em;text-transform:uppercase;}
+.bdot{width:6px;height:6px;border-radius:50%;background:var(--teal);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(1.6);}}
+.hero-h1{font-family:'Baloo 2',cursive;font-size:clamp(28px,5.2vw,52px);font-weight:900;line-height:1.05;letter-spacing:-1.5px;margin-bottom:16px;}
+.hero-h1 .grad{background:linear-gradient(135deg,var(--gold),var(--pink),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-size:200%;animation:gmove 4s ease infinite;}
+@keyframes gmove{0%{background-position:0%;}50%{background-position:100%;}100%{background-position:0%;}}
+.hero-sub{font-size:clamp(13px,1.4vw,15px);color:var(--muted);line-height:1.8;max-width:min(440px,100%);margin-bottom:32px;}
+.hero-sub strong{color:var(--white);}
+
+/* AUTH CARD */
+.auth-card{background:var(--surface);border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:clamp(16px,4vw,26px);position:relative;overflow:hidden;max-width:440px;width:100%;}
+.auth-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--teal),var(--pink));}
+.auth-tabs{display:flex;background:var(--bg2);border-radius:10px;padding:3px;margin-bottom:18px;}
+.atab{flex:1;padding:8px;text-align:center;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;color:var(--muted);border:none;background:none;font-family:'Space Grotesk',sans-serif;transition:all .2s;}
+.atab.on{background:var(--surface2);color:var(--white);}
+.afield{margin-bottom:13px;}
+.afield label{display:block;font-size:10px;font-weight:600;color:var(--muted);margin-bottom:5px;letter-spacing:.08em;text-transform:uppercase;}
+.afield input{width:100%;padding:11px 13px;background:var(--bg2);border:1px solid var(--muted2);border-radius:9px;color:var(--white);font-size:14px;font-family:'Space Grotesk',sans-serif;outline:none;transition:border-color .2s;}
+.afield input:focus{border-color:var(--teal);}
+.afield input::placeholder{color:var(--muted2);}
+.abtn{width:100%;padding:12px;border-radius:11px;background:linear-gradient(135deg,var(--gold),#e8a020);border:none;color:#0A0D14;font-size:14px;font-weight:800;cursor:pointer;font-family:'Baloo 2',cursive;box-shadow:0 4px 18px rgba(247,183,49,0.3);transition:all .2s;margin-top:4px;}
+.abtn:hover{transform:translateY(-2px);}
+.abtn:disabled{opacity:.6;transform:none;cursor:not-allowed;}
+.amsg{font-size:12px;margin-top:10px;text-align:center;padding:8px;border-radius:8px;display:none;}
+.amsg.err{background:rgba(239,71,111,0.1);color:#EF476F;display:block;}
+.amsg.ok{background:rgba(0,229,195,0.1);color:var(--teal);display:block;}
+
+/* HERO RIGHT */
+.hero-right{position:relative;z-index:2;display:flex;flex-direction:column;gap:14px;}
+.hcard{background:var(--surface);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:18px;transition:transform .3s;}
+.hcard:hover{transform:translateY(-3px);}
+.hcard.gc{border-color:rgba(247,183,49,0.2);}
+.hcard.tc{border-color:rgba(0,229,195,0.2);}
+.hc-label{font-size:10px;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em;}
+.hc-title{font-family:'Baloo 2',cursive;font-size:18px;font-weight:800;}
+.hc-sub{font-size:12px;color:var(--muted);margin-top:3px;}
+.hc-num{font-family:'Baloo 2',cursive;font-size:28px;font-weight:800;color:var(--teal);}
+.prog{height:5px;background:var(--bg2);border-radius:3px;margin-top:10px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--gold),var(--teal));width:0;transition:width 2s ease;}
+.mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.mcard{background:var(--surface);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:14px;}
+.mcard-icon{font-size:20px;margin-bottom:6px;}
+.mcard-title{font-size:12px;font-weight:700;}
+.mcard-sub{font-size:11px;color:var(--muted);margin-top:2px;}
+
+/* STATS BAR */
+.stats-bar{display:flex;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.05);background:var(--bg2);}
+.stat{flex:1 1 140px;padding:clamp(16px,3vw,26px) 12px;text-align:center;border-right:1px solid rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.05);}
+.stat:last-child{border-right:none;}
+.stat:hover{background:rgba(247,183,49,0.03);}
+.stat-icon{font-size:18px;margin-bottom:6px;}
+.stat-num{font-family:'Baloo 2',cursive;font-size:clamp(20px,3vw,28px);font-weight:800;color:var(--gold);line-height:1;margin-bottom:4px;}
+.stat-label{font-size:clamp(9.5px,1vw,11px);color:var(--muted);}
+
+/* HOW IT WORKS */
+.section{padding:clamp(40px,8vw,80px) clamp(16px,6vw,60px);}
+.sec-label{font-size:11px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px;text-align:center;}
+.sec-title{font-family:'Baloo 2',cursive;font-size:clamp(22px,3.6vw,34px);font-weight:900;letter-spacing:-1px;margin-bottom:10px;text-align:center;}
+.sec-sub{font-size:clamp(12.5px,1.4vw,14px);color:var(--muted);line-height:1.7;max-width:min(480px,100%);margin:0 auto clamp(28px,4vw,44px);text-align:center;padding:0 8px;}
+.how-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;max-width:860px;margin:0 auto;}
+.how-card{background:var(--surface);border:1px solid rgba(255,255,255,0.06);border-radius:20px;padding:clamp(20px,4vw,30px) clamp(16px,3vw,22px);position:relative;transition:all .3s;}
+.how-card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,0.12);}
+.how-bg-num{font-family:'Baloo 2',cursive;font-size:60px;font-weight:900;color:rgba(247,183,49,0.08);position:absolute;top:10px;right:16px;line-height:1;}
+.how-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:14px;}
+.hi1{background:rgba(247,183,49,0.1);}
+.hi2{background:rgba(0,229,195,0.1);}
+.hi3{background:rgba(255,107,157,0.1);}
+.how-title{font-size:17px;font-weight:700;margin-bottom:8px;}
+.how-body{font-size:13px;color:var(--muted);line-height:1.7;}
+
+/* LEADERBOARD */
+.lb-section{padding:clamp(40px,8vw,80px) clamp(16px,6vw,60px);background:var(--bg2);}
+.lb-inner{max-width:680px;margin:0 auto;}
+.lb-list{display:flex;flex-direction:column;gap:8px;margin-top:32px;}
+.lb-row{display:flex;align-items:center;gap:clamp(8px,2vw,14px);background:var(--surface);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:clamp(10px,2vw,13px) clamp(10px,3vw,18px);transition:all .3s;}
+.lb-row:hover{border-color:rgba(255,255,255,0.12);}
+.lb-row.top{border-color:rgba(247,183,49,0.2);background:linear-gradient(135deg,var(--surface),rgba(247,183,49,0.04));}
+.lb-rank{font-family:'Baloo 2',cursive;font-size:clamp(15px,2vw,18px);font-weight:800;width:26px;text-align:center;flex-shrink:0;}
+.r1{color:var(--gold);}
+.r2{color:#9BA4B5;}
+.r3{color:#C9A96E;}
+.r-rest{color:var(--muted);}
+.lb-av{width:clamp(30px,5vw,38px);height:clamp(30px,5vw,38px);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:clamp(11px,1.3vw,13px);font-weight:700;color:#0A0D14;flex-shrink:0;}
+.av1{background:linear-gradient(135deg,#F7B731,#e8a020);}
+.av2{background:linear-gradient(135deg,#00E5C3,#00b89a);}
+.av3{background:linear-gradient(135deg,#FF6B9D,#e0527a);}
+.av4{background:linear-gradient(135deg,#4D8CFF,#2d6fd6);}
+.av5{background:linear-gradient(135deg,#A78BFA,#7C3AED);}
+.lb-info{flex:1;min-width:0;}
+.lb-name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.lb-name{font-size:clamp(12.5px,1.6vw,14px);font-weight:600;}
+.lb-sub{font-size:11px;color:var(--muted);}
+.lb-pts{font-family:'Baloo 2',cursive;font-weight:700;color:var(--gold);font-size:clamp(13px,1.8vw,16px);flex-shrink:0;}
+.lb-cta{text-align:center;margin-top:22px;}
+.lb-cta p{font-size:14px;color:var(--muted);margin-bottom:14px;}
+
+/* COMMENTS */
+.cm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:40px;}
+.cm-card{background:var(--surface);border:1px solid rgba(255,255,255,0.06);border-radius:18px;padding:20px;transition:transform .3s;}
+.cm-card:hover{transform:translateY(-3px);}
+.cm-card.hot{border-color:rgba(247,183,49,0.15);}
+.stars{color:var(--gold);font-size:13px;margin-bottom:10px;}
+.cm-text{font-size:13px;color:rgba(240,244,255,0.75);line-height:1.7;margin-bottom:14px;font-style:italic;}
+.cm-auth{display:flex;align-items:center;gap:10px;}
+.cmav{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#0A0D14;flex-shrink:0;}
+.cmav1{background:linear-gradient(135deg,#F7B731,#e8a020);}
+.cmav2{background:linear-gradient(135deg,#00E5C3,#00b89a);}
+.cmav3{background:linear-gradient(135deg,#FF6B9D,#e0527a);}
+.cmav4{background:linear-gradient(135deg,#4D8CFF,#2d6fd6);}
+.cmav5{background:linear-gradient(135deg,#A78BFA,#7C3AED);}
+.cmav6{background:linear-gradient(135deg,#4ADE80,#16A34A);}
+.cm-name{font-size:13px;font-weight:600;}
+.cm-tag{font-size:11px;color:var(--muted);}
+.cm-empty{grid-column:1/-1;text-align:center;padding:34px 20px;color:var(--muted);font-size:13px;background:var(--surface);border:1px dashed rgba(255,255,255,0.12);border-radius:18px;}
+.cm-empty a{color:var(--teal);text-decoration:none;font-weight:600;}
+.cm-empty a:hover{text-decoration:underline;}
+
+/* BOTTOM CTA */
+.cta-section{padding:clamp(40px,8vw,80px) clamp(16px,6vw,60px);text-align:center;background:radial-gradient(ellipse 70% 60% at 50% 100%,rgba(247,183,49,0.05),transparent);}
+.cta-title{font-family:'Baloo 2',cursive;font-size:clamp(24px,4.2vw,40px);font-weight:900;letter-spacing:-1px;margin-bottom:14px;}
+.cta-sub{font-size:clamp(12.5px,1.5vw,15px);color:var(--muted);margin-bottom:30px;line-height:1.6;}
+.cta-btns{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;}
+.btn-cta-p{padding:14px clamp(20px,4vw,34px);border-radius:14px;background:linear-gradient(135deg,var(--gold),#e8a020);border:none;color:#0A0D14;font-size:15px;font-weight:800;cursor:pointer;font-family:'Baloo 2',cursive;box-shadow:0 6px 26px rgba(247,183,49,0.35);transition:all .2s;flex:1 1 auto;min-width:180px;}
+.btn-cta-p:hover{transform:translateY(-2px);}
+.btn-cta-s{padding:14px clamp(20px,4vw,34px);border-radius:14px;background:transparent;border:1px solid var(--muted2);color:var(--white);font-size:15px;font-weight:600;cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:all .2s;flex:1 1 auto;min-width:180px;}
+.btn-cta-s:hover{border-color:var(--teal);color:var(--teal);}
+
+/* FOOTER */
+footer{padding:20px clamp(16px,6vw,60px);border-top:1px solid rgba(255,255,255,0.05);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;text-align:center;}
+.f-logo{font-family:'Baloo 2',cursive;font-size:18px;font-weight:900;background:linear-gradient(135deg,var(--gold),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.f-copy{font-size:12px;color:var(--muted);}
+.f-tag{font-family:'Baloo 2',cursive;font-size:13px;font-weight:700;background:linear-gradient(135deg,var(--gold),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+
+/* SCROLL REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+/* ══════════════════════════════════════════
+   RESPONSIVE — tablet & mobile
+══════════════════════════════════════════ */
+/* Structural layout switches — everything else (font-size, padding, gaps)
+   is fluid via clamp()/vw above, so it adjusts continuously at ANY
+   window width, not just at these two snap points. */
+@media (max-width:860px){
+  .hero{grid-template-columns:1fr;min-height:auto;}
+  .hero-right{order:-1;}
+}
+@media (max-width:520px){
+  .mini-grid{grid-template-columns:1fr;}
+  .cta-btns{flex-direction:column;}
+  .btn-cta-p,.btn-cta-s{width:100%;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">🧠 GyanIQ</div>
+  <div class="nav-links">
+    <button class="nav-link active">Home</button>
+    <button class="nav-link" onclick="goProtected('games.html')">Games</button>
+    <button class="nav-link" onclick="goProtected('tournaments.html')">Tournaments</button>
+    <button class="nav-link" onclick="goProtected('leaderboard.html')">Leaderboard</button>
+    <button class="nav-link" onclick="location.href='contact.html'">Contact</button>
+    <button class="nav-link" onclick="location.href='help.html'">Help</button>
+  </div>
+  <div class="nav-btns" id="nav-btns">
+    <button class="btn-nav-login" onclick="location.href='login.html'">Login</button>
+    <button class="btn-nav-signup" onclick="location.href='signup.html'">Sign Up Free</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-grid"></div>
+
+  <!-- LEFT -->
+  <div class="hero-left">
+    <div class="hero-badge"><span class="bdot"></span>India Ka Smart EduGaming Platform</div>
+    <h1 class="hero-h1">
+      Exam Ki Taiyari<br>
+      <span class="grad">Alag Andaaz Mein!</span>
+    </h1>
+    <p class="hero-sub">
+      GK, Math, Current Affairs ke <strong>smart games</strong> khelo.<br>
+      Apni <strong>rank badhao</strong> aur exam mein aage niklo.<br>
+      Roz naya challenge — roz naya seekhna.
+    </p>
+
+    <!-- AUTH CARD -->
+    <div class="auth-card">
+      <div class="auth-tabs">
+        <button class="atab on" id="ts" onclick="switchTab('s')">Naya Account</button>
+        <button class="atab" id="tl" onclick="switchTab('l')">Login Karo</button>
+      </div>
+
+      <!-- SIGNUP -->
+      <div id="sf">
+        <div class="afield"><label>Poora Naam</label><input type="text" id="sn" placeholder="Jaise: Rahul Sharma"></div>
+        <div class="afield"><label>Email</label><input type="email" id="se" placeholder="tumhara@email.com"></div>
+        <div class="afield"><label>Password</label><input type="password" id="sp" placeholder="Minimum 6 characters"></div>
+        <button class="abtn" id="sb" onclick="doSignup()">🚀 Free Mein Join Karo</button>
+        <div class="amsg" id="sm"></div>
+      </div>
+
+      <!-- LOGIN -->
+      <div id="lf" style="display:none">
+        <div class="afield"><label>Email</label><input type="email" id="le" placeholder="tumhara@email.com"></div>
+        <div class="afield"><label>Password</label><input type="password" id="lp" placeholder="Tumhara password"></div>
+        <button class="abtn" id="lb" onclick="doLogin()">🔓 Login Karo</button>
+        <div class="amsg" id="lm"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="hero-right">
+    <div class="hcard gc" id="liveGameCard">
+      <div class="hc-label">🔴 Live Abhi</div>
+      <div class="hc-title" id="liveGameTitle">GK Battle Royale</div>
+      <div class="hc-sub" id="liveGameSub">Hazaron students khel rahe hain abhi</div>
+      <div class="prog"><div class="prog-fill" id="pf"></div></div>
+    </div>
+    <div class="hcard tc" id="topPlayerCard">
+      <div class="hc-label">👑 Top Player Aaj Ka</div>
+      <div class="hc-num" id="topPlayerNum">#1 —</div>
+      <div class="hc-sub" id="topPlayerSub">Study Zone Leaderboard</div>
+    </div>
+    <div class="mini-grid" id="miniGameGrid">
+      <div class="mcard">
+        <div class="mcard-icon">🔢</div>
+        <div class="mcard-title">Math Speed Race</div>
+        <div class="mcard-sub">60 sec challenge</div>
+      </div>
+      <div class="mcard">
+        <div class="mcard-icon">📰</div>
+        <div class="mcard-title">Current Affairs</div>
+        <div class="mcard-sub">Roz naya quiz</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar reveal">
+  <div class="stat"><div class="stat-icon">👥</div><div class="stat-num">500+</div><div class="stat-label">Active Players</div></div>
+  <div class="stat"><div class="stat-icon">📅</div><div class="stat-num">Daily</div><div class="stat-label">New Challenges</div></div>
+  <div class="stat"><div class="stat-icon">⭐</div><div class="stat-num">4.8</div><div class="stat-label">User Rating</div></div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="section reveal">
+  <div class="sec-label">Kaise Kaam Karta Hai?</div>
+  <h2 class="sec-title">3 Steps Mein Shuru Karo</h2>
+  <p class="sec-sub">Bilkul simple — koi extra setup nahi</p>
+  <div class="how-grid">
+    <div class="how-card">
+      <div class="how-bg-num">1</div>
+      <div class="how-icon hi1">👤</div>
+      <h3 class="how-title">Account Banao</h3>
+      <p class="how-body">Free mein sign up karo — sirf naam aur email chahiye. 30 seconds mein ready ho jaoge.</p>
+    </div>
+    <div class="how-card">
+      <div class="how-bg-num">2</div>
+      <div class="how-icon hi2">🎮</div>
+      <h3 class="how-title">Game Chuno</h3>
+      <p class="how-body">GK, Math, Vocabulary, Current Affairs — apni pasand ka game select karo aur khelo.</p>
+    </div>
+    <div class="how-card">
+      <div class="how-bg-num">3</div>
+      <div class="how-icon hi3">🏆</div>
+      <h3 class="how-title">Rank Badhao</h3>
+      <p class="how-body">Roz khelo, score improve karo, leaderboard pe apna naam laao aur exam ki taiyari mazedaar banao.</p>
+    </div>
+  </div>
+</section>
+
+<!-- LEADERBOARD -->
+<section class="lb-section reveal">
+  <div class="lb-inner">
+    <div class="sec-label">🏆 Top Players</div>
+    <h2 class="sec-title">Aaj Ka Leaderboard</h2>
+    <div class="lb-list" id="lbList">
+      <div class="lb-row top">
+        <div class="lb-rank r1">1</div>
+        <div class="lb-av av1">PS</div>
+        <div class="lb-info"><div class="lb-name">Priya S. 👑</div><div class="lb-sub">SSC CGL · Jaipur</div></div>
+        <div class="lb-pts">1,240 pts</div>
+      </div>
+      <div class="lb-row">
+        <div class="lb-rank r2">2</div>
+        <div class="lb-av av2">RK</div>
+        <div class="lb-info"><div class="lb-name">Rahul K.</div><div class="lb-sub">Railway · Lucknow</div></div>
+        <div class="lb-pts">1,180 pts</div>
+      </div>
+      <div class="lb-row">
+        <div class="lb-rank r3">3</div>
+        <div class="lb-av av3">AM</div>
+        <div class="lb-info"><div class="lb-name">Amit M.</div><div class="lb-sub">UPSC · Delhi</div></div>
+        <div class="lb-pts">1,050 pts</div>
+      </div>
+      <div class="lb-row">
+        <div class="lb-rank r-rest">4</div>
+        <div class="lb-av av4">SG</div>
+        <div class="lb-info"><div class="lb-name">Sunita G.</div><div class="lb-sub">Bank PO · Mumbai</div></div>
+        <div class="lb-pts">980 pts</div>
+      </div>
+      <div class="lb-row">
+        <div class="lb-rank r-rest">5</div>
+        <div class="lb-av av5">VT</div>
+        <div class="lb-info"><div class="lb-name">Vijay T.</div><div class="lb-sub">Police SI · Bhopal</div></div>
+        <div class="lb-pts">920 pts</div>
+      </div>
+    </div>
+    <div class="lb-cta">
+      <p>Join karo aur apna naam is list mein daalo!</p>
+      <button class="btn-cta-p" onclick="location.href='signup.html'">🚀 Abhi Join Karo</button>
+    </div>
+  </div>
+</section>
+
+<!-- COMMENTS -->
+<section class="section reveal" style="background:var(--bg);">
+  <div class="sec-label">Users Ka Kehna</div>
+  <h2 class="sec-title">Unhi Ke Shabdon Mein</h2>
+  <p class="sec-sub">Jo log roz GyanIQ use karte hain</p>
+  <div class="cm-grid" id="cmGrid">
+    <!-- Populated dynamically from real user reviews (see script at bottom).
+         Falls back to a friendly empty-state if no reviews exist yet. -->
+  </div>
+</section>
+
+<!-- BOTTOM CTA -->
+<section class="cta-section reveal">
+  <h2 class="cta-title">Taiyaar Ho? <span style="color:var(--gold)">Shuru Karo!</span></h2>
+  <p class="cta-sub">Hazaron students roz GyanIQ pe apni rank badha rahe hain.<br>Tum kab join kar rahe ho?</p>
+  <div class="cta-btns">
+    <button class="btn-cta-p" onclick="location.href='signup.html'">🚀 Free Mein Join Karo</button>
+    <button class="btn-cta-s" onclick="location.href='login.html'">🔓 Login Karo</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-logo">🧠 GyanIQ</div>
+  <div class="f-copy">© 2025 GyanIQ. Sab rights reserved.</div>
+  <div class="f-tag">Khelo. Seekho. Aage Badho. 🎯</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+// ========== APNI KEYS YAHAN DAALO ==========
+const SURL = 'https://tkdsvzumcribcmbsikwg.supabase.co';
+const SKEY = 'sb_publishable_CGABUWknNZA_irMSmw3UYg_jk_j-EY1';
+// ============================================
+
+// Page animations - keys ke bina bhi kaam karega
+setTimeout(() => { document.getElementById('pf').style.width = '72%'; }, 500);
+
+// Scroll reveal
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, {threshold:.1});
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// Tab switch
+function switchTab(t) {
+  document.getElementById('sf').style.display = t==='s'?'block':'none';
+  document.getElementById('lf').style.display = t==='l'?'block':'none';
+  document.getElementById('ts').classList.toggle('on', t==='s');
+  document.getElementById('tl').classList.toggle('on', t==='l');
+}
+
+// Auth setup — sb stays null if Supabase can't initialize, so every
+// function below can check for it and ALWAYS show a message instead of
+// silently failing (this also avoids duplicate function declarations
+// inside try/catch, which some in-app/WebView browsers handle
+// inconsistently and can cause buttons to silently do nothing).
+let sb = null;
+try {
+  if (!window.supabase) throw new Error('Supabase SDK failed to load (CDN blocked?)');
+  sb = window.supabase.createClient(SURL, SKEY);
+  sb.auth.getSession().then(({data:{session}}) => {
+    if(session) {
+      const name = session.user.user_metadata?.name || ('Player' + session.user.id.slice(0,6));
+      document.getElementById('nav-btns').innerHTML = `
+        <span style="color:var(--teal);font-size:13px;font-weight:600;">👋 ${name}</span>
+        <button class="btn-nav-login" onclick="sb.auth.signOut().then(()=>location.reload())">Logout</button>
+      `;
+      ensureUniqueUsername();
+    }
+  }).catch(err => console.error('GyanIQ: getSession failed', err));
+} catch(err) {
+  console.error('GyanIQ: Supabase init failed', err);
+}
+
+async function doSignup() {
+  const n=document.getElementById('sn').value, e=document.getElementById('se').value, p=document.getElementById('sp').value;
+  const msg=document.getElementById('sm'), btn=document.getElementById('sb');
+  if(!n||!e||!p){showMsg(msg,'Sab fields bharo!','err');return;}
+  if(p.length<6){showMsg(msg,'Password 6+ characters ka hona chahiye!','err');return;}
+  if(!sb){showMsg(msg,'Connection problem — page reload karke dobara try karo.','err');return;}
+  btn.disabled=true; btn.textContent='Ho raha hai...';
+  try{
+    const {error} = await sb.auth.signUp({email:e,password:p,options:{data:{name:n}}});
+    if(error){showMsg(msg,error.message,'err');btn.disabled=false;btn.textContent='🚀 Free Mein Join Karo';}
+    else{showMsg(msg,'Account ban gaya! Email verify karo phir login karo.','ok');btn.textContent='✅ Done!';}
+  }catch(err){
+    showMsg(msg,'Kuch gadbad ho gayi — internet check karke dobara try karo.','err');
+    btn.disabled=false; btn.textContent='🚀 Free Mein Join Karo';
+    console.error('GyanIQ: signup failed', err);
+  }
+}
+
+// Guarantees every logged-in user has a permanent, database-enforced
+// UNIQUE username (so two people named "suraj" never collide on any
+// leaderboard). Runs once per login: if a profile already exists, it's
+// reused as-is; otherwise a fresh unique handle is generated and saved.
+async function ensureUniqueUsername(){
+  try{
+    const { data:{ user } } = await sb.auth.getUser();
+    if(!user) return;
+
+    const { data: existing } = await sb.from('user_profiles').select('username').eq('id', user.id).maybeSingle();
+    if(existing && existing.username){
+      if(user.user_metadata?.username !== existing.username){
+        await sb.auth.updateUser({ data:{ username: existing.username } });
+      }
+      return;
+    }
+
+    const rawName = (user.user_metadata?.name || 'player').toLowerCase().replace(/[^a-z0-9]/g,'').slice(0,14) || 'player';
+    for(let attempt=0; attempt<8; attempt++){
+      const suffix = Math.floor(1000 + Math.random()*9000); // 4-digit random
+      const candidate = rawName + suffix;
+      const { error } = await sb.from('user_profiles').insert({ id:user.id, username:candidate, full_name:user.user_metadata?.name || null });
+      if(!error){
+        await sb.auth.updateUser({ data:{ username: candidate } });
+        return;
+      }
+      if(error.code !== '23505') break; // not a duplicate-username error — stop retrying
+    }
+    // Extremely unlikely fallback: guarantee uniqueness via the user's own id.
+    const fallback = rawName + user.id.slice(0,6);
+    await sb.from('user_profiles').upsert({ id:user.id, username:fallback, full_name:user.user_metadata?.name || null });
+    await sb.auth.updateUser({ data:{ username: fallback } });
+  }catch(err){ console.error('GyanIQ: ensureUniqueUsername failed', err); }
+}
+
+async function doLogin() {
+  const e=document.getElementById('le').value, p=document.getElementById('lp').value;
+  const msg=document.getElementById('lm'), btn=document.getElementById('lb');
+  if(!e||!p){showMsg(msg,'Email aur password bharo!','err');return;}
+  if(!sb){showMsg(msg,'Connection problem — page reload karke dobara try karo.','err');return;}
+  btn.disabled=true; btn.textContent='Login ho raha hai...';
+  try{
+    const {error} = await sb.auth.signInWithPassword({email:e,password:p});
+    if(error){showMsg(msg,'Email ya password galat hai!','err');btn.disabled=false;btn.textContent='🔓 Login Karo';}
+    else{ await ensureUniqueUsername(); location.href='games.html'; }
+  }catch(err){
+    showMsg(msg,'Kuch gadbad ho gayi — internet check karke dobara try karo.','err');
+    btn.disabled=false; btn.textContent='🔓 Login Karo';
+    console.error('GyanIQ: login failed', err);
+  }
+}
+
+function goProtected(page) {
+  if(!sb){ location.href='login.html'; return; }
+  sb.auth.getSession().then(({data:{session}}) => {
+    location.href = session ? page : 'login.html';
+  }).catch(()=>{ location.href='login.html'; });
+}
+
+function showMsg(el,txt,cls){el.textContent=txt;el.className='amsg '+cls;}
+</script>
+
+<script>
+/* ============================
+   HOMEPAGE LIVE DATA — Study Zone leaderboard + most-played games
+   ============================
+   Reads from the SAME `leaderboard_players` table that tournaments.html
+   and leaderboard.html use. Uses the `sb` Supabase client already created
+   above. Falls back to the existing hardcoded markup (left in place) if
+   Supabase isn't reachable, so the page never looks broken.
+*/
+(function(){
+  "use strict";
+  if(!sb) return; // Supabase unavailable — keep existing static content as fallback
+
+  const GAME_CATALOG = {
+    'current-affairs': { name:'Current Affairs Champion', icon:'📰' },
+    'science-warrior': { name:'Science Warrior',           icon:'⚗️' },
+    'geochamp':        { name:'GeoChamp',                  icon:'🌍' },
+    'mind-matrix':     { name:'Mind Matrix',                icon:'🧩' },
+    'mathrush':        { name:'MathRush',                   icon:'🔢' },
+    'wordrush':        { name:'WordRush',                   icon:'🔤' },
+    'socho-zara':      { name:'Socho Zara',                 icon:'🧠' },
+    'snake-rush':      { name:'Snake Rush',        icon:'🐍' },
+    'ludo-legends':    { name:'Ludo Legends',      icon:'🎲' },
+    'uno':             { name:'UNO',                icon:'🌈' },
+    'rummy-royale':    { name:'Rummy Royale',      icon:'🃏' },
+    'puzzle-master':   { name:'Puzzle Master',     icon:'🧩' },
+    'royal-checkmate': { name:'Royal Checkmate',   icon:'♟️' }
+  };
+  function gameInfo(id){ return GAME_CATALOG[id] || { name:'GyanIQ Game', icon:'🎮' }; }
+
+  /* ---- Aaj Ka Leaderboard (Study Zone, top 5) + Top Player card ---- */
+  async function loadStudyLeaderboard(){
+    const { data, error } = await sb
+      .from('leaderboard_players')
+      .select('username, points')
+      .eq('zone', 'study')
+      .order('points', { ascending:false })
+      .limit(5);
+
+    if(error || !data || data.length === 0){
+      console.error('GyanIQ: homepage leaderboard fetch failed or empty', error);
+      return;
+    }
+
+    const lbList = document.getElementById('lbList');
+    const avClasses = ['av1','av2','av3','av4','av5'];
+    const rankClasses = ['r1','r2','r3','r-rest','r-rest'];
+    lbList.innerHTML = data.map((p, i)=>{
+      const initials = (p.username || 'P').trim().slice(0,2).toUpperCase();
+      const crown = i === 0 ? ' 👑' : '';
+      return `
+        <div class="lb-row ${i===0?'top':''}">
+          <div class="lb-rank ${rankClasses[i]}">${i+1}</div>
+          <div class="lb-av ${avClasses[i]}">${initials}</div>
+          <div class="lb-info"><div class="lb-name">${p.username}${crown}</div><div class="lb-sub">Study Zone</div></div>
+          <div class="lb-pts">${p.points} pts</div>
+        </div>`;
+    }).join('');
+
+    // Top Player Aaj Ka — the real #1 from Study Zone
+    const top = data[0];
+    document.getElementById('topPlayerNum').textContent = '#1 ' + top.username;
+    document.getElementById('topPlayerSub').textContent = top.points + ' points · Study Zone Leaderboard';
+  }
+
+  /* ---- Most-played games (Live Abhi + mini-grid) ----
+     leaderboard_players doesn't store a global play-count per game, so
+     this approximates "most played" by counting how many players have
+     each game set as their favorite_game_id (their most recent game). */
+  async function loadMostPlayedGames(){
+    const { data, error } = await sb
+      .from('leaderboard_players')
+      .select('favorite_game_id')
+      .not('favorite_game_id', 'is', null);
+
+    if(error || !data || data.length === 0){
+      console.error('GyanIQ: most-played games fetch failed or empty', error);
+      return;
+    }
+
+    const counts = {};
+    data.forEach(row=>{
+      if(!row.favorite_game_id) return;
+      counts[row.favorite_game_id] = (counts[row.favorite_game_id] || 0) + 1;
+    });
+    const ranked = Object.entries(counts).sort((a,b)=> b[1]-a[1]).map(([id,count])=>({ id, count, ...gameInfo(id) }));
+    if(ranked.length === 0) return;
+
+    // Live Abhi — #1 most-played game right now
+    const top = ranked[0];
+    document.getElementById('liveGameTitle').textContent = top.name;
+    document.getElementById('liveGameSub').textContent = `Sabse zyada khela ja raha hai abhi — ${top.count} players`;
+
+    // Mini-grid — next most-played games (skip the one already shown above)
+    const rest = ranked.slice(1, 3);
+    if(rest.length > 0){
+      document.getElementById('miniGameGrid').innerHTML = rest.map(g => `
+        <div class="mcard">
+          <div class="mcard-icon">${g.icon}</div>
+          <div class="mcard-title">${g.name}</div>
+          <div class="mcard-sub">${g.count} players ne khela</div>
+        </div>`).join('');
+    }
+  }
+
+  loadStudyLeaderboard();
+  loadMostPlayedGames();
+})();
+</script>
+
+<script>
+/* ============================
+   HOMEPAGE REVIEWS — real user reviews
+   ============================
+   Reads from the SAME store the Help Center's Review Submission Form
+   writes to (localStorage key 'gyaniqReviews_v1', JSON array of
+   { id, username, rating, message, createdAt }), so a review submitted
+   on help.html shows up here with no extra wiring. This mirrors the
+   window.GyanIQReviews API exposed on the Help Center page and is
+   structured so swapping to Supabase later only means changing
+   loadReviews() below to a `supabase.from('reviews').select()` call
+   (see the Help Center page for the matching table schema).
+*/
+(function(){
+  "use strict";
+  const REVIEWS_KEY = 'gyaniqReviews_v1';
+  const cmGrid = document.getElementById('cmGrid');
+  if(!cmGrid) return;
+
+  function loadReviews(){
+    try{
+      const raw = localStorage.getItem(REVIEWS_KEY);
+      return raw ? JSON.parse(raw) : [];
+    }catch(e){ return []; }
+  }
+
+  function renderHomeReviews(){
+    const reviews = loadReviews().sort((a,b)=> new Date(b.createdAt) - new Date(a.createdAt)).slice(0,6);
+
+    if(reviews.length === 0){
+      cmGrid.innerHTML = `<div class="cm-empty">Abhi tak koi review nahi hai — <a href="help.html">GyanIQ ko rate karne wale sabse pehle bano! ⭐</a></div>`;
+      return;
+    }
+
+    cmGrid.innerHTML = reviews.map((r, i)=>{
+      const avClass = 'cmav' + ((i % 6) + 1);
+      const initials = r.username.trim().slice(0,2).toUpperCase();
+      const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+      const safeUser = r.username.replace(/</g,'&lt;');
+      const safeMsg = r.message.replace(/</g,'&lt;');
+      const hotClass = r.rating === 5 ? ' hot' : '';
+      return `
+        <div class="cm-card${hotClass}">
+          <div class="stars">${stars}</div>
+          <div class="cm-text">"${safeMsg}"</div>
+          <div class="cm-auth"><div class="cmav ${avClass}">${initials}</div><div><div class="cm-name">${safeUser}</div><div class="cm-tag">GyanIQ Player</div></div></div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  renderHomeReviews();
+
+  // Cross-tab live update: if a review is submitted on help.html in
+  // another tab, this page's testimonials refresh automatically.
+  window.addEventListener('storage', (e)=>{
+    if(e.key === REVIEWS_KEY) renderHomeReviews();
+  });
+})();
+</script>
+</body>
+</html>

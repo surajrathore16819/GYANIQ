@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Current Affairs Arena — GyanIQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════
+   ROOT
+══════════════════════════════════════════ */
+:root{
+  --bg:#04070F;
+  --bg2:#080E1C;
+  --bg3:#0C1526;
+  --card:#0F1B30;
+  --card2:#132038;
+  --gold:#F7B731;
+  --gold2:#e89e1a;
+  --teal:#00E5C3;
+  --pink:#FF6B9D;
+  --blue:#4A9FFF;
+  --purple:#9B7FFF;
+  --green:#06D6A0;
+  --red:#EF476F;
+  --amber:#FFB347;
+  --text:#EEF2FF;
+  --text2:#6B7FAA;
+  --text3:#2E3F60;
+  --b1:rgba(255,255,255,0.06);
+  --b2:rgba(255,255,255,0.12);
+  --b3:rgba(255,255,255,0.18);
+  --font-head:'Rajdhani',sans-serif;
+  --font-body:'DM Sans',sans-serif;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ── Background grid ── */
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(0,229,195,0.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,229,195,0.025) 1px,transparent 1px);
+  background-size:60px 60px;
+}
+body::after{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% -10%,rgba(74,159,255,0.08),transparent),
+    radial-gradient(ellipse 40% 60% at 100% 80%,rgba(247,183,49,0.05),transparent),
+    radial-gradient(ellipse 40% 50% at 0% 50%,rgba(0,229,195,0.04),transparent);
+}
+.z1{position:relative;z-index:1;}
+
+/* ══════════════════════════════════════════
+   SCREEN SYSTEM
+══════════════════════════════════════════ */
+.screen{display:none;}
+.screen.active{display:flex;flex-direction:column;min-height:100vh;}
+
+/* ══════════════════════════════════════════
+   NAV
+══════════════════════════════════════════ */
+nav{
+  height:54px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;
+  background:rgba(4,7,15,0.88);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--b1);
+  position:sticky;top:0;z-index:200;
+}
+.nav-logo{
+  font-family:var(--font-head);font-size:20px;font-weight:700;letter-spacing:1px;
+  background:linear-gradient(135deg,var(--gold),var(--teal));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  text-decoration:none;cursor:pointer;
+}
+.nav-title{
+  font-family:var(--font-head);font-size:15px;font-weight:600;letter-spacing:2px;
+  color:var(--teal);text-transform:uppercase;
+}
+.nav-back{
+  font-size:12px;font-weight:600;color:var(--text2);
+  padding:6px 14px;border-radius:8px;border:1px solid var(--b1);
+  background:var(--bg3);cursor:pointer;transition:all 0.2s;
+  text-decoration:none;letter-spacing:0.5px;
+}
+.nav-back:hover{color:var(--text);border-color:var(--b2);}
+
+/* ══════════════════════════════════════════
+   HOME SCREEN
+══════════════════════════════════════════ */
+#s-home{
+  align-items:center;
+  padding:0 20px 60px;
+  background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(74,159,255,0.06),transparent);
+}
+.home-inner{width:100%;max-width:520px;margin:0 auto;}
+
+/* Hero */
+.hero{text-align:center;padding:48px 0 32px;}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(74,159,255,0.08);border:1px solid rgba(74,159,255,0.2);
+  border-radius:30px;padding:6px 16px;
+  font-size:11px;font-weight:600;color:var(--blue);
+  text-transform:uppercase;letter-spacing:1.5px;margin-bottom:20px;
+}
+.hero-dot{width:6px;height:6px;border-radius:50%;background:var(--blue);animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.2;}}
+.hero-title{
+  font-family:var(--font-head);
+  font-size:clamp(38px,10vw,58px);font-weight:700;letter-spacing:1px;
+  line-height:1.05;margin-bottom:6px;
+  background:linear-gradient(135deg,var(--text) 0%,var(--blue) 60%,var(--teal) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero-sub{
+  font-family:var(--font-head);font-size:clamp(16px,4vw,22px);
+  font-weight:600;letter-spacing:3px;color:var(--text2);
+  text-transform:uppercase;margin-bottom:14px;
+}
+.hero-desc{font-size:14px;color:var(--text2);line-height:1.7;max-width:360px;margin:0 auto 28px;}
+
+/* Stat chips */
+.stat-row{display:flex;gap:8px;justify-content:center;margin-bottom:32px;flex-wrap:wrap;}
+.stat-chip{
+  display:flex;align-items:center;gap:7px;
+  background:var(--card);border:1px solid var(--b1);
+  border-radius:12px;padding:8px 14px;font-size:12px;font-weight:600;color:var(--text2);
+}
+.stat-chip-icon{font-size:16px;}
+.stat-chip span:last-child{color:var(--text);}
+
+/* Category grid */
+.cat-section{margin-bottom:28px;}
+.sec-label{
+  font-family:var(--font-head);font-size:12px;font-weight:600;
+  color:var(--text2);text-transform:uppercase;letter-spacing:2px;margin-bottom:12px;
+}
+.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;}
+.cat-chip{
+  background:var(--bg3);border:1px solid var(--b1);
+  border-radius:10px;padding:8px 6px;text-align:center;
+  font-size:10px;font-weight:600;color:var(--text2);
+  cursor:pointer;transition:all 0.2s;
+}
+.cat-chip:hover,.cat-chip.on{border-color:rgba(74,159,255,0.4);color:var(--blue);background:rgba(74,159,255,0.06);}
+.cat-chip .ci{font-size:16px;display:block;margin-bottom:3px;}
+
+/* Best score card */
+.best-card{
+  background:linear-gradient(135deg,rgba(247,183,49,0.07),rgba(0,229,195,0.04));
+  border:1px solid rgba(247,183,49,0.18);
+  border-radius:18px;padding:16px 20px;
+  display:flex;align-items:center;gap:16px;margin-bottom:20px;
+  position:relative;overflow:hidden;
+}
+.best-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(247,183,49,0.5),transparent);
+}
+.bc-icon{font-size:36px;}
+.bc-info{flex:1;}
+.bc-label{font-size:10px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:1px;}
+.bc-val{font-family:var(--font-head);font-size:30px;font-weight:700;color:var(--gold);line-height:1.1;}
+.bc-sub{font-size:11px;color:var(--text2);}
+
+/* Start button */
+.start-btn{
+  width:100%;padding:18px;border-radius:14px;
+  background:linear-gradient(135deg,var(--blue),#2980e8);
+  border:none;color:#fff;
+  font-family:var(--font-head);font-size:20px;font-weight:700;letter-spacing:2px;
+  text-transform:uppercase;cursor:pointer;
+  box-shadow:0 8px 32px rgba(74,159,255,0.4);
+  transition:all 0.25s;position:relative;overflow:hidden;
+}
+.start-btn::after{
+  content:'';position:absolute;
+  top:-50%;left:-60%;width:35%;height:200%;
+  background:rgba(255,255,255,0.15);transform:skewX(-15deg);
+  animation:shine 3s 1.5s infinite;
+}
+@keyframes shine{0%{left:-60%;}30%,100%{left:130%;}}
+.start-btn:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(74,159,255,0.5);}
+.start-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
+
+/* ══════════════════════════════════════════
+   COUNTDOWN
+══════════════════════════════════════════ */
+#s-cd{align-items:center;justify-content:center;background:var(--bg);}
+.cd-wrap{text-align:center;}
+.cd-ring{
+  width:160px;height:160px;border-radius:50%;margin:0 auto 20px;
+  background:conic-gradient(var(--blue) 0%,var(--teal) 100%);
+  display:flex;align-items:center;justify-content:center;
+  animation:cdSpin 0.8s cubic-bezier(.34,1.56,.64,1);
+  box-shadow:0 0 60px rgba(74,159,255,0.4);
+}
+@keyframes cdSpin{from{transform:scale(0.2) rotate(-180deg);opacity:0;}to{transform:scale(1) rotate(0);opacity:1;}}
+.cd-num{
+  font-family:var(--font-head);font-size:80px;font-weight:700;
+  color:#fff;line-height:1;
+  background:var(--bg2);border-radius:50%;
+  width:144px;height:144px;display:flex;align-items:center;justify-content:center;
+}
+.cd-label{
+  font-family:var(--font-head);font-size:18px;font-weight:600;
+  color:var(--text2);letter-spacing:3px;text-transform:uppercase;
+}
+
+/* ══════════════════════════════════════════
+   GAME SCREEN
+══════════════════════════════════════════ */
+#s-game{background:var(--bg);padding-bottom:30px;}
+
+/* ── HUD ── */
+.hud{
+  position:sticky;top:0;z-index:100;
+  background:rgba(4,7,15,0.93);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--b1);
+  padding:10px 16px;display:flex;align-items:center;gap:10px;
+}
+.hud-chip{
+  display:flex;flex-direction:column;align-items:center;
+  background:var(--bg3);border:1px solid var(--b1);
+  border-radius:11px;padding:6px 12px;min-width:58px;
+}
+.hud-lbl{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--text2);}
+.hud-val{font-family:var(--font-head);font-size:22px;font-weight:700;line-height:1.1;}
+.hv-score{color:var(--gold);}
+.hv-streak{color:var(--pink);}
+.hv-correct{color:var(--green);}
+.hv-wrong{color:var(--red);}
+
+/* Difficulty badge */
+.diff-badge{
+  display:flex;align-items:center;gap:5px;
+  padding:5px 11px;border-radius:20px;font-size:10px;font-weight:700;
+  text-transform:uppercase;letter-spacing:1px;
+  border:1px solid;
+}
+.diff-easy{background:rgba(6,214,160,0.1);color:var(--green);border-color:rgba(6,214,160,0.25);}
+.diff-medium{background:rgba(247,183,49,0.1);color:var(--gold);border-color:rgba(247,183,49,0.25);}
+.diff-hard{background:rgba(239,71,111,0.1);color:var(--red);border-color:rgba(239,71,111,0.25);}
+
+/* Timer */
+.timer-wrap{margin-left:auto;flex-shrink:0;position:relative;width:50px;height:50px;}
+.t-svg{width:50px;height:50px;transform:rotate(-90deg);}
+.t-bg{fill:none;stroke:#1A2A40;stroke-width:4;}
+.t-arc{
+  fill:none;stroke:var(--teal);stroke-width:4;stroke-linecap:round;
+  stroke-dasharray:133;stroke-dashoffset:0;
+  transition:stroke-dashoffset 0.9s linear,stroke 0.4s;
+}
+.t-arc.urg{stroke:var(--red);}
+.t-center{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-head);font-size:14px;font-weight:700;color:var(--teal);
+  transition:color 0.4s;
+}
+.t-center.urg{color:var(--red);animation:urgBeat 0.6s ease-in-out infinite;}
+@keyframes urgBeat{0%,100%{transform:scale(1);}50%{transform:scale(1.15);}}
+
+/* Time bar */
+.time-bar{height:2px;background:var(--b1);}
+.time-bar-fill{height:100%;width:100%;background:linear-gradient(90deg,var(--teal),var(--blue));transition:width 0.9s linear,background 0.4s;}
+.time-bar-fill.urg{background:linear-gradient(90deg,var(--red),var(--pink));}
+
+/* Progress */
+.prog-area{padding:14px 16px 0;}
+.prog-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.prog-cat{
+  font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  padding:4px 12px;border-radius:20px;
+}
+.prog-qnum{font-size:11px;font-weight:700;color:var(--text2);}
+.prog-dots{display:flex;gap:4px;flex-wrap:wrap;}
+.pd{
+  flex:1;min-width:6px;max-width:22px;height:4px;border-radius:2px;
+  background:#1A2A40;transition:all 0.3s;
+}
+.pd.ok{background:var(--green);}
+.pd.bad{background:var(--red);}
+.pd.cur{background:var(--gold);box-shadow:0 0 6px rgba(247,183,49,0.6);}
+
+/* Question card */
+.q-wrap{padding:14px 16px 0;max-width:600px;margin:0 auto;width:100%;}
+.q-card{
+  background:var(--card);border:1px solid var(--b2);
+  border-radius:20px;overflow:hidden;
+  margin-bottom:14px;
+  animation:qIn 0.32s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes qIn{from{transform:translateX(40px);opacity:0;}to{transform:translateX(0);opacity:1;}}
+.q-card-top{height:2px;background:linear-gradient(90deg,var(--blue),var(--teal),var(--purple));}
+.q-card-body{padding:20px 18px;}
+.q-source{
+  font-size:10px;font-weight:600;color:var(--text2);
+  text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;
+  display:flex;align-items:center;gap:6px;
+}
+.q-source-dot{width:6px;height:6px;border-radius:50%;background:var(--blue);}
+.q-text{
+  font-family:var(--font-head);font-size:clamp(16px,4.5vw,21px);
+  font-weight:600;line-height:1.45;color:var(--text);letter-spacing:0.3px;
+}
+
+/* Options */
+.opts{display:flex;flex-direction:column;gap:9px;}
+.opt{
+  display:flex;align-items:center;gap:12px;
+  padding:13px 16px;border-radius:13px;
+  background:var(--bg3);border:1.5px solid var(--b1);
+  color:var(--text);font-family:var(--font-body);font-size:14px;font-weight:500;
+  cursor:pointer;transition:all 0.18s;text-align:left;width:100%;
+  position:relative;overflow:hidden;
+}
+.opt::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity 0.2s;}
+.opt:hover:not(:disabled){border-color:rgba(74,159,255,0.4);transform:translateX(3px);}
+.opt:hover:not(:disabled)::before{background:rgba(74,159,255,0.05);opacity:1;}
+.opt-key{
+  width:28px;height:28px;border-radius:8px;flex-shrink:0;
+  background:var(--text3);display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-head);font-size:12px;font-weight:700;color:var(--text);
+  transition:all 0.18s;
+}
+.opt-txt{flex:1;line-height:1.3;position:relative;z-index:1;}
+.opt.correct{border-color:var(--green);background:rgba(6,214,160,0.08);animation:optGlow 0.4s ease;}
+.opt.correct .opt-key{background:var(--green);color:#04070F;}
+.opt.wrong{border-color:var(--red);background:rgba(239,71,111,0.08);animation:optShake 0.35s ease;}
+.opt.wrong .opt-key{background:var(--red);color:#fff;}
+.opt:disabled{cursor:not-allowed;}
+@keyframes optGlow{0%{transform:scale(1);}40%{transform:scale(1.02);box-shadow:0 0 20px rgba(6,214,160,0.3);}100%{transform:scale(1);}}
+@keyframes optShake{0%,100%{transform:translateX(0);}20%{transform:translateX(-8px);}60%{transform:translateX(6px);}80%{transform:translateX(-3px);}}
+
+/* Feedback strip */
+.fb-strip{
+  margin:10px 16px 0;padding:11px 15px;border-radius:12px;
+  font-size:13px;font-weight:600;display:flex;align-items:center;gap:9px;
+  opacity:0;transition:opacity 0.3s;pointer-events:none;
+}
+.fb-strip.show{opacity:1;pointer-events:auto;}
+.fb-strip.fb-ok{background:rgba(6,214,160,0.1);border:1px solid rgba(6,214,160,0.2);color:var(--green);}
+.fb-strip.fb-bad{background:rgba(239,71,111,0.1);border:1px solid rgba(239,71,111,0.2);color:var(--red);}
+.fb-icon{font-size:18px;flex-shrink:0;}
+
+/* Score pop */
+.score-pop{
+  position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
+  font-family:var(--font-head);font-size:40px;font-weight:700;
+  pointer-events:none;z-index:999;
+  animation:popUp 0.8s ease-out forwards;
+}
+@keyframes popUp{0%{opacity:1;transform:translate(-50%,-50%) scale(1);}100%{opacity:0;transform:translate(-50%,-120%) scale(1.6);}}
+
+/* Combo toast */
+.combo-toast{
+  position:fixed;bottom:80px;right:16px;z-index:500;
+  background:linear-gradient(135deg,var(--gold),var(--pink));
+  color:#04070F;font-family:var(--font-head);font-size:14px;font-weight:700;
+  padding:10px 18px;border-radius:12px;letter-spacing:1px;
+  transform:translateX(150%);transition:transform 0.35s cubic-bezier(.34,1.56,.64,1);
+  box-shadow:0 6px 24px rgba(247,183,49,0.4);white-space:nowrap;
+}
+.combo-toast.show{transform:translateX(0);}
+
+/* ══════════════════════════════════════════
+   RESULT SCREEN
+══════════════════════════════════════════ */
+#s-result{
+  align-items:center;padding:0 20px 80px;
+  background:radial-gradient(ellipse 70% 40% at 50% 0%,rgba(247,183,49,0.06),transparent);
+}
+.result-inner{width:100%;max-width:520px;margin:0 auto;}
+
+.result-hero{text-align:center;padding:36px 0 24px;}
+.result-emo{font-size:72px;display:block;animation:rEmoIn 0.6s cubic-bezier(.34,1.56,.64,1);}
+@keyframes rEmoIn{from{transform:scale(0.2) rotate(-20deg);opacity:0;}to{transform:scale(1) rotate(0);opacity:1;}}
+.result-title{
+  font-family:var(--font-head);font-size:clamp(28px,8vw,40px);font-weight:700;
+  letter-spacing:1px;margin-top:10px;
+  background:linear-gradient(135deg,var(--gold),var(--teal));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.result-sub{font-size:14px;color:var(--text2);margin-top:6px;line-height:1.5;}
+
+/* Score big */
+.score-big-card{
+  background:linear-gradient(135deg,rgba(247,183,49,0.09),rgba(74,159,255,0.05));
+  border:1px solid rgba(247,183,49,0.22);
+  border-radius:22px;padding:26px;text-align:center;margin-bottom:16px;
+  position:relative;overflow:hidden;
+  animation:fadeUp 0.5s 0.2s ease both;
+}
+@keyframes fadeUp{from{transform:translateY(20px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.score-big-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--gold),var(--teal),var(--blue));
+}
+.sb-label{font-size:10px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:1.5px;}
+.sb-num{
+  font-family:var(--font-head);font-size:clamp(60px,16vw,80px);font-weight:700;line-height:1;
+  background:linear-gradient(135deg,var(--gold),#FFD77A);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.sb-pts{font-size:16px;color:var(--text2);font-weight:500;}
+.sb-rank{
+  display:inline-flex;align-items:center;gap:7px;
+  background:rgba(247,183,49,0.1);border:1px solid rgba(247,183,49,0.2);
+  border-radius:20px;padding:6px 18px;margin-top:12px;
+  font-size:12px;font-weight:700;color:var(--gold);letter-spacing:1px;
+}
+
+/* Stats grid */
+.stats-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:10px;margin-bottom:14px;
+  animation:fadeUp 0.5s 0.35s ease both;
+}
+.stat-c{
+  background:var(--card);border:1px solid var(--b2);
+  border-radius:16px;padding:16px 14px;position:relative;overflow:hidden;
+}
+.stat-c::before{content:'';position:absolute;top:0;left:0;right:0;height:2.5px;}
+.stat-c:nth-child(1)::before{background:var(--green);}
+.stat-c:nth-child(2)::before{background:var(--red);}
+.stat-c:nth-child(3)::before{background:var(--blue);}
+.stat-c:nth-child(4)::before{background:var(--purple);}
+.sc-icon{font-size:20px;margin-bottom:6px;}
+.sc-val{font-family:var(--font-head);font-size:28px;font-weight:700;line-height:1;margin-bottom:2px;}
+.stat-c:nth-child(1) .sc-val{color:var(--green);}
+.stat-c:nth-child(2) .sc-val{color:var(--red);}
+.stat-c:nth-child(3) .sc-val{color:var(--blue);}
+.stat-c:nth-child(4) .sc-val{color:var(--purple);}
+.sc-lbl{font-size:11px;color:var(--text2);font-weight:500;}
+
+/* Category bars */
+.cat-breakdown{
+  background:var(--card);border:1px solid var(--b1);
+  border-radius:18px;padding:18px;margin-bottom:16px;
+  animation:fadeUp 0.5s 0.45s ease both;
+}
+.cb-title{
+  font-family:var(--font-head);font-size:13px;font-weight:600;
+  color:var(--text2);text-transform:uppercase;letter-spacing:2px;margin-bottom:14px;
+}
+.cb-row{margin-bottom:10px;}
+.cb-row:last-child{margin-bottom:0;}
+.cb-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;}
+.cb-name{font-size:12px;font-weight:600;color:var(--text);}
+.cb-pct{font-size:11px;font-weight:700;color:var(--teal);}
+.cb-track{height:5px;background:#1A2A40;border-radius:3px;overflow:hidden;}
+.cb-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--teal));border-radius:3px;width:0%;transition:width 0.8s ease;}
+
+/* New best */
+.new-best{
+  display:flex;align-items:center;gap:10px;
+  background:rgba(0,229,195,0.07);border:1px solid rgba(0,229,195,0.2);
+  border-radius:13px;padding:12px 16px;margin-bottom:14px;
+  font-size:13px;font-weight:600;color:var(--teal);
+  animation:fadeUp 0.5s 0.3s ease both;
+}
+.nb-spin{animation:spin 0.8s ease-out;}
+@keyframes spin{from{transform:rotate(0) scale(0.3);}to{transform:rotate(360deg) scale(1);}}
+
+/* Action buttons */
+.result-actions{display:flex;flex-direction:column;gap:10px;animation:fadeUp 0.5s 0.55s ease both;}
+.btn-prim{
+  width:100%;padding:16px;border-radius:13px;
+  background:linear-gradient(135deg,var(--blue),#2980e8);
+  border:none;color:#fff;
+  font-family:var(--font-head);font-size:18px;font-weight:700;letter-spacing:1.5px;
+  text-transform:uppercase;cursor:pointer;
+  box-shadow:0 6px 26px rgba(74,159,255,0.35);transition:all 0.22s;
+}
+.btn-prim:hover{transform:translateY(-3px);box-shadow:0 10px 34px rgba(74,159,255,0.45);}
+.btn-sec{
+  width:100%;padding:14px;border-radius:13px;
+  background:none;border:1.5px solid var(--b2);
+  color:var(--text2);font-family:var(--font-body);font-size:14px;font-weight:600;
+  cursor:pointer;transition:all 0.2s;
+}
+.btn-sec:hover{border-color:var(--teal);color:var(--teal);}
+
+/* ══════════════════════════════════════════
+   MOBILE
+══════════════════════════════════════════ */
+@media(max-width:380px){
+  .cat-grid{grid-template-columns:repeat(3,1fr);}
+  .stats-grid{grid-template-columns:1fr 1fr;}
+  .hud{gap:6px;}
+  .hud-chip{padding:5px 8px;min-width:48px;}
+  .hud-val{font-size:18px;}
+}
+@media(min-width:640px){
+  .q-wrap,.prog-area{padding-left:0;padding-right:0;max-width:600px;margin-left:auto;margin-right:auto;width:100%;}
+  .prog-area{padding-left:0;padding-right:0;}
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+<!-- Combo toast -->
+<div class="combo-toast z1" id="combo-toast">🔥 3x Streak!</div>
+
+<!-- ══════════════════════════════════════
+     HOME
+══════════════════════════════════════ -->
+<div class="screen active z1" id="s-home">
+  <nav>
+    <a class="nav-logo" href="index.html">🧠 GyanIQ</a>
+    <div class="nav-title">Current Affairs</div>
+    <a class="nav-back" href="games.html">← Games</a>
+  </nav>
+  <div class="home-inner z1" style="padding-top:0">
+    <div class="hero">
+      <div class="hero-tag"><span class="hero-dot"></span> Live Quiz</div>
+      <div class="hero-title">Current<br>Affairs</div>
+      <div class="hero-sub">Arena</div>
+      <p class="hero-desc">Apni news, politics, economy, sports ki knowledge test karo. Timer se ladho, leaderboard pe aao!</p>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-chip"><span class="stat-chip-icon">⏱️</span><span>60 Second</span></div>
+      <div class="stat-chip"><span class="stat-chip-icon">🎯</span><span>MCQ Format</span></div>
+      <div class="stat-chip"><span class="stat-chip-icon">⚡</span><span>+10 / -2 pts</span></div>
+    </div>
+
+    <div class="cat-section">
+      <div class="sec-label">Category Filter Karo</div>
+      <div class="cat-grid" id="cat-grid">
+        <div class="cat-chip on" data-cat="all" onclick="selCat(this)"><span class="ci">🎯</span>Sab</div>
+        <div class="cat-chip" data-cat="politics" onclick="selCat(this)"><span class="ci">🏛️</span>Politics</div>
+        <div class="cat-chip" data-cat="schemes" onclick="selCat(this)"><span class="ci">📋</span>Schemes</div>
+        <div class="cat-chip" data-cat="budget" onclick="selCat(this)"><span class="ci">💼</span>Budget</div>
+        <div class="cat-chip" data-cat="economy" onclick="selCat(this)"><span class="ci">📈</span>Economy</div>
+        <div class="cat-chip" data-cat="tax" onclick="selCat(this)"><span class="ci">💰</span>Income Tax</div>
+        <div class="cat-chip" data-cat="banking" onclick="selCat(this)"><span class="ci">🏦</span>Banking</div>
+        <div class="cat-chip" data-cat="international" onclick="selCat(this)"><span class="ci">🌍</span>Antarrashtriya</div>
+        <div class="cat-chip" data-cat="sports" onclick="selCat(this)"><span class="ci">🏅</span>Sports</div>
+        <div class="cat-chip" data-cat="science" onclick="selCat(this)"><span class="ci">🔬</span>Science & Tech</div>
+        <div class="cat-chip" data-cat="awards" onclick="selCat(this)"><span class="ci">🏆</span>Awards</div>
+        <div class="cat-chip" data-cat="defence" onclick="selCat(this)"><span class="ci">🛡️</span>Defence</div>
+        <div class="cat-chip" data-cat="environment" onclick="selCat(this)"><span class="ci">🌿</span>Environment</div>
+        <div class="cat-chip" data-cat="days" onclick="selCat(this)"><span class="ci">📅</span>Mahatvapurn Din</div>
+        <div class="cat-chip" data-cat="appointments" onclick="selCat(this)"><span class="ci">👤</span>Niyuktiyan</div>
+      </div>
+    </div>
+
+    <div class="best-card" id="best-card">
+      <div class="bc-icon">🏆</div>
+      <div class="bc-info">
+        <div class="bc-label">Tumhara Best Score</div>
+        <div class="bc-val" id="home-best">0</div>
+        <div class="bc-sub" id="home-best-sub">Pehla game khelo!</div>
+      </div>
+    </div>
+
+    <button class="start-btn" id="start-btn" onclick="startCountdown()">⚡ Game Shuru Karo</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     COUNTDOWN
+══════════════════════════════════════ -->
+<div class="screen z1" id="s-cd">
+  <div class="cd-wrap" style="text-align:center;margin:auto;">
+    <div class="cd-ring">
+      <div class="cd-num" id="cd-num">3</div>
+    </div>
+    <div class="cd-label" id="cd-label">TAIYAAR HO JAO</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     GAME
+══════════════════════════════════════ -->
+<div class="screen z1" id="s-game">
+  <!-- HUD -->
+  <div class="hud">
+    <div class="hud-chip">
+      <span class="hud-lbl">Score</span>
+      <span class="hud-val hv-score" id="h-score">0</span>
+    </div>
+    <div class="hud-chip">
+      <span class="hud-lbl">Streak</span>
+      <span class="hud-val hv-streak" id="h-streak">0</span>
+    </div>
+    <div class="hud-chip">
+      <span class="hud-lbl">✓</span>
+      <span class="hud-val hv-correct" id="h-correct">0</span>
+    </div>
+    <div class="hud-chip">
+      <span class="hud-lbl">✗</span>
+      <span class="hud-val hv-wrong" id="h-wrong">0</span>
+    </div>
+    <div class="diff-badge diff-easy" id="diff-badge">Aasaan</div>
+    <!-- Timer -->
+    <div class="timer-wrap" id="timer-wrap">
+      <svg class="t-svg" viewBox="0 0 50 50">
+        <circle class="t-bg" cx="25" cy="25" r="21"/>
+        <circle class="t-arc" id="t-arc" cx="25" cy="25" r="21"/>
+      </svg>
+      <div class="t-center" id="t-center">60</div>
+    </div>
+  </div>
+  <div class="time-bar"><div class="time-bar-fill" id="time-bar-fill"></div></div>
+
+  <!-- Progress -->
+  <div class="prog-area z1">
+    <div class="prog-meta">
+      <span class="prog-cat" id="prog-cat">Current Affairs</span>
+      <span class="prog-qnum" id="prog-qnum">#1</span>
+    </div>
+    <div class="prog-dots" id="prog-dots"></div>
+  </div>
+
+  <!-- Question -->
+  <div class="q-wrap z1">
+    <div class="q-card" id="q-card">
+      <div class="q-card-top"></div>
+      <div class="q-card-body">
+        <div class="q-source"><span class="q-source-dot"></span><span id="q-src">Current Affairs 2024</span></div>
+        <div class="q-text" id="q-text">Loading...</div>
+      </div>
+    </div>
+    <div class="opts" id="opts"></div>
+  </div>
+  <div class="fb-strip" id="fb-strip">
+    <span class="fb-icon" id="fb-icon">✅</span>
+    <span id="fb-text">Correct!</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     RESULT
+══════════════════════════════════════ -->
+<div class="screen z1" id="s-result">
+  <nav>
+    <a class="nav-logo" href="index.html">🧠 GyanIQ</a>
+    <div class="nav-title">Natije</div>
+    <a class="nav-back" href="games.html">← Games</a>
+  </nav>
+  <div class="result-inner">
+    <div class="result-hero">
+      <span class="result-emo" id="r-emo">🏆</span>
+      <div class="result-title" id="r-title">Outstanding!</div>
+      <div class="result-sub" id="r-sub">You're a Current Affairs Champion!</div>
+    </div>
+
+    <div class="score-big-card">
+      <div class="sb-label">Final Score</div>
+      <div class="sb-num" id="r-score">0</div>
+      <div class="sb-pts">points mile</div>
+      <div class="sb-rank" id="r-rank">🎖️ Rank dekh rahe hain...</div>
+    </div>
+
+    <div class="new-best" id="r-newbest" style="display:none">
+      <span class="nb-spin">⭐</span>
+      <span id="r-newbest-txt">New Personal Best!</span>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-c"><div class="sc-icon">✅</div><div class="sc-val" id="r-correct">0</div><div class="sc-lbl">Sahi</div></div>
+      <div class="stat-c"><div class="sc-icon">❌</div><div class="sc-val" id="r-wrong">0</div><div class="sc-lbl">Galat</div></div>
+      <div class="stat-c"><div class="sc-icon">🎯</div><div class="sc-val" id="r-acc">0%</div><div class="sc-lbl">Shuddhi</div></div>
+      <div class="stat-c"><div class="sc-icon">🔥</div><div class="sc-val" id="r-streak">0</div><div class="sc-lbl">Best Streak</div></div>
+    </div>
+
+    <div class="result-actions">
+      <button class="btn-prim" onclick="restartGame()">🔄 Phir Khelo</button>
+      <button class="btn-sec" onclick="goHome()">← Wapas Jao</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════
+   QUESTION DATABASE — 150 Questions
+   Structure ready for Supabase integration:
+   {
+     id, cat, difficulty, q, opts[], ans, explanation, source, year
+   }
+══════════════════════════════════════════════════════════ */
+</script>
+<script src="questions/current-affairs-questions.js"></script>
+<script>
+
+/* ══════════════════════════════════════════
+   CAT META
+══════════════════════════════════════════ */
+const CAT_META = {
+  politics:      {icon:'🏛️',label:'Politics',      col:'var(--blue)'},
+  schemes:       {icon:'📋',label:'Govt Schemes',   col:'var(--teal)'},
+  budget:        {icon:'💼',label:'Budget',          col:'var(--gold)'},
+  economy:       {icon:'📈',label:'Economy',         col:'var(--green)'},
+  tax:           {icon:'💰',label:'Income Tax',      col:'var(--amber)'},
+  banking:       {icon:'🏦',label:'Banking',         col:'var(--purple)'},
+  international: {icon:'🌍',label:'International',   col:'var(--blue)'},
+  sports:        {icon:'🏅',label:'Sports',          col:'var(--pink)'},
+  science:       {icon:'🔬',label:'Science & Tech',  col:'var(--teal)'},
+  awards:        {icon:'🏆',label:'Awards',          col:'var(--gold)'},
+  defence:       {icon:'🛡️',label:'Defence',         col:'var(--red)'},
+  environment:   {icon:'🌿',label:'Environment',     col:'var(--green)'},
+  days:          {icon:'📅',label:'Important Days',  col:'var(--blue)'},
+  appointments:  {icon:'👤',label:'Appointments',    col:'var(--purple)'},
+};
+
+/* ══════════════════════════════════════════
+   GAME STATE
+   (Supabase integration: replace QUESTIONS
+   array with supabase.from('questions').select()
+   and buildGameSession() for saving results)
+══════════════════════════════════════════ */
+let G = {
+  pool:[],idx:0,
+  score:0,correct:0,wrong:0,
+  streak:0,bestStreak:0,
+  timeLeft:60,timer:null,
+  answered:false,qCount:0,dots:[],
+  gameEnded:false,
+  filterCat:'all',
+  catStats:{},     // { cat: {c:0,t:0} }
+  sessionId: Date.now() + Math.random().toString(36).slice(2), // unique session
+};
+
+/* ── Supabase-ready session builder ──
+   To save to DB:
+   const session = buildGameSession();
+   await supabase.from('ca_game_sessions').insert(session);
+*/
+function buildGameSession(){
+  const total = G.correct + G.wrong;
+  return {
+    session_id: G.sessionId,
+    user_id: null,           // fill from supabase.auth.getUser()
+    game_name: 'current_affairs',
+    filter_cat: G.filterCat,
+    score: G.score,
+    correct: G.correct,
+    wrong: G.wrong,
+    total_answered: G.qCount,
+    accuracy: total > 0 ? Math.round(G.correct/total*100) : 0,
+    best_streak: G.bestStreak,
+    cat_stats: G.catStats,
+    played_at: new Date().toISOString(),
+  };
+}
+
+/* ══════════════════════════════════════════
+   UTILITIES
+══════════════════════════════════════════ */
+const $=id=>document.getElementById(id);
+const shuffle=arr=>{
+  // Fisher-Yates + use sessionId as seed variation
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+};
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  $(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+/* ══════════════════════════════════════════
+   HOME
+══════════════════════════════════════════ */
+function selCat(el){
+  document.querySelectorAll('.cat-chip').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+  G.filterCat=el.dataset.cat;
+}
+
+function loadHomeStats(){
+  const best=parseInt(localStorage.getItem('ca_best')||'0');
+  $('home-best').textContent=best;
+  $('home-best-sub').textContent=best>0?`Best: ${best} points · Khelte raho!`:'Pehla game khelo!';
+}
+
+/* ══════════════════════════════════════════
+   COUNTDOWN
+══════════════════════════════════════════ */
+function startCountdown(){
+  // Reset state with fresh sessionId for different sequences
+  G={...G,
+    pool:[],idx:0,
+    score:0,correct:0,wrong:0,
+    streak:0,bestStreak:0,
+    timeLeft:60,timer:null,
+    answered:false,qCount:0,dots:[],
+    gameEnded:false,
+    catStats:{},
+    sessionId:Date.now()+Math.random().toString(36).slice(2),
+  };
+  // Build pool: filter + shuffle (random each game)
+  let src=QUESTIONS.filter(q=>G.filterCat==='all'||q.cat===G.filterCat);
+  if(src.length===0) src=QUESTIONS;
+  G.pool=shuffle(src);
+  G.idx=0;
+
+  showScreen('s-cd');
+  let n=3;
+  $('cd-num').textContent=n;
+  $('cd-label').textContent='TAIYAAR HO JAO';
+  const tick=setInterval(()=>{
+    n--;
+    const cdEl=$('cd-num');
+    cdEl.style.animation='none';void cdEl.offsetWidth;cdEl.style.animation='';
+    if(n>0){
+      cdEl.textContent=n;
+      $('cd-label').textContent='LAGBHAG...';
+    } else if(n===0){
+      cdEl.textContent='SHURU!';
+      $('cd-label').textContent='CURRENT AFFAIRS ARENA ⚡';
+    } else {
+      clearInterval(tick);startGame();
+    }
+  },900);
+}
+
+/* ══════════════════════════════════════════
+   GAME
+══════════════════════════════════════════ */
+function startGame(){
+  showScreen('s-game');
+  // Init progress dots
+  const dotRow=$('prog-dots');dotRow.innerHTML='';G.dots=[];
+  const cnt=Math.min(G.pool.length,20);
+  for(let i=0;i<cnt;i++){
+    const d=document.createElement('div');
+    d.className='pd';d.id='pd-'+i;
+    dotRow.appendChild(d);G.dots.push(d);
+  }
+  startTimer();
+  loadQuestion();
+}
+
+function startTimer(){
+  const arc=$('t-arc'),cen=$('t-center'),bar=$('time-bar-fill');
+  const CIRC=133;
+  clearInterval(G.timer);
+  G.gameEnded=false;
+  G.timer=setInterval(()=>{
+    if(G.gameEnded){clearInterval(G.timer);return;}
+    G.timeLeft--;
+    if(G.timeLeft<0)G.timeLeft=0;
+    const pct=G.timeLeft/60;
+    arc.style.strokeDashoffset=CIRC*(1-pct);
+    cen.textContent=G.timeLeft;
+    bar.style.width=(pct*100)+'%';
+    if(G.timeLeft<=15){
+      arc.classList.add('urg');
+      cen.classList.add('urg');
+      bar.classList.add('urg');
+    }
+    if(G.timeLeft<=0){
+      clearInterval(G.timer);
+      if(!G.gameEnded){G.gameEnded=true;endGame();}
+    }
+  },1000);
+}
+
+function loadQuestion(){
+  if(G.gameEnded)return;
+  if(G.idx>=G.pool.length){
+    G.pool=shuffle(G.pool);G.idx=0; // reshuffle for endless
+  }
+  const q=G.pool[G.idx++];
+  G.qCount++;G.answered=false;
+
+  // Difficulty badge
+  updateDiffBadge();
+
+  // Category
+  const cm=CAT_META[q.cat]||{icon:'📰',label:q.cat,col:'var(--blue)'};
+  const pc=$('prog-cat');
+  pc.textContent=cm.icon+' '+cm.label;
+  pc.style.background=cm.col.replace('var(','rgba(').replace(')',',0.1)');
+  pc.style.color=cm.col;
+  pc.style.borderColor=cm.col.replace('var(','rgba(').replace(')',',0.2)');
+  $('prog-qnum').textContent='#'+G.qCount;
+  $('q-src').textContent=q.src+' '+q.year;
+
+  // Animate card
+  const card=$('q-card');
+  card.style.animation='none';void card.offsetWidth;
+  card.style.animation='qIn 0.32s cubic-bezier(.22,1,.36,1) both';
+  $('q-text').textContent=q.q;
+
+  // Progress dot
+  if(G.qCount-1<G.dots.length){
+    G.dots[G.qCount-1].classList.add('cur');
+  }
+
+  // Shuffle options — every game different order
+  const shuffled=shuffle(q.opts);
+  const keys=['A','B','C','D'];
+  $('opts').innerHTML=shuffled.map((opt,i)=>{
+    const s=opt.replace(/'/g,"\\'").replace(/"/g,'&quot;');
+    const a=q.ans.replace(/'/g,"\\'").replace(/"/g,'&quot;');
+    return `<button class="opt" id="opt-${i}" onclick="selectAnswer('${s}','${a}','${q.cat}',${i})">
+      <span class="opt-key">${keys[i]}</span>
+      <span class="opt-txt">${opt}</span>
+    </button>`;
+  }).join('');
+
+  // Hide feedback
+  $('fb-strip').className='fb-strip';
+  updateHUD();
+}
+
+function updateDiffBadge(){
+  const db=$('diff-badge');
+  if(G.score<50){
+    db.className='diff-badge diff-easy';db.textContent='Aasaan';
+  } else if(G.score<150){
+    db.className='diff-badge diff-medium';db.textContent='Madhyam';
+  } else {
+    db.className='diff-badge diff-hard';db.textContent='Mushkil';
+  }
+}
+
+/* ══════════════════════════════════════════
+   ANSWER
+══════════════════════════════════════════ */
+function selectAnswer(chosen,correct,cat,idx){
+  if(G.answered||G.gameEnded)return;
+  G.answered=true;
+  document.querySelectorAll('.opt').forEach(b=>b.disabled=true);
+
+  const isOk=chosen===correct;
+
+  // Highlight correct always
+  document.querySelectorAll('.opt').forEach(btn=>{
+    if(btn.querySelector('.opt-txt').textContent===correct)
+      btn.classList.add('correct');
+  });
+
+  // Cat stats
+  if(!G.catStats[cat])G.catStats[cat]={c:0,t:0};
+  G.catStats[cat].t++;
+
+  if(isOk){
+    $('opt-'+idx)?.classList.add('correct');
+    const bonus=G.streak>=4?5:0;
+    const pts=10+bonus;
+    G.score+=pts;G.correct++;G.streak++;
+    if(G.streak>G.bestStreak)G.bestStreak=G.streak;
+    G.catStats[cat].c++;
+    if(G.streak===3||G.streak===5||G.streak===7||G.streak%10===0)showCombo(G.streak);
+    showPop('+'+pts+'✓','var(--green)');
+    showFB(true,'Sahi! '+( bonus?`🔥 Streak Bonus +${bonus}`:''));
+    // Mark dot green
+    if(G.qCount-1<G.dots.length){
+      G.dots[G.qCount-1].classList.remove('cur');G.dots[G.qCount-1].classList.add('ok');
+    }
+  } else {
+    $('opt-'+idx)?.classList.add('wrong');
+    G.score=Math.max(0,G.score-2);G.wrong++;G.streak=0;
+    showPop('−2','var(--red)');
+    showFB(false,'Galat! Sahi Jawab: '+correct);
+    if(G.qCount-1<G.dots.length){
+      G.dots[G.qCount-1].classList.remove('cur');G.dots[G.qCount-1].classList.add('bad');
+    }
+  }
+  updateHUD();
+  setTimeout(()=>{if(!G.gameEnded)loadQuestion();},900);
+}
+
+/* ══════════════════════════════════════════
+   HUD / UI HELPERS
+══════════════════════════════════════════ */
+function updateHUD(){
+  const s=$('h-score');
+  s.textContent=G.score;
+  s.style.transform='scale(1.3)';
+  setTimeout(()=>s.style.transform='scale(1)',160);
+  $('h-streak').textContent=G.streak+(G.streak>=2?'🔥':'');
+  $('h-correct').textContent=G.correct;
+  $('h-wrong').textContent=G.wrong;
+}
+
+function showFB(ok,msg){
+  const el=$('fb-strip');
+  $('fb-icon').textContent=ok?'✅':'❌';
+  $('fb-text').textContent=msg;
+  el.className='fb-strip show '+(ok?'fb-ok':'fb-bad');
+}
+
+function showPop(txt,col){
+  const el=document.createElement('div');
+  el.className='score-pop z1';
+  el.style.color=col;el.textContent=txt;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),820);
+}
+
+function showCombo(n){
+  const t=$('combo-toast');
+  const m={3:'🔥 3x Streak!',5:'⚡ 5x Roke Na Ruke!',7:'💥 7x Aag Laga Di!'};
+  t.textContent=m[n]||`🏆 ${n}x Combo!`;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2300);
+}
+
+/* ══════════════════════════════════════════
+   END GAME
+══════════════════════════════════════════ */
+/* ══ SUPABASE — real backend, same table as GeoChamp/Quiz-Game/Mind-Matrix/games.html ══ */
+const SUPA_URL = 'https://tkdsvzumcribcmbsikwg.supabase.co';
+const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRrZHN2enVtY3JpYmNtYnNpa3dnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk2Mjg0NzMsImV4cCI6MjA5NTIwNDQ3M30.aKE22gf_yU-ybrI-CI05MZamuBG1-PXQd8OnuAYjMQU';
+let supa = null;
+try{
+  if(!window.supabase) throw new Error('Supabase SDK failed to load');
+  supa = window.supabase.createClient(SUPA_URL, SUPA_KEY);
+}catch(err){ console.error('Supabase init failed', err); }
+
+// Save this round's score via the add_game_points RPC — this safely ADDS
+// to the player's existing study-zone total (the table only allows one
+// row per player per zone, so a raw insert fails after the first game).
+async function saveScoreToServer(score) {
+  if(!supa || score <= 0) return;
+  try{
+    const { data: { session } } = await supa.auth.getSession();
+    if(!session){ console.warn('Not logged in — score not saved'); return; }
+    const username = session.user.user_metadata?.username || session.user.user_metadata?.name || ('Player' + session.user.id.slice(0,6));
+    const { error } = await supa.rpc('add_game_points', {
+      p_zone: 'study',
+      p_username: username,
+      p_points: score,
+      p_game_id: 'current-affairs'
+    });
+    if(error) console.error('score save failed', error);
+  }catch(err){ console.error('score save exception', err); }
+}
+
+function endGame(){
+  G.gameEnded=true;clearInterval(G.timer);
+  const total=G.correct+G.wrong;
+  const acc=total>0?Math.round(G.correct/total*100):0;
+
+  // Best score
+  const prev=parseInt(localStorage.getItem('ca_best')||'0');
+  const isNew=G.score>prev;
+  if(isNew)localStorage.setItem('ca_best',G.score);
+
+  // Rank & emoji
+  let emo,title,sub;
+  if(acc>=90){emo='🏆';title='Zabardast!';sub='You\'re a Current Affairs Champion!';}
+  else if(acc>=75){emo='⭐';title='Shandaar!';sub='Tumhari current affairs ki pakad kaafi achhi hai!';}
+  else if(acc>=55){emo='😊';title='Achha Kiya!';sub='Roz news padhte raho!';}
+  else if(acc>=35){emo='📰';title='Himmat Rakho!';sub='Zyada current affairs padho, improve hoga!';}
+  else{emo='📚';title='Aur Padho!';sub='Roz akhbaar padhna zaruri hai!';}
+
+  showScreen('s-result');
+  $('r-emo').textContent=emo;
+  $('r-title').textContent=title;
+  $('r-sub').textContent=sub;
+
+  // Score count-up animation
+  const target=G.score,start=performance.now(),dur=1200;
+  $('r-score').textContent='0';
+  function countUp(now){
+    const t=Math.min((now-start)/dur,1);
+    const e=1-Math.pow(1-t,3);
+    $('r-score').textContent=Math.round(target*e);
+    if(t<1)requestAnimationFrame(countUp);
+  }
+  requestAnimationFrame(countUp);
+
+  $('r-correct').textContent=G.correct;
+  $('r-wrong').textContent=G.wrong;
+  $('r-acc').textContent=acc+'%';
+  $('r-streak').textContent=G.bestStreak;
+
+  // Rank label
+  const rankMap=[
+    [90,'🥇 Gyaan Guru'],[75,'🥈 Khabar Expert'],[55,'🥉 Ubharta Analyst'],
+    [35,'📖 Achha Paathak'],[0,'📚 Nayi Shuruat']
+  ];
+  const rank=rankMap.find(([t])=>acc>=t);
+  $('r-rank').textContent=rank?rank[1]:'📚 Nayi Shuruat';
+
+  // New best
+  const nb=$('r-newbest');
+  if(isNew&&G.score>0){
+    nb.style.display='flex';
+    $('r-newbest-txt').textContent=`New Personal Best! (Prev: ${prev} pts) 🎉`;
+  } else nb.style.display='none';
+
+  // Save score to Supabase (adds to existing total, never overwrites)
+  saveScoreToServer(G.score);
+
+  // ── Tournament mode: report the REAL score back to tournaments.html ──
+  if (new URLSearchParams(location.search).get('tournament') === '1') {
+    setTimeout(() => reportScoreToTournament(G.score, G.correct, total), 1800);
+  }
+}
+
+function reportScoreToTournament(finalScore, correctAnswers, totalQuestions) {
+  const params = new URLSearchParams(location.search);
+  if (params.get('tournament') !== '1') return;
+  const returnUrl = params.get('return') || 'tournaments.html';
+  location.href = returnUrl + '?score=' + encodeURIComponent(finalScore)
+    + '&correct=' + encodeURIComponent(correctAnswers || 0)
+    + '&total=' + encodeURIComponent(totalQuestions || 0);
+}
+
+/* ══════════════════════════════════════════
+   NAVIGATION
+══════════════════════════════════════════ */
+function restartGame(){startCountdown();}
+function goHome(){
+  clearInterval(G.timer);G.gameEnded=true;
+  loadHomeStats();showScreen('s-home');
+}
+
+/* ══════════════════════════════════════════
+   INIT
+══════════════════════════════════════════ */
+loadHomeStats();
+</script>
+</body>
+</html>

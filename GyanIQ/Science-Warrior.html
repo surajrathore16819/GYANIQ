@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#05080F">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<title>Science Warrior ⚗️ v4.0 — GyanIQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;900&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;900&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet"></noscript>
+<style>
+:root{
+  --bg:#05080F;--bg2:#090f1c;--bg3:#0d1526;
+  --surf:#101c30;--s2:#152034;
+  --gold:#F7B731;--gold2:#e0a01a;
+  --teal:#00E5C3;--teal2:#00bfa5;
+  --pink:#FF6B9D;--blue:#4D8CFF;
+  --green:#06D6A0;--red:#EF476F;
+  --purple:#A855F7;--orange:#FF8C42;
+  --text:#F0F4FF;--text2:#6B7A99;--text3:#3A4F72;
+  --b1:rgba(255,255,255,.07);--b2:rgba(255,255,255,.13);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-serif;min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(0,229,195,.055),transparent),
+  radial-gradient(ellipse 60% 60% at 100% 100%,rgba(168,85,247,.04),transparent),
+  radial-gradient(ellipse 50% 70% at 0% 80%,rgba(255,107,157,.03),transparent);}
+body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgba(77,140,255,.018) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(77,140,255,.018) 1px,transparent 1px);
+  background-size:44px 44px;}
+.z1{position:relative;z-index:1;}
+::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--bg2);}::-webkit-scrollbar-thumb{background:var(--s2);border-radius:3px;}
+.screen{display:none;}.screen.active{display:flex;flex-direction:column;min-height:100vh;}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:100;background:rgba(5,8,15,.93);backdrop-filter:blur(16px);border-bottom:1px solid var(--b1);padding:0 22px;height:54px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.nav-logo{font-family:'Baloo 2',cursive;font-size:20px;font-weight:900;background:linear-gradient(135deg,var(--gold),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none;}
+.nav-tag{font-size:11px;color:var(--text2);font-weight:600;letter-spacing:.1em;text-transform:uppercase;}
+
+/* HOME */
+#s-home{align-items:center;justify-content:center;padding:28px 20px 48px;}
+.home-inner{width:100%;max-width:520px;min-width:0;display:flex;flex-direction:column;align-items:center;}
+.sw-logo{text-align:center;margin-bottom:22px;animation:fadeDown .6s ease both;}
+.sw-glyph{display:inline-flex;align-items:center;justify-content:center;width:86px;height:86px;border-radius:28px;background:linear-gradient(135deg,var(--teal),var(--purple),var(--pink));font-size:42px;margin-bottom:14px;box-shadow:0 8px 36px rgba(0,229,195,.3);animation:glFloat 3s ease-in-out infinite;}
+@keyframes glFloat{0%,100%{transform:translateY(0) rotate(-2deg);}50%{transform:translateY(-8px) rotate(2deg);}}
+.sw-title{font-family:'Baloo 2',cursive;font-size:clamp(32px,9vw,52px);font-weight:900;background:linear-gradient(135deg,var(--teal) 0%,var(--purple) 50%,var(--pink) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-1px;line-height:1;}
+.sw-sub{font-size:13px;color:var(--text2);margin-top:8px;letter-spacing:.04em;}
+.best-chip{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,rgba(0,229,195,.1),rgba(168,85,247,.07));border:1px solid rgba(0,229,195,.25);border-radius:20px;padding:8px 20px;margin-bottom:20px;font-size:13px;font-weight:600;animation:fadeUp .5s .1s ease both;}
+.best-chip .bv{font-family:'Baloo 2',cursive;font-size:22px;font-weight:900;color:var(--teal);}
+/* Subject chips scroll */
+.subj-scroll{display:flex;gap:7px;width:100%;min-width:0;overflow-x:auto;padding-bottom:4px;margin-bottom:18px;animation:fadeUp .5s .18s ease both;}
+.subj-scroll::-webkit-scrollbar{height:0;}
+.subj-chip{flex-shrink:0;display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:14px;border:1px solid var(--b1);background:var(--bg3);font-size:10px;font-weight:700;letter-spacing:.04em;}
+.score-pills{display:flex;gap:8px;width:100%;min-width:0;margin-bottom:22px;animation:fadeUp .5s .25s ease both;}
+.s-pill{flex:1;min-width:0;padding:11px 8px;background:var(--bg3);border:1px solid var(--b1);border-radius:14px;text-align:center;}
+.s-pill .pv{font-family:'Baloo 2',cursive;font-size:20px;font-weight:900;display:block;line-height:1;}
+.s-pill .pl{font-size:9px;color:var(--text2);text-transform:uppercase;letter-spacing:.07em;margin-top:3px;display:block;}
+.s-pill.ok .pv{color:var(--green);}.s-pill.ng .pv{color:var(--red);}.s-pill.cb .pv{color:var(--gold);}
+.home-start-btn{width:100%;padding:18px 10px;border-radius:16px;background:linear-gradient(135deg,var(--teal),var(--purple));border:none;color:#0a0d14;font-family:'Baloo 2',cursive;font-size:clamp(15px,4.5vw,19px);font-weight:900;cursor:pointer;letter-spacing:.04em;box-shadow:0 6px 28px rgba(0,229,195,.3);transition:transform .2s,box-shadow .2s;position:relative;overflow:hidden;animation:fadeUp .5s .35s ease both;-webkit-tap-highlight-color:transparent;touch-action:manipulation;white-space:nowrap;}
+.home-start-btn::after{content:'';position:absolute;top:-50%;left:-60%;width:40%;height:200%;background:rgba(255,255,255,.2);transform:skewX(-15deg);animation:btnShine 3s 1.5s infinite;}
+@keyframes btnShine{0%{left:-60%;}30%,100%{left:120%;}}
+.home-start-btn:hover{transform:translateY(-3px);box-shadow:0 10px 36px rgba(0,229,195,.4);}
+
+/* DIFFICULTY SCREEN */
+#s-diff{align-items:center;justify-content:center;padding:28px 20px 48px;}
+.diff-inner{width:100%;max-width:520px;}
+.diff-heading{text-align:center;margin-bottom:26px;animation:fadeDown .5s ease both;}
+.diff-heading h2{font-family:'Baloo 2',cursive;font-size:clamp(22px,6vw,34px);font-weight:900;background:linear-gradient(135deg,var(--gold),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.diff-heading p{font-size:13px;color:var(--text2);margin-top:6px;}
+.diff-cards{display:flex;flex-direction:column;gap:11px;animation:fadeUp .5s .15s ease both;}
+.diff-card{display:flex;align-items:center;gap:14px;padding:16px 18px;background:var(--bg3);border:2px solid var(--b1);border-radius:20px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;}
+.diff-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--dc,var(--teal));border-radius:0 2px 2px 0;}
+.diff-card:hover{transform:translateX(4px);border-color:var(--dc,var(--teal));box-shadow:0 0 0 1px var(--dc,var(--teal)),0 6px 24px rgba(0,0,0,.3);}
+.dc-icon{font-size:34px;flex-shrink:0;}
+.dc-info{flex:1;min-width:0;}
+.dc-name{font-family:'Baloo 2',cursive;font-size:17px;font-weight:900;}
+.dc-desc{font-size:11px;color:var(--text2);margin-top:3px;line-height:1.4;}
+.dc-badge{flex-shrink:0;font-size:9px;font-weight:800;padding:4px 9px;border-radius:20px;background:rgba(255,255,255,.05);color:var(--text2);letter-spacing:.08em;text-transform:uppercase;}
+.diff-back{margin-top:14px;width:100%;padding:13px;border-radius:14px;background:transparent;border:1.5px solid var(--b1);color:var(--text2);font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;}
+.diff-back:hover{border-color:var(--b2);color:var(--text);}
+
+/* COUNTDOWN */
+#s-cd{align-items:center;justify-content:center;}
+.cd-inner{text-align:center;}
+.cd-diff-label{font-size:13px;color:var(--text2);font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px;padding:6px 16px;border-radius:20px;border:1px solid var(--b1);display:inline-block;}
+.cd-num{font-family:'Baloo 2',cursive;font-size:clamp(100px,28vw,160px);font-weight:900;background:linear-gradient(135deg,var(--teal),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;animation:cdPop .45s cubic-bezier(.34,1.56,.64,1) both;}
+@keyframes cdPop{from{transform:scale(.2);opacity:0;}to{transform:scale(1);opacity:1;}}
+.cd-lbl{font-family:'Baloo 2',cursive;font-size:20px;font-weight:800;color:var(--text2);margin-top:8px;letter-spacing:.12em;text-transform:uppercase;}
+
+/* GAME SCREEN */
+#s-game{background:var(--bg);}
+.gh{position:sticky;top:0;z-index:50;background:rgba(5,8,15,.94);backdrop-filter:blur(16px);border-bottom:1px solid var(--b1);padding:10px 18px;display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.gh-score-w{display:flex;flex-direction:column;}
+.gh-lbl{font-size:9px;color:var(--text2);text-transform:uppercase;letter-spacing:.1em;font-weight:700;}
+.gh-score{font-family:'Baloo 2',cursive;font-size:30px;font-weight:900;color:var(--gold);min-width:58px;transition:transform .15s;line-height:1;}
+.gh-score.bump{transform:scale(1.4);color:#fff;}
+.gh-diff-pill{font-size:10px;font-weight:800;padding:4px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.07em;flex-shrink:0;}
+.gh-streak{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:800;padding:4px 9px;border-radius:20px;background:rgba(255,107,157,.1);color:var(--pink);opacity:0;transition:opacity .3s;white-space:nowrap;}
+.gh-streak.on{opacity:1;}
+.gh-timer{margin-left:auto;position:relative;width:52px;height:52px;flex-shrink:0;}
+.t-svg{width:52px;height:52px;transform:rotate(-90deg);}
+.t-track{fill:none;stroke:var(--s2);stroke-width:4;}
+.t-arc{fill:none;stroke:var(--teal);stroke-width:4;stroke-linecap:round;stroke-dasharray:138;stroke-dashoffset:0;transition:stroke-dashoffset .9s linear,stroke .4s;}
+.t-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Baloo 2',cursive;font-size:16px;font-weight:900;color:var(--teal);transition:color .3s;}
+.gh-timer.urgent .t-arc{stroke:var(--red);}.gh-timer.urgent .t-num{color:var(--red);}
+.gh-timer.urgent{animation:urgPulse .7s ease-in-out infinite;}
+@keyframes urgPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
+.tbar{height:3px;background:rgba(255,255,255,.04);flex-shrink:0;}
+.tbar-f{height:100%;background:linear-gradient(90deg,var(--teal),var(--purple));transition:width .9s linear,background .4s;width:100%;}
+.tbar-f.urg{background:linear-gradient(90deg,var(--red),var(--pink));}
+
+/* Progress dots */
+.q-progress{padding:10px 18px 0;max-width:600px;margin:0 auto;width:100%;}
+.qp-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.qp-label{font-size:11px;color:var(--text2);font-weight:700;}
+.qp-dots{display:flex;gap:5px;flex-wrap:wrap;}
+.qp-dot{width:8px;height:8px;border-radius:50%;background:var(--s2);transition:all .3s;flex-shrink:0;}
+.qp-dot.done{background:var(--green);}.qp-dot.wrong-dot{background:var(--red);}.qp-dot.current{background:var(--gold);transform:scale(1.3);}
+
+/* Q area */
+.q-area{flex:1;padding:12px 18px 80px;max-width:600px;margin:0 auto;width:100%;overflow-y:auto;}
+
+/* Q type badge */
+.q-type-pill{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:800;padding:4px 10px;border-radius:20px;margin-bottom:8px;border:1px solid;}
+
+/* Question card */
+.q-card{background:var(--bg3);border:1px solid var(--b1);border-radius:24px;overflow:hidden;}
+.q-card.slide-in{animation:slideIn .28s cubic-bezier(.22,1,.36,1) both;}
+@keyframes slideIn{from{transform:translateX(44px);opacity:0;}to{transform:translateX(0);opacity:1;}}
+.qc-bar{height:3px;background:linear-gradient(90deg,var(--teal),var(--purple),var(--pink));}
+.qc-top{display:flex;align-items:center;justify-content:space-between;padding:12px 18px 0;}
+.qc-badge{font-size:10px;font-weight:800;padding:4px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.07em;}
+.qc-num{font-size:11px;color:var(--text3);font-weight:700;}
+
+/* Fill in blank styling */
+.q-fill-wrap{padding:12px 18px 6px;}
+.q-fill-text{font-family:'Baloo 2',cursive;font-size:clamp(17px,4.5vw,22px);font-weight:800;line-height:1.45;color:var(--text);}
+.blank-box{display:inline-block;min-width:80px;padding:2px 12px;margin:0 4px;background:linear-gradient(135deg,rgba(247,183,49,.13),rgba(0,229,195,.09));border:1.5px dashed rgba(247,183,49,.5);border-radius:8px;color:var(--gold);font-size:.9em;vertical-align:middle;text-align:center;}
+
+/* Equation card */
+.eq-display{margin:10px 18px 6px;padding:14px 16px;background:var(--s2);border-radius:14px;border:1px solid var(--b2);font-family:'Baloo 2',cursive;font-size:clamp(16px,4vw,20px);font-weight:800;text-align:center;color:var(--teal);letter-spacing:.06em;line-height:1.5;}
+
+/* Image biology — real imageUrl + emoji placeholder + shimmer skeleton */
+.q-img-wrap{margin:10px 18px 6px;display:flex;flex-direction:column;align-items:center;gap:8px;}
+.q-img-real{width:100%;max-height:160px;object-fit:contain;border-radius:14px;border:1px solid var(--b2);background:var(--s2);display:block;aspect-ratio:16/7;content-visibility:auto;}
+.q-img-placeholder{width:100%;min-height:110px;background:var(--s2);border-radius:14px;border:1px solid var(--b2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:12px;}
+.q-emoji-diag{font-size:68px;line-height:1;text-align:center;}
+.q-img-label{font-size:9px;color:var(--text3);font-weight:700;letter-spacing:.1em;text-transform:uppercase;}
+.q-img-caption{font-size:11px;color:var(--text2);font-weight:600;text-align:center;}
+.img-loading{background:linear-gradient(90deg,var(--s2) 25%,var(--surf) 50%,var(--s2) 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+.q-text{font-family:'Baloo 2',cursive;font-size:clamp(17px,4.5vw,22px);font-weight:800;line-height:1.38;padding:14px 18px 6px;color:var(--text);}
+.q-sub{font-size:12px;color:var(--text2);padding:0 18px 10px;font-weight:500;}
+
+/* Options */
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:6px 18px 18px;}
+.opt{display:flex;align-items:flex-start;gap:8px;padding:13px 12px;background:var(--bg2);border:1.5px solid var(--b1);border-radius:14px;color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;cursor:pointer;text-align:left;transition:border-color .15s,background .15s,transform .15s,color .15s;user-select:none;line-height:1.35;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+.opt:hover:not(:disabled){border-color:rgba(0,229,195,.45);background:rgba(0,229,195,.05);transform:translateY(-1px);}
+.opt:disabled{cursor:not-allowed;}
+.opt.correct{border-color:var(--green);background:rgba(6,214,160,.1);color:var(--green);animation:optGood .4s ease both;}
+.opt.wrong{border-color:var(--red);background:rgba(239,71,111,.1);color:var(--red);animation:optBad .4s ease both;}
+@keyframes optGood{0%{transform:scale(1);}40%{transform:scale(1.04);box-shadow:0 0 22px rgba(6,214,160,.4);}100%{transform:scale(1);}}
+@keyframes optBad{0%,100%{transform:translateX(0);}20%{transform:translateX(-7px);}40%{transform:translateX(7px);}60%{transform:translateX(-4px);}80%{transform:translateX(4px);}}
+.opt-l{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;min-width:22px;border-radius:7px;background:rgba(255,255,255,.05);font-size:10px;font-weight:900;font-family:'Baloo 2',cursive;margin-top:1px;}
+
+/* Combo & float */
+.combo-toast{position:fixed;top:72px;right:16px;z-index:300;background:linear-gradient(135deg,var(--gold),var(--pink));color:#0a0d14;font-family:'Baloo 2',cursive;font-size:16px;font-weight:900;padding:10px 18px;border-radius:14px;box-shadow:0 6px 24px rgba(247,183,49,.5);transform:translateX(120%);transition:transform .35s cubic-bezier(.34,1.56,.64,1);pointer-events:none;display:flex;align-items:center;gap:6px;}
+.combo-toast.show{transform:translateX(0);}
+.score-float{position:fixed;z-index:400;pointer-events:none;font-family:'Baloo 2',cursive;font-size:26px;font-weight:900;animation:floatUp .95s ease-out forwards;}
+@keyframes floatUp{0%{opacity:1;transform:translateY(0) scale(1);}100%{opacity:0;transform:translateY(-80px) scale(1.4);}}
+
+/* RESULT */
+#s-result{align-items:center;overflow-y:auto;contain:layout style;}
+.result-inner{width:100%;max-width:520px;margin:0 auto;padding:28px 20px 80px;}
+.rank-wrap{text-align:center;margin-bottom:22px;animation:rankIn .65s cubic-bezier(.34,1.56,.64,1) both;}
+@keyframes rankIn{from{transform:scale(.35) rotate(-14deg);opacity:0;}to{transform:scale(1) rotate(0);opacity:1;}}
+.rank-emo{font-size:72px;display:block;animation:rankBob 1.6s .6s ease-in-out infinite alternate;}
+@keyframes rankBob{from{transform:translateY(0) rotate(-3deg);}to{transform:translateY(-12px) rotate(3deg);}}
+.rank-letter{font-family:'Baloo 2',cursive;font-size:96px;font-weight:900;line-height:.9;display:block;margin-top:4px;}
+.rank-S .rank-letter{background:linear-gradient(135deg,var(--gold),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.rank-A .rank-letter{background:linear-gradient(135deg,var(--teal),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.rank-B .rank-letter{background:linear-gradient(135deg,var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.rank-C .rank-letter{color:var(--text2);}
+.rank-title{font-family:'Baloo 2',cursive;font-size:22px;font-weight:900;margin-top:8px;}
+.rank-desc{font-size:13px;color:var(--text2);margin-top:4px;}
+.r-diff-played{display:inline-flex;align-items:center;gap:6px;padding:6px 16px;border-radius:20px;font-size:12px;font-weight:800;margin:12px auto 0;border:1px solid;}
+.r-score-wrap{text-align:center;margin-bottom:22px;animation:fadeUp .5s .3s ease both;}
+.r-score-big{font-family:'Baloo 2',cursive;font-size:clamp(64px,18vw,96px);font-weight:900;background:linear-gradient(135deg,var(--teal),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;}
+.r-score-lbl{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.14em;margin-top:4px;font-weight:700;}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;animation:fadeUp .5s .4s ease both;}
+.stat-box{background:var(--bg3);border:1px solid var(--b1);border-radius:18px;padding:16px;text-align:center;position:relative;overflow:hidden;}
+.stat-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2.5px;background:var(--sc,var(--teal));}
+.stat-v{font-family:'Baloo 2',cursive;font-size:32px;font-weight:900;line-height:1;}
+.stat-l{font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.1em;margin-top:4px;font-weight:700;}
+.bkdn{background:var(--bg3);border:1px solid var(--b1);border-radius:18px;padding:18px;margin-bottom:20px;animation:fadeUp .5s .5s ease both;}
+.bkdn-t{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.12em;font-weight:800;margin-bottom:14px;}
+.bk-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.bk-row:last-child{margin-bottom:0;}
+.bk-ic{font-size:13px;width:18px;text-align:center;flex-shrink:0;}
+.bk-lb{font-size:11px;font-weight:700;width:100px;flex-shrink:0;color:var(--text2);}
+.bk-bg{flex:1;height:6px;background:var(--s2);border-radius:3px;overflow:hidden;}
+.bk-f{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--teal),var(--purple));transition:width 1.3s ease;width:0;}
+.bk-pc{font-size:10px;color:var(--text2);font-weight:700;width:30px;text-align:right;}
+.r-actions{display:flex;gap:10px;animation:fadeUp .5s .6s ease both;}
+.btn-replay{flex:2;padding:17px;border-radius:16px;background:linear-gradient(135deg,var(--teal),var(--purple));border:none;color:#0a0d14;font-family:'Baloo 2',cursive;font-size:17px;font-weight:900;cursor:pointer;transition:all .2s;letter-spacing:.04em;}
+.btn-replay:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,229,195,.35);}
+.btn-home{flex:1;padding:17px;border-radius:16px;background:var(--surf);border:1.5px solid var(--b1);color:var(--text2);font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;}
+.btn-home:hover{border-color:var(--b2);color:var(--text);}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:400px){.opts{grid-template-columns:1fr;}.q-text,.q-fill-text{font-size:16px;}.q-emoji-diag{font-size:56px;}}
+@media(max-width:360px){body::after{display:none;}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+<div class="combo-toast z1" id="combo-toast">🔥 COMBO x<span id="combo-n">3</span>!</div>
+
+<!-- HOME -->
+<div class="screen active z1" id="s-home">
+  <nav class="nav"><a href="index.html" class="nav-logo">🧠 GyanIQ</a><a href="games.html" class="nav-tag" style="color:var(--text2);text-decoration:none;">← Games</a></nav>
+  <div style="flex:1;min-width:0;display:flex;align-items:center;justify-content:center;padding:28px 20px 48px;">
+    <div class="home-inner">
+      <div class="sw-logo">
+        <div class="sw-glyph">⚗️</div>
+        <div class="sw-title">Science Warrior</div>
+        <div class="sw-sub">"Dimag lagao, science jito. 60 seconds. Pure Science."</div>
+      </div>
+      <div class="best-chip">🏆 Best Score: <span class="bv" id="home-best">0</span> pts</div>
+      <div class="subj-scroll">
+        <div class="subj-chip" style="color:var(--teal);border-color:rgba(0,229,195,.3)">🏃 Motion</div>
+        <div class="subj-chip" style="color:var(--orange);border-color:rgba(255,140,66,.3)">💥 Force</div>
+        <div class="subj-chip" style="color:var(--gold);border-color:rgba(247,183,49,.3)">⚡ Energy</div>
+        <div class="subj-chip" style="color:var(--blue);border-color:rgba(77,140,255,.3)">🔌 Electricity</div>
+        <div class="subj-chip" style="color:var(--teal);border-color:rgba(34,211,238,.3)">🧲 Magnetism</div>
+        <div class="subj-chip" style="color:var(--purple);border-color:rgba(168,85,247,.3)">〰️ Waves</div>
+        <div class="subj-chip" style="color:var(--purple);border-color:rgba(168,85,247,.3)">⚛️ Atomic</div>
+        <div class="subj-chip" style="color:var(--gold);border-color:rgba(247,183,49,.3)">📊 Periodic</div>
+        <div class="subj-chip" style="color:var(--orange);border-color:rgba(255,140,66,.3)">🔗 Bonding</div>
+        <div class="subj-chip" style="color:var(--green);border-color:rgba(6,214,160,.3)">🧴 Acids</div>
+        <div class="subj-chip" style="color:var(--green);border-color:rgba(6,214,160,.3)">🌿 Organic</div>
+        <div class="subj-chip" style="color:var(--teal);border-color:rgba(0,229,195,.3)">🫧 Cell</div>
+        <div class="subj-chip" style="color:var(--pink);border-color:rgba(255,107,157,.3)">🫀 Human Body</div>
+        <div class="subj-chip" style="color:var(--purple);border-color:rgba(168,85,247,.3)">🧬 Genetics</div>
+        <div class="subj-chip" style="color:var(--green);border-color:rgba(6,214,160,.3)">🌿 Plants</div>
+        <div class="subj-chip" style="color:var(--gold);border-color:rgba(247,183,49,.3)">🌍 Ecology</div>
+      </div>
+      <div class="score-pills">
+        <div class="s-pill ok"><span class="pv">+10</span><span class="pl">Sahi ✅</span></div>
+        <div class="s-pill ng"><span class="pv">−2</span><span class="pl">Galat ❌</span></div>
+        <div class="s-pill cb"><span class="pv">+5</span><span class="pl">🔥 x3 Combo</span></div>
+      </div>
+      <button class="home-start-btn" onclick="showDiff()">⚗️ Difficulty Chuno!</button>
+    </div>
+  </div>
+</div>
+
+<!-- DIFFICULTY -->
+<div class="screen z1" id="s-diff">
+  <nav class="nav"><a href="javascript:void(0)" class="nav-logo" onclick="showScreen('s-home')" style="cursor:pointer;">← 🧠 GyanIQ</a><a href="games.html" class="nav-tag" style="color:var(--text2);text-decoration:none;">← Games</a></nav>
+  <div style="flex:1;min-width:0;display:flex;align-items:center;justify-content:center;padding:28px 20px 48px;">
+    <div class="diff-inner">
+      <div class="diff-heading">
+        <h2>⚗️ Level Chuno</h2>
+        <p>Basics se PhD tak — apna level select karo!</p>
+      </div>
+      <div class="diff-cards">
+        <div class="diff-card" style="--dc:var(--green)" onclick="startCountdown('basics')">
+          <span class="dc-icon">🌱</span>
+          <div class="dc-info"><div class="dc-name" style="color:var(--green)">Basics</div><div class="dc-desc">Class 8–10 level. Science ke basic concepts. Sab ke liye!</div></div>
+          <span class="dc-badge">Beginner</span>
+        </div>
+        <div class="diff-card" style="--dc:var(--teal)" onclick="startCountdown('class11')">
+          <span class="dc-icon">📘</span>
+          <div class="dc-info"><div class="dc-name" style="color:var(--teal)">Class 11</div><div class="dc-desc">Physics, Chemistry & Biology — NCERT Class 11 standard.</div></div>
+          <span class="dc-badge">Moderate</span>
+        </div>
+        <div class="diff-card" style="--dc:var(--blue)" onclick="startCountdown('class12')">
+          <span class="dc-icon">📗</span>
+          <div class="dc-info"><div class="dc-name" style="color:var(--blue)">Class 12</div><div class="dc-desc">Board & JEE/NEET level. High difficulty concepts.</div></div>
+          <span class="dc-badge">Advanced</span>
+        </div>
+        <div class="diff-card" style="--dc:var(--purple)" onclick="startCountdown('advanced')">
+          <span class="dc-icon">🔬</span>
+          <div class="dc-info"><div class="dc-name" style="color:var(--purple)">Advanced</div><div class="dc-desc">University level. Olympiad aur entrance exam standard.</div></div>
+          <span class="dc-badge">Expert</span>
+        </div>
+        <div class="diff-card" style="--dc:var(--pink)" onclick="startCountdown('phd')">
+          <span class="dc-icon">🎓</span>
+          <div class="dc-info"><div class="dc-name" style="color:var(--pink)">PhD Level</div><div class="dc-desc">Research grade. Sirf sachche Science Warriors ke liye! 🔥</div></div>
+          <span class="dc-badge">Legendary</span>
+        </div>
+      </div>
+      <button class="diff-back" onclick="showScreen('s-home')">← Wapas Jao</button>
+    </div>
+  </div>
+</div>
+
+<!-- COUNTDOWN -->
+<div class="screen z1" id="s-cd">
+  <div class="cd-inner">
+    <div class="cd-diff-label" id="cd-diff-label">Basics Mode</div>
+    <div class="cd-num" id="cd-num">3</div>
+    <div class="cd-lbl" id="cd-lbl">Taiyar Ho Jao!</div>
+  </div>
+</div>
+
+<!-- GAME -->
+<div class="screen z1" id="s-game">
+  <nav class="nav"><a href="javascript:void(0)" class="nav-logo" onclick="quitGame()" style="cursor:pointer;">← 🧠 GyanIQ</a><span class="nav-tag" id="game-nav-tag">Science Warrior</span></nav>
+  <div class="gh">
+    <div class="gh-score-w"><span class="gh-lbl">Score</span><span class="gh-score" id="gh-score">0</span></div>
+    <div class="gh-diff-pill" id="gh-diff-pill">Basics</div>
+    <div class="gh-streak" id="gh-streak">🔥 <span id="streak-n">0</span>x</div>
+    <div class="gh-timer" id="gh-timer">
+      <svg class="t-svg" viewBox="0 0 56 56"><circle class="t-track" cx="28" cy="28" r="22"/><circle class="t-arc" cx="28" cy="28" r="22" id="t-arc"/></svg>
+      <div class="t-num" id="t-num">60</div>
+    </div>
+  </div>
+  <div class="tbar"><div class="tbar-f" id="tbar-f"></div></div>
+  <div class="q-progress">
+    <div class="qp-row">
+      <span class="qp-label" id="qp-label">Sawaal 1</span>
+      <div class="qp-dots" id="qp-dots"></div>
+    </div>
+  </div>
+  <div class="q-area">
+    <div class="q-card slide-in" id="q-card">
+      <div class="qc-bar"></div>
+      <div class="qc-top">
+        <span class="qc-badge" id="qc-badge" style="background:rgba(0,229,195,.12);color:var(--teal)">⚛️ Physics</span>
+        <span class="qc-num" id="qc-num">#1</span>
+      </div>
+      <div id="q-dynamic-content"></div>
+      <div class="q-sub" id="q-sub">Sahi jawab chuno:</div>
+      <div class="opts" id="opts-grid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- RESULT -->
+<div class="screen z1" id="s-result">
+  <nav class="nav"><a href="index.html" class="nav-logo">🧠 GyanIQ</a><a href="games.html" class="nav-tag" style="color:var(--text2);text-decoration:none;">← Games</a></nav>
+  <div style="flex:1;overflow-y:auto;">
+    <div class="result-inner">
+      <div class="rank-wrap rank-S" id="rank-wrap">
+        <span class="rank-emo" id="rank-emo">🏆</span>
+        <span class="rank-letter" id="rank-letter">S</span>
+        <div class="rank-title" id="rank-title">Science Genius!</div>
+        <div class="rank-desc" id="rank-desc">Kamaal kar diya!</div>
+        <div class="r-diff-played" id="r-diff-played">🌱 Basics Mode</div>
+      </div>
+      <div class="r-score-wrap">
+        <div class="r-score-big" id="r-score">0</div>
+        <div class="r-score-lbl">TOTAL SCORE</div>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-box" style="--sc:var(--green)"><div class="stat-v" style="color:var(--green)" id="r-correct">0</div><div class="stat-l">Sahi ✅</div></div>
+        <div class="stat-box" style="--sc:var(--red)"  ><div class="stat-v" style="color:var(--red)"   id="r-wrong">0</div>  <div class="stat-l">Galat ❌</div></div>
+        <div class="stat-box" style="--sc:var(--gold)" ><div class="stat-v" style="color:var(--gold)"  id="r-total">0</div>  <div class="stat-l">Koshish</div></div>
+        <div class="stat-box" style="--sc:var(--pink)" ><div class="stat-v" style="color:var(--pink)"  id="r-acc">0%</div>   <div class="stat-l">Accuracy 🎯</div></div>
+      </div>
+      <div class="bkdn">
+        <div class="bkdn-t">Subject Performance</div>
+        <div class="bk-row"><span class="bk-ic">⚛️</span><span class="bk-lb">Physics</span>         <div class="bk-bg"><div class="bk-f" id="bk-phy"></div></div><span class="bk-pc" id="bk-phy-p">—</span></div>
+        <div class="bk-row"><span class="bk-ic">🏃</span><span class="bk-lb">Motion</span>          <div class="bk-bg"><div class="bk-f" id="bk-motion"></div></div><span class="bk-pc" id="bk-motion-p">—</span></div>
+        <div class="bk-row"><span class="bk-ic">💥</span><span class="bk-lb">Force</span>           <div class="bk-bg"><div class="bk-f" id="bk-force"></div></div><span class="bk-pc" id="bk-force-p">—</span></div>
+        <div class="bk-row"><span class="bk-ic">⚡</span><span class="bk-lb">Energy</span>          <div class="bk-bg"><div class="bk-f" id="bk-energy"></div></div><span class="bk-pc" id="bk-energy-p">—</span></div>
+        <div class="bk-row"><span class="bk-ic">🔌</span><span class="bk-lb">Electricity</span>     <div class="bk-bg"><div class="bk-f" id="bk-elec"></div></div><span class="bk-pc" id="bk-elec-p">—</span></div>
+        <div class="bk-row"><span class="bk-ic">🧲</span><span class="bk-lb">Magnetism</span>       <div class="bk-bg"><div class="bk-f" id="bk-mag"></div></div><span class="bk-pc" id="bk-mag-p">—</span></div>
+        <div class="bk-row"><span class="bk-ic">〰️</span><span class="bk-lb">Waves</span>           <div class="bk-bg"><div class="bk-f" id="bk-waves"></div></div><span class="bk-pc" id="bk-waves-p">—</span></div>
+        <div class="bk-row"><span class="bk-ic">🧪</span><span class="bk-lb">Chemistry</span>       <div class="bk-bg"><div class="bk-f" id="bk-chem"></div></div><span class="bk-pc" id="bk-chem-p">—</span></div>
+        <div class="bk-row"><span class="bk-ic">⚛️</span><span class="bk-lb">Atomic Struct.</span> <div class="bk-bg"><div class="bk-f" id="bk-atomic"></div></div><span class="bk-pc" id="bk-atomic-p">—</span></div>
+        <div class="bk-row"><span class="bk-ic">📊</span><span class="bk-lb">Periodic Table</span> <div class="bk-bg"><div class="bk-f" id="bk-periodic"></div></div><span class="bk-pc" id="bk-periodic-p">—</span></div>
+        <div class="bk-row"><span class="bk-ic">🔗</span><span class="bk-lb">Chem Bonding</span>   <div class="bk-bg"><div class="bk-f" id="bk-bond"></div></div><span class="bk-pc" id="bk-bond-p">—</span></div>
+        <div class="bk-row"><span class="bk-ic">🧴</span><span class="bk-lb">Acids & Bases</span>  <div class="bk-bg"><div class="bk-f" id="bk-acid"></div></div><span class="bk-pc" id="bk-acid-p">—</span></div>
+        <div class="bk-row"><span class="bk-ic">🌿</span><span class="bk-lb">Organic Chem</span>   <div class="bk-bg"><div class="bk-f" id="bk-organic"></div></div><span class="bk-pc" id="bk-organic-p">—</span></div>
+        <div class="bk-row"><span class="bk-ic">🧬</span><span class="bk-lb">Biology</span>         <div class="bk-bg"><div class="bk-f" id="bk-bio"></div></div><span class="bk-pc" id="bk-bio-p">—</span></div>
+        <div class="bk-row"><span class="bk-ic">🫧</span><span class="bk-lb">Cell Structure</span> <div class="bk-bg"><div class="bk-f" id="bk-cell"></div></div><span class="bk-pc" id="bk-cell-p">—</span></div>
+        <div class="bk-row"><span class="bk-ic">🫀</span><span class="bk-lb">Human Body</span>      <div class="bk-bg"><div class="bk-f" id="bk-humanbody"></div></div><span class="bk-pc" id="bk-humanbody-p">—</span></div>
+        <div class="bk-row"><span class="bk-ic">🧬</span><span class="bk-lb">Genetics</span>        <div class="bk-bg"><div class="bk-f" id="bk-genetics"></div></div><span class="bk-pc" id="bk-genetics-p">—</span></div>
+        <div class="bk-row"><span class="bk-ic">🌿</span><span class="bk-lb">Plant Biology</span>  <div class="bk-bg"><div class="bk-f" id="bk-plant"></div></div><span class="bk-pc" id="bk-plant-p">—</span></div>
+        <div class="bk-row"><span class="bk-ic">🌍</span><span class="bk-lb">Ecology</span>         <div class="bk-bg"><div class="bk-f" id="bk-gen"></div></div><span class="bk-pc" id="bk-gen-p">—</span></div>
+      </div>
+      <div class="r-actions">
+        <button class="btn-replay" onclick="showDiff()">🔄 Phir Khelo!</button>
+        <button class="btn-home" onclick="showScreen('s-home')">🏠 Home</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+</script>
+<script src="questions/science-warrior-questions.js"></script>
+<script>
+
+/* ── DIFFICULTY CONFIG ────────────────────────────── */
+const DIFF_CONFIG = {
+  basics:  {name:'Basics',   emoji:'🌱',color:'var(--green)',  bg:'rgba(6,214,160,.12)',  pill:'Beginner'},
+  class11: {name:'Class 11', emoji:'📘',color:'var(--teal)',   bg:'rgba(0,229,195,.12)',  pill:'Moderate'},
+  class12: {name:'Class 12', emoji:'📗',color:'var(--blue)',   bg:'rgba(77,140,255,.12)', pill:'Advanced'},
+  advanced:{name:'Advanced', emoji:'🔬',color:'var(--purple)', bg:'rgba(168,85,247,.12)', pill:'Expert'},
+  phd:     {name:'PhD Level',emoji:'🎓',color:'var(--pink)',   bg:'rgba(255,107,157,.12)',pill:'Legendary'},
+};
+
+/* ── CATEGORY META ────────────────────────────────── */
+const CAT_META = {
+  motion:   {icon:'🏃',name:'Motion',          color:'var(--teal)',   bg:'rgba(0,229,195,.12)'},
+  force:    {icon:'💥',name:'Force',            color:'var(--orange)', bg:'rgba(255,140,66,.12)'},
+  energy:   {icon:'⚡',name:'Energy',           color:'var(--gold)',   bg:'rgba(247,183,49,.12)'},
+  elec:     {icon:'🔌',name:'Electricity',      color:'var(--blue)',   bg:'rgba(77,140,255,.12)'},
+  mag:      {icon:'🧲',name:'Magnetism',        color:'#22D3EE',       bg:'rgba(34,211,238,.12)'},
+  waves:    {icon:'〰️',name:'Waves',            color:'var(--purple)', bg:'rgba(168,85,247,.12)'},
+  phy:      {icon:'⚛️',name:'Physics',          color:'var(--teal)',   bg:'rgba(0,229,195,.12)'},
+  chem:     {icon:'🧪',name:'Chemistry',        color:'var(--purple)', bg:'rgba(168,85,247,.12)'},
+  atomic:   {icon:'⚛️',name:'Atomic Structure', color:'var(--blue)',   bg:'rgba(77,140,255,.12)'},
+  periodic: {icon:'📊',name:'Periodic Table',   color:'var(--gold)',   bg:'rgba(247,183,49,.12)'},
+  bond:     {icon:'🔗',name:'Chemical Bonding', color:'var(--orange)', bg:'rgba(255,140,66,.12)'},
+  acid:     {icon:'🧴',name:'Acids & Bases',    color:'var(--green)',  bg:'rgba(6,214,160,.12)'},
+  organic:  {icon:'🌿',name:'Organic Chem',     color:'var(--green)',  bg:'rgba(6,214,160,.12)'},
+  bio:      {icon:'🧬',name:'Biology',          color:'var(--green)',  bg:'rgba(6,214,160,.12)'},
+  cell:     {icon:'🫧',name:'Cell Structure',   color:'var(--teal)',   bg:'rgba(0,229,195,.12)'},
+  humanbody:{icon:'🫀',name:'Human Body',       color:'var(--pink)',   bg:'rgba(255,107,157,.12)'},
+  genetics: {icon:'🧬',name:'Genetics',         color:'var(--purple)', bg:'rgba(168,85,247,.12)'},
+  plant:    {icon:'🌿',name:'Plant Biology',    color:'var(--green)',  bg:'rgba(6,214,160,.12)'},
+  gen:      {icon:'🌍',name:'Ecology',          color:'var(--gold)',   bg:'rgba(247,183,49,.12)'},
+};
+
+/* ── ALL STAT KEYS for result breakdown ── */
+const ALL_CAT_KEYS = ['motion','force','energy','elec','mag','waves','phy','chem','atomic','periodic','bond','acid','organic','bio','cell','humanbody','genetics','plant','gen'];
+
+/* ── QUESTION TYPE META ── */
+const TYPE_META = {
+  mcq:  {label:'MCQ',         color:'rgba(0,229,195,.12)',  tc:'var(--teal)'},
+  fill: {label:'Fill Blank',  color:'rgba(247,183,49,.12)', tc:'var(--gold)'},
+  eq:   {label:'Equation',    color:'rgba(168,85,247,.12)', tc:'var(--purple)'},
+  img:  {label:'Image Based', color:'rgba(255,107,157,.12)',tc:'var(--pink)'},
+};
+
+/* ── RESULT BREAKDOWN BAR GROUPS ── */
+const BAR_GROUPS = {
+  phy:      ['phy','motion','force','energy','elec','mag','waves'],
+  motion:   ['motion'],
+  force:    ['force'],
+  energy:   ['energy'],
+  elec:     ['elec'],
+  mag:      ['mag'],
+  waves:    ['waves'],
+  chem:     ['chem','atomic','periodic','bond','acid','organic'],
+  atomic:   ['atomic'],
+  periodic: ['periodic'],
+  bond:     ['bond'],
+  acid:     ['acid'],
+  organic:  ['organic'],
+  bio:      ['bio','cell','humanbody','genetics','plant','gen'],
+  cell:     ['cell'],
+  humanbody:['humanbody'],
+  genetics: ['genetics'],
+  plant:    ['plant'],
+  gen:      ['gen'],
+};
+
+/* ── GAME STATE ── */
+let SELECTED_DIFF = 'basics';
+let G = {
+  score:0,streak:0,bestStreak:0,correct:0,wrong:0,qCount:0,
+  timeLeft:60,timer:null,answered:false,
+  pool:[],usedSet:new Set(),poolIdx:0,
+  catStats:{},
+};
+
+/* ── UTILS ── */
+const $ = id => document.getElementById(id);
+// Fisher-Yates shuffle — truly random, different every time
+function sh(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+const esc = s => (s+'').replace(/&/g,'&amp;').replace(/'/g,"&#39;").replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$(id).classList.add('active');window.scrollTo(0,0);}
+function showDiff(){showScreen('s-diff');}
+function quitGame(){
+  if(confirm('Kya aap sach mein quiz chhodna chahte ho? Aapka progress is round ka save nahi hoga.')){
+    clearInterval(G.timer);
+    showScreen('s-home');
+  }
+}
+
+/* ── INIT STAT KEYS ── */
+function initStats(){
+  const s={};
+  ALL_CAT_KEYS.forEach(k=>s[k]={c:0,t:0});
+  return s;
+}
+
+/* ── BUILD POOL (no repeats per game, random every session) ── */
+function buildPool(diff){
+  // Filter by difficulty, then shuffle with seed based on timestamp for different sequences per user session
+  const filtered = QUESTIONS.filter(q=>q.diff===diff);
+  return sh(filtered);
+}
+
+function getNextQ(){
+  // If all used — reshuffle entire pool for seamless endless play
+  if(G.poolIdx >= G.pool.length){
+    G.pool = sh([...G.pool]);
+    G.poolIdx = 0;
+    G.usedSet = new Set();
+  }
+  // Skip already used (safety guard)
+  while(G.usedSet.has(G.poolIdx) && G.poolIdx < G.pool.length) G.poolIdx++;
+  if(G.poolIdx >= G.pool.length){
+    G.pool = sh([...G.pool]);
+    G.poolIdx = 0;
+    G.usedSet = new Set();
+  }
+  G.usedSet.add(G.poolIdx);
+  return G.pool[G.poolIdx++];
+}
+
+/* ── COUNTDOWN ── */
+function startCountdown(diff){
+  SELECTED_DIFF=diff;
+  const dc=DIFF_CONFIG[diff];
+  G={
+    score:0,streak:0,bestStreak:0,correct:0,wrong:0,qCount:0,
+    timeLeft:60,timer:null,answered:false,
+    pool:buildPool(diff),usedSet:new Set(),poolIdx:0,
+    catStats:initStats(),
+  };
+  showScreen('s-cd');
+  const lbl=$('cd-diff-label');
+  lbl.textContent=dc.emoji+' '+dc.name+' Mode';
+  lbl.style.color=dc.color; lbl.style.borderColor=dc.color+'44';
+  let n=3; $('cd-num').textContent=n; $('cd-lbl').textContent='Taiyar Ho Jao!';
+  const tick=setInterval(()=>{
+    n--;
+    if(n>0){const el=$('cd-num');el.style.animation='none';el.offsetHeight;el.style.animation='';el.textContent=n;$('cd-lbl').textContent=n===2?'Almost ready...':'Set ho jao!';}
+    else if(n===0){const el=$('cd-num');el.style.animation='none';el.offsetHeight;el.style.animation='';el.textContent='GO!';$('cd-lbl').textContent='⚗️ Science Warrior!';}
+    else{clearInterval(tick);startGame();}
+  },750);
+}
+
+/* ── START GAME ── */
+function startGame(){
+  const dc=DIFF_CONFIG[SELECTED_DIFF];
+  showScreen('s-game');
+  $('game-nav-tag').textContent=dc.emoji+' '+dc.name;
+  $('gh-score').textContent='0';
+  $('t-num').textContent='60';
+  $('gh-timer').classList.remove('urgent');
+  $('tbar-f').classList.remove('urg');
+  $('tbar-f').style.width='100%';
+  $('t-arc').style.strokeDashoffset='0';
+  $('gh-streak').classList.remove('on');
+  const pill=$('gh-diff-pill');
+  pill.style.cssText=`background:${dc.bg};color:${dc.color};font-size:10px;font-weight:800;padding:4px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.07em;`;
+  pill.textContent=dc.name;
+  // 12 progress dots
+  $('qp-dots').innerHTML=Array.from({length:12},(_,i)=>
+    `<div class="qp-dot${i===0?' current':''}" id="pdot-${i}"></div>`).join('');
+  startTimer();
+  loadQuestion();
+}
+
+/* ── TIMER ── */
+function startTimer(){
+  const CIRC=138; clearInterval(G.timer);
+  G.timer=setInterval(()=>{
+    G.timeLeft--;
+    const pct=G.timeLeft/60;
+    $('t-arc').style.strokeDashoffset=CIRC*(1-pct);
+    $('t-num').textContent=G.timeLeft;
+    $('tbar-f').style.width=(pct*100)+'%';
+    if(G.timeLeft<=15){$('gh-timer').classList.add('urgent');$('tbar-f').classList.add('urg');}
+    if(G.timeLeft<=0){clearInterval(G.timer);endGame();}
+  },1000);
+}
+
+/* ── RENDER QUESTION CONTENT ── */
+function renderQContent(q){
+  const cm=CAT_META[q.cat]||CAT_META.phy;
+
+  // Badge on card top
+  const badge=$('qc-badge');
+  badge.textContent=cm.icon+' '+cm.name;
+  badge.style.cssText=`background:${cm.bg};color:${cm.color};font-size:10px;font-weight:800;padding:4px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.07em;`;
+
+  let html='';
+
+  if(q.type==='mcq'){
+    html=`<div class="q-text">${q.q}</div>`;
+  }
+  else if(q.type==='fill'){
+    const parts=q.q.split('___');
+    const filled=parts[0]+'<span class="blank-box">?</span>'+(parts[1]||'');
+    html=`<div class="q-fill-wrap"><div class="q-fill-text">${filled}</div></div>`;
+  }
+  else if(q.type==='eq'){
+    html=`<div class="eq-display">${q.eqDisplay}</div><div class="q-text">${q.q}</div>`;
+  }
+  else if(q.type==='img'){
+    const hasImg=q.imageUrl&&!q.imageUrl.startsWith('IMG_PLACEHOLDER');
+    const visual=hasImg
+      ?`<img class="q-img-real img-loading" src="${q.imageUrl}" alt="${q.imgCaption||''}" loading="lazy" decoding="async" onload="this.classList.remove('img-loading')" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="q-img-placeholder" style="display:none"><div class="q-emoji-diag">${q.emoji||'🔬'}</div><div class="q-img-label">📷 Image coming soon</div></div>`
+      :`<div class="q-img-placeholder"><div class="q-emoji-diag">${q.emoji||'🔬'}</div><div class="q-img-label">📷 ${q.imageUrl||'Diagram placeholder'}</div></div>`;
+    html=`<div class="q-img-wrap">${visual}<div class="q-img-caption">${q.imgCaption||''}</div></div><div class="q-text">${q.q}</div>`;
+  }
+
+  $('q-dynamic-content').innerHTML=html;
+
+  // Sub label
+  const subMap={
+    mcq:'Sahi jawab chuno:',
+    fill:'Blank mein sahi option chuno:',
+    eq:'Equation dekh ke answer do:',
+    img:'Image dekh ke jawab do:'
+  };
+  $('q-sub').textContent=subMap[q.type]||'Sahi jawab chuno:';
+}
+
+/* ── LOAD QUESTION ── */
+function loadQuestion(){
+  const q=getNextQ();
+  if(!q){endGame();return;}
+  G.answered=false; G.qCount++;
+
+  // Progress dots
+  const dotIdx=(G.qCount-1)%12;
+  document.querySelectorAll('.qp-dot').forEach(d=>d.classList.remove('current'));
+  const curDot=$(`pdot-${dotIdx}`);
+  if(curDot)curDot.classList.add('current');
+  $('qp-label').textContent='Sawaal '+G.qCount;
+  $('qc-num').textContent='#'+G.qCount;
+
+  // Slide-in animation
+  const card=$('q-card');
+  card.classList.remove('slide-in'); void card.offsetWidth; card.classList.add('slide-in');
+
+  renderQContent(q);
+
+  // Shuffle options — random order every question
+  const shuffled=sh(q.opts);
+  const letters=['A','B','C','D'];
+  $('opts-grid').innerHTML=shuffled.map((opt,i)=>`
+    <button class="opt" id="opt-${i}" onclick="answer('${esc(opt)}','${esc(q.ans)}','${q.cat}',${i})">
+      <span class="opt-l">${letters[i]}</span><span>${opt}</span>
+    </button>`).join('');
+}
+
+/* ── ANSWER ── */
+function answer(chosen,correct,cat,idx){
+  if(G.answered)return;
+  G.answered=true;
+  document.querySelectorAll('.opt').forEach(b=>b.disabled=true);
+
+  // Always highlight correct answer
+  document.querySelectorAll('.opt').forEach(btn=>{
+    if(btn.querySelector('span:last-child').textContent.trim()===correct.trim()) btn.classList.add('correct');
+  });
+
+  const isCorrect=chosen.trim()===correct.trim();
+  const dotIdx=(G.qCount-1)%12;
+  const curDot=$(`pdot-${dotIdx}`);
+
+  // Update category stats
+  if(G.catStats[cat]) G.catStats[cat].t++;
+
+  if(isCorrect){
+    G.score+=10; G.streak++; G.correct++;
+    if(G.catStats[cat]) G.catStats[cat].c++;
+    if(G.streak>G.bestStreak) G.bestStreak=G.streak;
+    if(G.streak%3===0){G.score+=5;showCombo(G.streak);}
+    if(curDot){curDot.classList.remove('current');curDot.classList.add('done');}
+    showFloat('+10','#06D6A0');
+  } else {
+    $('opt-'+idx)?.classList.add('wrong');
+    G.score=Math.max(0,G.score-2); G.streak=0; G.wrong++;
+    if(curDot){curDot.classList.remove('current');curDot.classList.add('wrong-dot');}
+    showFloat('−2','#EF476F');
+  }
+  updateHeader();
+  setTimeout(()=>{if(G.timeLeft>0)loadQuestion();},650);
+}
+
+/* ── HEADER ── */
+function updateHeader(){
+  const el=$('gh-score');
+  el.textContent=G.score;
+  el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump');
+  setTimeout(()=>el.classList.remove('bump'),200);
+  $('streak-n').textContent=G.streak;
+  $('gh-streak').classList.toggle('on',G.streak>=2);
+}
+
+/* ── COMBO ── */
+function showCombo(n){
+  $('combo-n').textContent=n;
+  const t=$('combo-toast'); t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2200);
+}
+
+/* ── FLOAT SCORE ── */
+function showFloat(text,color){
+  const el=document.createElement('div');
+  el.className='score-float z1';
+  el.style.cssText=`color:${color};top:${window.innerHeight*.42}px;left:${window.innerWidth/2-18}px;`;
+  el.textContent=text; document.body.appendChild(el);
+  setTimeout(()=>el.remove(),980);
+}
+
+/* ── END GAME ── */
+/* ══ SUPABASE — real backend, same table/RPC as other GyanIQ games ══ */
+const SUPA_URL = 'https://tkdsvzumcribcmbsikwg.supabase.co';
+const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRrZHN2enVtY3JpYmNtYnNpa3dnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk2Mjg0NzMsImV4cCI6MjA5NTIwNDQ3M30.aKE22gf_yU-ybrI-CI05MZamuBG1-PXQd8OnuAYjMQU';
+let supa = null;
+try{
+  if(!window.supabase) throw new Error('Supabase SDK failed to load');
+  supa = window.supabase.createClient(SUPA_URL, SUPA_KEY);
+}catch(err){ console.error('Supabase init failed', err); }
+
+async function saveScoreToServer(score) {
+  if(!supa || score <= 0) return;
+  try{
+    const { data: { session } } = await supa.auth.getSession();
+    if(!session){ console.warn('Not logged in — score not saved'); return; }
+    const username = session.user.user_metadata?.username || session.user.user_metadata?.name || ('Player' + session.user.id.slice(0,6));
+    const { error } = await supa.rpc('add_game_points', {
+      p_zone: 'study',
+      p_username: username,
+      p_points: score,
+      p_game_id: 'science-warrior'
+    });
+    if(error) console.error('score save failed', error);
+  }catch(err){ console.error('score save exception', err); }
+}
+
+function endGame(){
+  clearInterval(G.timer);
+  const dc=DIFF_CONFIG[SELECTED_DIFF];
+  const key='sw_best_'+SELECTED_DIFF;
+  const prev=parseInt(localStorage.getItem(key)||'0');
+  const best=Math.max(G.score,prev);
+  localStorage.setItem(key,best);
+  const allBest=['basics','class11','class12','advanced','phd'].reduce((m,d)=>Math.max(m,parseInt(localStorage.getItem('sw_best_'+d)||'0')),0);
+  $('home-best').textContent=allBest;
+
+  const total=G.correct+G.wrong;
+  const acc=total>0?Math.round(G.correct/total*100):0;
+
+  let rank,emo,title,desc;
+  if(acc>=90&&G.correct>=7){rank='S';emo='🏆';title='Science Genius!';   desc='Ekdum zabardast! Sachche Science Warrior ho tum! 🔥';}
+  else if(acc>=75)         {rank='A';emo='⭐';title='Science Pro!';      desc='Bahut badhiya! Almost perfect performance!';}
+  else if(acc>=55)         {rank='B';emo='🌟';title='Acha Kiya!';        desc='Keep experimenting bhai, improving ho raha hai!';}
+  else                     {rank='C';emo='🔬';title='Practice Karo!';    desc='Science practice se aati hai. Phir koshish karo!';}
+
+  showScreen('s-result');
+  saveScoreToServer(G.score);
+  $('rank-wrap').className='rank-wrap rank-'+rank;
+  $('rank-emo').textContent=emo;
+  $('rank-letter').textContent=rank;
+  $('rank-title').textContent=title;
+  $('rank-desc').textContent=desc;
+
+  const dp=$('r-diff-played');
+  dp.textContent=dc.emoji+' '+dc.name+' Mode';
+  dp.style.cssText=`display:inline-flex;align-items:center;gap:6px;padding:6px 16px;border-radius:20px;font-size:12px;font-weight:800;margin:12px auto 0;border:1px solid;color:${dc.color};border-color:${dc.color}44;`;
+
+  // Score count-up animation
+  let disp=0; const stp=Math.max(1,Math.ceil(G.score/50));
+  const cnt=setInterval(()=>{disp=Math.min(disp+stp,G.score);$('r-score').textContent=disp;if(disp>=G.score)clearInterval(cnt);},30);
+
+  $('r-correct').textContent=G.correct;
+  $('r-wrong').textContent=G.wrong;
+  $('r-total').textContent=total;
+  $('r-acc').textContent=acc+'%';
+
+  // Subject bars — show all categories
+  setTimeout(()=>{
+    Object.entries(BAR_GROUPS).forEach(([barId,cats])=>{
+      const totC=cats.reduce((s,c)=>s+(G.catStats[c]?.c||0),0);
+      const totT=cats.reduce((s,c)=>s+(G.catStats[c]?.t||0),0);
+      const pct=totT>0?Math.round(totC/totT*100):0;
+      const bar=$('bk-'+barId), pEl=$('bk-'+barId+'-p');
+      if(bar)bar.style.width=pct+'%';
+      if(pEl)pEl.textContent=totT>0?pct+'%':'—';
+    });
+  },350);
+
+  // ── Tournament mode: report the REAL score back to tournaments.html ──
+  if (new URLSearchParams(location.search).get('tournament') === '1') {
+    setTimeout(() => reportScoreToTournament(G.score, G.correct, total), 1800);
+  }
+}
+
+function reportScoreToTournament(finalScore, correctAnswers, totalQuestions) {
+  const params = new URLSearchParams(location.search);
+  if (params.get('tournament') !== '1') return;
+  const returnUrl = params.get('return') || 'tournaments.html';
+  location.href = returnUrl + '?score=' + encodeURIComponent(finalScore)
+    + '&correct=' + encodeURIComponent(correctAnswers || 0)
+    + '&total=' + encodeURIComponent(totalQuestions || 0);
+}
+
+/* ── INIT ── */
+(function init(){
+  const allBest=['basics','class11','class12','advanced','phd'].reduce((m,d)=>Math.max(m,parseInt(localStorage.getItem('sw_best_'+d)||'0')),0);
+  $('home-best').textContent=allBest;
+})();
+</script>
+</body>
+</html>
