@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-8NYSKTGJG9"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-8NYSKTGJG9');
-</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GyanIQ — Khelo. Seekho. Aage Badho.</title>
@@ -634,30 +625,35 @@ function showMsg(el,txt,cls){el.textContent=txt;el.className='amsg '+cls;}
 /* ============================
    HOMEPAGE REVIEWS — real user reviews
    ============================
-   Reads from the SAME store the Help Center's Review Submission Form
-   writes to (localStorage key 'gyaniqReviews_v1', JSON array of
-   { id, username, rating, message, createdAt }), so a review submitted
-   on help.html shows up here with no extra wiring. This mirrors the
-   window.GyanIQReviews API exposed on the Help Center page and is
-   structured so swapping to Supabase later only means changing
-   loadReviews() below to a `supabase.from('reviews').select()` call
-   (see the Help Center page for the matching table schema).
+   Reads from the SAME Supabase table ('reviews') that the Help Center's
+   Review Submission Form writes to, so a review submitted on help.html
+   (by ANY visitor, on ANY device) shows up here for EVERYONE — no
+   per-browser storage, no extra wiring. Updates live via Realtime.
 */
 (function(){
   "use strict";
-  const REVIEWS_KEY = 'gyaniqReviews_v1';
   const cmGrid = document.getElementById('cmGrid');
   if(!cmGrid) return;
 
-  function loadReviews(){
-    try{
-      const raw = localStorage.getItem(REVIEWS_KEY);
-      return raw ? JSON.parse(raw) : [];
-    }catch(e){ return []; }
+  const SUPABASE_URL = 'https://tkdsvzumcribcmbsikwg.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_CGABUWknNZA_irMSmw3UYg_jk_j-EY1';
+  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  let cachedReviews = [];
+
+  function rowToReview(r){
+    return { id: r.id, username: r.username, rating: r.rating, message: r.message, createdAt: r.created_at };
+  }
+
+  async function loadReviews(){
+    const { data, error } = await sb.from('reviews').select('*').order('created_at', { ascending: false }).limit(6);
+    if(error){ console.error('Homepage reviews load error:', error); return cachedReviews; }
+    cachedReviews = data.map(rowToReview);
+    return cachedReviews;
   }
 
   function renderHomeReviews(){
-    const reviews = loadReviews().sort((a,b)=> new Date(b.createdAt) - new Date(a.createdAt)).slice(0,6);
+    const reviews = cachedReviews;
 
     if(reviews.length === 0){
       cmGrid.innerHTML = `<div class="cm-empty">Abhi tak koi review nahi hai — <a href="help.html">GyanIQ ko rate karne wale sabse pehle bano! ⭐</a></div>`;
@@ -681,13 +677,20 @@ function showMsg(el,txt,cls){el.textContent=txt;el.className='amsg '+cls;}
     }).join('');
   }
 
-  renderHomeReviews();
+  cmGrid.innerHTML = `<div class="cm-empty">Loading reviews…</div>`;
+  loadReviews().then(renderHomeReviews);
 
-  // Cross-tab live update: if a review is submitted on help.html in
-  // another tab, this page's testimonials refresh automatically.
-  window.addEventListener('storage', (e)=>{
-    if(e.key === REVIEWS_KEY) renderHomeReviews();
-  });
+  // Live update: if a review is submitted on help.html by ANY visitor
+  // (any tab, any device), this page's testimonials refresh automatically
+  // via Supabase Realtime — no polling, no page refresh needed.
+  sb.channel('homepage-reviews-realtime')
+    .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'reviews' }, payload => {
+      const incoming = rowToReview(payload.new);
+      if(cachedReviews.some(r => r.id === incoming.id)) return;
+      cachedReviews = [incoming, ...cachedReviews].slice(0, 6);
+      renderHomeReviews();
+    })
+    .subscribe();
 })();
 </script>
 </body>

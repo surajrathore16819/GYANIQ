@@ -140,6 +140,20 @@ body::before{
 .turn-bar.o-turn .turn-dot{background:var(--o);}
 @keyframes tDot{from{opacity:.3;transform:scale(.6)}to{opacity:1;transform:scale(1)}}
 
+/* Persistent 2-Player mode clarification — stays up the whole time you're
+   in 2P mode (across rounds), not a toast that fades away. */
+.mode-note{
+  display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:2px;
+  width:100%;max-width:340px;
+  background:rgba(240,165,0,.08);border:1px solid rgba(240,165,0,.28);border-radius:12px;
+  padding:clamp(6px,1.8vw,8px) clamp(10px,3vw,14px);
+  font-size:clamp(.62rem,2vw,.7rem);color:var(--t2);
+  text-align:center;line-height:1.4;
+}
+.mode-note.hidden{display:none;}
+.mode-note .mn-x{color:var(--x3);font-weight:800;}
+.mode-note .mn-o{color:var(--o3);font-weight:800;}
+
 /* ══ GAME BOARD ══════════════════════════════════════════ */
 .board-wrap{
   position:relative;
@@ -693,6 +707,14 @@ body::before{
     </div>
   </div>
 
+  <!-- 2-Player mode note — stays visible the whole time you're in 2P mode,
+       clarifying which symbol earns real points (only X, the logged-in
+       account) vs which is just a local guest (O). -->
+  <div class="mode-note" id="modeNote">
+    <span class="mn-x">✕ You</span> — points count &nbsp;·&nbsp;
+    <span class="mn-o">○ Local Player</span> — no points
+  </div>
+
   <!-- Turn indicator -->
   <div class="turn-bar x-turn" id="turnBar">
     <span class="turn-dot"></span>
@@ -749,11 +771,17 @@ try{
 // session.user.email.split('@')[0] when the name wasn't set, which
 // leaked the exact local-part of a real email address onto the public
 // leaderboard. That fallback has been removed entirely.
+//
+// Returns true/false so callers can show a visible "points earned" toast
+// only once the save has actually succeeded — before this, the save
+// happened silently in the background with zero on-screen confirmation,
+// which made it look like points weren't being awarded at all even when
+// they were.
 async function saveScoreToServer(points) {
-  if(!supa || points <= 0) return;
+  if(!supa || points <= 0) return false;
   try{
     const { data: { session } } = await supa.auth.getSession();
-    if(!session){ console.warn('Not logged in — points not saved'); return; }
+    if(!session){ console.warn('Not logged in — points not saved'); return false; }
     const { data: profile, error: profileErr } = await supa
       .from('user_profiles')
       .select('username')
@@ -761,7 +789,7 @@ async function saveScoreToServer(points) {
       .single();
     if(profileErr || !profile?.username){
       console.warn('No safe username on profile — points not saved (never falls back to email)', profileErr);
-      return;
+      return false;
     }
     const username = profile.username;
     const { error } = await supa.rpc('add_game_points', {
@@ -770,8 +798,18 @@ async function saveScoreToServer(points) {
       p_points: points,
       p_game_id: 'tictactoe'
     });
-    if(error) console.error('score save failed', error);
-  }catch(err){ console.error('score save exception', err); }
+    if(error){ console.error('score save failed', error); return false; }
+    return true;
+  }catch(err){ console.error('score save exception', err); return false; }
+}
+
+// Shows a follow-up toast once points are confirmed saved, timed to appear
+// just after the win/draw toast has faded (so they don't overlap/replace
+// each other — toast() clears any existing toast before showing a new one).
+function announcePointsEarned(points){
+  saveScoreToServer(points).then(ok=>{
+    if(ok) setTimeout(()=> toast(`🪙 +${points} points added to your profile!`), 2300);
+  });
 }
 
 /* ══════════════════════════════════════════════════
@@ -845,6 +883,7 @@ function homeStart() {
   document.getElementById('chipEasy').className   = 'diff-chip' + (difficulty==='easy'   ? ' active-easy'   : '');
   document.getElementById('chipMedium').className = 'diff-chip' + (difficulty==='medium' ? ' active-medium'  : '');
   document.getElementById('lblO').textContent = gameMode==='ai' ? 'Computer' : 'Player O';
+  updateModeNote();
 
   // Hide home, show game
   document.getElementById('homeScreen').classList.add('hidden');
@@ -878,8 +917,17 @@ function setMode(m) {
   document.getElementById('btnAI').className  = 'mode-btn' + (m==='ai' ? ' active-ai' : '');
   document.getElementById('diffRow').style.display = m==='ai' ? 'flex' : 'none';
   document.getElementById('lblO').textContent = m==='ai' ? 'Computer' : 'Player O';
+  updateModeNote();
   SFX.play('click');
   restartRound();
+}
+
+// Shows/hides the persistent "✕ You / ○ Local Player" clarification —
+// only relevant in 2P mode, since in vs-Computer mode there's no ambiguity
+// about whose points are whose (O is always the AI, never a person).
+function updateModeNote(){
+  const el = document.getElementById('modeNote');
+  if(el) el.classList.toggle('hidden', gameMode !== '2p');
 }
 
 function setDiff(d) {
@@ -1063,7 +1111,7 @@ function endGame(winLine, isDraw) {
     setTurnBarResult('draw');
     toast("🤝 It's a draw! Well played both.");
     showAIThink(false);
-    saveScoreToServer(DRAW_POINTS);
+    announcePointsEarned(DRAW_POINTS);
     reportTournamentResult('draw');
     return;
   }
@@ -1092,7 +1140,7 @@ function endGame(winLine, isDraw) {
   toast(`${emo} ${winName} wins this round!`);
   // Points go to the logged-in player, who always plays as X (Player O is
   // either the AI or a local second player, not the account owner).
-  if (current === 'X') saveScoreToServer(WIN_POINTS);
+  if (current === 'X') announcePointsEarned(WIN_POINTS);
   // Tournament scoring is from Player X's (the human's) perspective.
   reportTournamentResult(current === 'X' ? 'win' : 'loss');
 }

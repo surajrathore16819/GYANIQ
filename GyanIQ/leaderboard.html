@@ -649,9 +649,9 @@
         <button class="jump-to-me-btn" id="studyJumpBtn">📍 Jump to Me</button>
       </div>
       <div class="player-card-stats">
-        <div class="pc-stat points"><span class="pc-stat-val" id="studyPcPoints">0</span><span class="pc-stat-lbl">Tournament Points</span></div>
+        <div class="pc-stat points"><span class="pc-stat-val" id="studyPcTourneyPoints">0</span><span class="pc-stat-lbl">Tournament Points</span></div>
+        <div class="pc-stat points"><span class="pc-stat-val" id="studyPcGamePoints">0</span><span class="pc-stat-lbl">Games Points</span></div>
         <div class="pc-stat"><span class="pc-stat-val" id="studyPcGames">0</span><span class="pc-stat-lbl">Games Played</span></div>
-        <div class="pc-stat"><span class="pc-stat-val" id="studyPcWins">0</span><span class="pc-stat-lbl">Wins</span></div>
       </div>
     </div>
 
@@ -676,7 +676,7 @@
       <div class="lb-table-wrap">
         <table class="lb-table">
           <thead>
-            <tr><th>Rank</th><th>Username</th><th>Tournament Points</th><th>Games Points</th><th>Games Played</th><th>Wins</th><th>Position</th></tr>
+            <tr><th>Rank</th><th>Username</th><th>Tournament Points</th><th>Games Points</th><th>Games Played</th><th>Position</th></tr>
           </thead>
           <tbody id="studyLbBody"></tbody>
         </table>
@@ -719,9 +719,9 @@
         <button class="jump-to-me-btn" id="funJumpBtn">📍 Jump to Me</button>
       </div>
       <div class="player-card-stats">
-        <div class="pc-stat points"><span class="pc-stat-val" id="funPcPoints">0</span><span class="pc-stat-lbl">Tournament Points</span></div>
+        <div class="pc-stat points"><span class="pc-stat-val" id="funPcTourneyPoints">0</span><span class="pc-stat-lbl">Tournament Points</span></div>
+        <div class="pc-stat points"><span class="pc-stat-val" id="funPcGamePoints">0</span><span class="pc-stat-lbl">Games Points</span></div>
         <div class="pc-stat"><span class="pc-stat-val" id="funPcGames">0</span><span class="pc-stat-lbl">Games Played</span></div>
-        <div class="pc-stat"><span class="pc-stat-val" id="funPcWins">0</span><span class="pc-stat-lbl">Wins</span></div>
       </div>
     </div>
 
@@ -746,7 +746,7 @@
       <div class="lb-table-wrap">
         <table class="lb-table">
           <thead>
-            <tr><th>Rank</th><th>Username</th><th>Tournament Points</th><th>Games Points</th><th>Games Played</th><th>Wins</th><th>Position</th></tr>
+            <tr><th>Rank</th><th>Username</th><th>Tournament Points</th><th>Games Points</th><th>Games Played</th><th>Position</th></tr>
           </thead>
           <tbody id="funLbBody"></tbody>
         </table>
@@ -828,7 +828,11 @@
      ============================
      Pulls the actual signed-in user from the same Supabase project that
      already handles login. Username preference order: user_metadata.username
-     -> user_metadata.full_name -> email prefix -> fallback "Player".
+     (safe, unique, generated at signup) -> user_profiles.username (same
+     value, fetched as a fallback in case metadata sync lagged) -> raw
+     entered name -> generic "Player" + short id. Email is NEVER used as a
+     username anywhere in this chain — that was a real privacy leak in an
+     earlier version and has been removed for good.
      If nobody is signed in, id stays null and score-writes are skipped
      (a signed-out visitor can still VIEW the leaderboard, just can't be
      recorded on it).
@@ -841,10 +845,20 @@
         if(error) safeLog('Supabase auth error', error);
         if(user){
           const meta = user.user_metadata || {};
-          this._current = {
-            id: user.id,
-            username: meta.username || meta.name || meta.full_name || ('Player' + user.id.slice(0,6))
-          };
+          let username = meta.username;
+          if(!username){
+            // Metadata didn't have it yet (e.g. sync lag right after
+            // signup) — fall back to the authoritative table directly
+            // rather than the raw, non-unique entered name.
+            const { data: profile } = await supabase
+              .from('user_profiles')
+              .select('username')
+              .eq('id', user.id)
+              .single();
+            username = profile?.username;
+          }
+          username = username || meta.name || meta.full_name || ('Player' + user.id.slice(0,6));
+          this._current = { id: user.id, username };
         }
       }catch(e){ safeLog('Supabase auth exception', e); }
       return this._current;
@@ -1135,7 +1149,7 @@
         <div class="podium-avatar">${p.avatar || '🧑'}</div>
         <div class="podium-name">${p.username}</div>
         <div class="podium-points">${p.points}</div>
-        <div class="podium-points-lbl">Tournament Points</div>
+        <div class="podium-points-lbl">Total Points</div>
         <span class="podium-tier-tag">${tierLabels[i]}</span>
       `;
       el.appendChild(card);
@@ -1150,7 +1164,7 @@
         <div class="podium-avatar">❔</div>
         <div class="podium-name">—</div>
         <div class="podium-points">0</div>
-        <div class="podium-points-lbl">Tournament Points</div>
+        <div class="podium-points-lbl">Total Points</div>
         <span class="podium-tier-tag">${tierLabels[displayRank-1]}</span>
       `;
       el.appendChild(card);
@@ -1178,7 +1192,7 @@
 
     if(displayList.length === 0){
       const tr = document.createElement('tr');
-      tr.innerHTML = `<td colspan="7" class="lb-no-results">No players found matching your search.</td>`;
+      tr.innerHTML = `<td colspan="6" class="lb-no-results">No players found matching your search.</td>`;
       bodyEl.appendChild(tr);
       return;
     }
@@ -1201,7 +1215,6 @@
         <td class="lb-points">${p.tournamentPoints}</td>
         <td class="lb-points">${p.gamePoints}</td>
         <td>${p.gamesPlayed}</td>
-        <td>${p.wins}</td>
         <td>${positionBadge(p.rank)}</td>
       `;
       bodyEl.appendChild(tr);
@@ -1215,9 +1228,9 @@
     document.getElementById(zone+'PcAvatar').textContent = (myEntry && myEntry.avatar) || '🧑';
     document.getElementById(zone+'PcUsername').textContent = me.username;
     document.getElementById(zone+'PcRank').textContent = myEntry ? ('#' + myEntry.rank) : '—';
-    document.getElementById(zone+'PcPoints').textContent = myEntry ? myEntry.points : 0;
+    document.getElementById(zone+'PcTourneyPoints').textContent = myEntry ? myEntry.tournamentPoints : 0;
+    document.getElementById(zone+'PcGamePoints').textContent = myEntry ? myEntry.gamePoints : 0;
     document.getElementById(zone+'PcGames').textContent = myEntry ? myEntry.gamesPlayed : 0;
-    document.getElementById(zone+'PcWins').textContent = myEntry ? myEntry.wins : 0;
 
     const posRow = document.getElementById(zone+'YourPosRow');
     const posText = document.getElementById(zone+'YourPosText');

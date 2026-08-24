@@ -553,7 +553,7 @@
       <h3>Still need help?</h3>
       <div class="still-help-opts">
         <div class="sh-btn primary" id="openAiFromNoResults">💬 Chat with AI Assistant</div>
-        <a class="sh-btn secondary" href="mailto:support@gyaniq.netlify.app">📩 Contact Support</a>
+        <a class="sh-btn secondary" href="mailto:contact@gyaniq.in">📩 Contact Support</a>
       </div>
     </div>
   </div>
@@ -563,11 +563,11 @@
       <h3>Still stuck?</h3>
       <p>Our support team typically replies within 24 hours.</p>
     </div>
-    <a class="contact-btn" href="mailto:support@gyaniq.netlify.app">✉️ Contact Support</a>
+    <a class="contact-btn" href="mailto:contact@gyaniq.in">✉️ Contact Support</a>
   </div>
 
   <footer>
-    GyanIQ Help Center &copy; <span id="year"></span> — <a href="https://gyaniq.netlify.app" target="_blank" rel="noopener">gyaniq.netlify.app</a>
+    GyanIQ Help Center &copy; <span id="year"></span> — <a href="mailto:contact@gyaniq.in">contact@gyaniq.in</a>
   </footer>
 
 </div>
@@ -585,6 +585,7 @@
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 (function(){
   "use strict";
@@ -1237,84 +1238,73 @@
   });
 
   /* ============================
-     REVIEW SERVICE — reviews stored as plain JS/JSON, structured for a
-     future Supabase swap exactly like LeaderboardService on the
-     leaderboard page. load()/save() are the only two methods that need
-     to change to move this from localStorage to Supabase.
-
-     Run this once in the Supabase SQL editor when ready to connect:
-
-       create table if not exists reviews (
-         id uuid primary key default gen_random_uuid(),
-         username text not null,
-         rating int not null check (rating between 1 and 5),
-         message text not null,
-         created_at timestamptz not null default now()
-       );
-
-       alter table reviews enable row level security;
-
-       create policy "Reviews are publicly readable"
-         on reviews for select using (true);
-
-       create policy "Anyone can submit a review"
-         on reviews for insert with check (true);
-
-       alter publication supabase_realtime add table reviews;
-
-     To connect: swap load()/save() below for a
-     supabase.from('reviews').select() / .insert() call, and call
-     subscribeRealtime() the same way LeaderboardService does, so new
-     reviews from ANY visitor (including the homepage) appear live here
-     without a refresh.
+     REVIEW SERVICE — backed by Supabase (table: reviews).
+     Reviews submitted here are visible to EVERY visitor, on every
+     device/browser, because they live in a shared database instead of
+     this browser's localStorage. New reviews (from ANY visitor,
+     including other tabs/devices) appear live via Realtime — no
+     refresh needed.
   */
+  const SUPABASE_URL = 'https://tkdsvzumcribcmbsikwg.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_CGABUWknNZA_irMSmw3UYg_jk_j-EY1';
+  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  function rowToReview(r){
+    return { id: r.id, username: r.username, rating: r.rating, message: r.message, createdAt: r.created_at };
+  }
+
   const ReviewService = {
-    STORAGE_KEY: 'gyaniqReviews_v1',
+    _cache: [],
     _listeners: [],
 
-    load(){
-      try{
-        const raw = localStorage.getItem(this.STORAGE_KEY);
-        if(raw) return JSON.parse(raw);
-      }catch(e){ /* localStorage unavailable — fall back to empty list */ }
-      return [];
-    },
-
-    save(list){
-      // NOTE: when Supabase is connected, replace this with:
-      //   await supabase.from('reviews').insert(newReview);
-      try{ localStorage.setItem(this.STORAGE_KEY, JSON.stringify(list)); }
-      catch(e){ /* ignore persistence errors */ }
+    async load(){
+      const { data, error } = await sb.from('reviews').select('*').order('created_at', { ascending: false });
+      if(error){ console.error('ReviewService load error:', error); return this._cache; }
+      this._cache = data.map(rowToReview);
+      return this._cache;
     },
 
     getAll(){
-      return this.load().sort((a,b)=> new Date(b.createdAt) - new Date(a.createdAt));
+      return this._cache;
     },
 
     getLatest(count){
-      return this.getAll().slice(0, count || 5);
+      return this._cache.slice(0, count || 5);
     },
 
-    submit({ username, rating, message }){
-      const list = this.load();
-      const review = {
-        id: 'r_' + Date.now() + '_' + Math.random().toString(36).slice(2,7),
+    async submit({ username, rating, message }){
+      const { data, error } = await sb.from('reviews').insert({
         username: username.trim(),
         rating: Number(rating),
-        message: message.trim(),
-        createdAt: new Date().toISOString()
-      };
-      list.push(review);
-      this.save(list);
+        message: message.trim()
+      }).select().single();
+      if(error) throw error;
+
+      const review = rowToReview(data);
+      this._cache = [review, ...this._cache];
       this._notify();
       return review;
     },
 
-    // Lightweight pub-sub so the live list (and, later, a homepage
-    // widget reading the same store) can react the instant a new
-    // review is submitted — no polling needed.
+    // Lightweight pub-sub so the live list (and the homepage widget
+    // reading the same table) can react the instant a new review is
+    // submitted — no polling needed.
     subscribe(callback){ this._listeners.push(callback); },
-    _notify(){ this._listeners.forEach(cb=>cb(this.getAll())); }
+    _notify(){ this._listeners.forEach(cb=>cb(this._cache)); },
+
+    // Realtime: picks up inserts from OTHER visitors/tabs too. Our own
+    // submit() already updates _cache immediately, so duplicates from
+    // the echo of our own insert are skipped by id.
+    subscribeRealtime(){
+      sb.channel('reviews-realtime')
+        .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'reviews' }, payload => {
+          const incoming = rowToReview(payload.new);
+          if(this._cache.some(r => r.id === incoming.id)) return;
+          this._cache = [incoming, ...this._cache];
+          this._notify();
+        })
+        .subscribe();
+    }
   };
 
   /* ---------- REVIEW FORM: STAR PICKER ---------- */
@@ -1363,27 +1353,36 @@
     return valid;
   }
 
-  reviewForm.addEventListener('submit', (e)=>{
+  reviewForm.addEventListener('submit', async (e)=>{
     e.preventDefault();
     if(!validateReviewForm()) return;
 
     rfSubmitBtn.disabled = true;
-    const newReview = ReviewService.submit({
-      username: rUsername.value,
-      rating: selectedRating,
-      message: rMessage.value
-    });
+    rfSubmitBtn.textContent = '⏳ Submitting…';
 
-    reviewForm.reset();
-    selectedRating = 0;
-    paintStars(0);
-    rCharCount.textContent = '0 / 500';
-    rfSubmitBtn.disabled = false;
+    try{
+      const newReview = await ReviewService.submit({
+        username: rUsername.value,
+        rating: selectedRating,
+        message: rMessage.value
+      });
 
-    rfSuccess.classList.add('show');
-    setTimeout(()=> rfSuccess.classList.remove('show'), 3000);
+      reviewForm.reset();
+      selectedRating = 0;
+      paintStars(0);
+      rCharCount.textContent = '0 / 500';
 
-    renderReviews(newReview.id);
+      rfSuccess.classList.add('show');
+      setTimeout(()=> rfSuccess.classList.remove('show'), 3000);
+
+      renderReviews(newReview.id);
+    }catch(err){
+      console.error('Review submit failed:', err);
+      alert('⚠️ Review submit nahi ho paaya — internet check karke dubara try karo.');
+    }finally{
+      rfSubmitBtn.disabled = false;
+      rfSubmitBtn.textContent = '📝 Submit Review';
+    }
   });
 
   /* ---------- LIVE REVIEW LIST ---------- */
@@ -1426,10 +1425,14 @@
     }).join('');
   }
 
-  // Any future submission (including from another tab, or later a real
-  // Supabase realtime event) re-renders the list automatically.
+  // Any future submission (from this tab, another tab, or another
+  // visitor entirely via Supabase Realtime) re-renders the list automatically.
   ReviewService.subscribe(()=> renderReviews());
-  renderReviews();
+  reviewListWrap.innerHTML = '<div class="review-empty">Loading reviews…</div>';
+  ReviewService.load().then(()=>{
+    renderReviews();
+    ReviewService.subscribeRealtime();
+  });
 
   // Public API — lets the homepage (or any other GyanIQ page) pull the
   // latest real reviews to replace placeholder/dummy testimonials, the
@@ -1437,7 +1440,7 @@
   window.GyanIQReviews = {
     getAll(){ return ReviewService.getAll(); },
     getLatest(count){ return ReviewService.getLatest(count); },
-    submit(review){ const r = ReviewService.submit(review); renderReviews(r.id); return r; },
+    async submit(review){ const r = await ReviewService.submit(review); renderReviews(r.id); return r; },
     subscribe(callback){ ReviewService.subscribe(callback); }
   };
 
