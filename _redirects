@@ -1,0 +1,4 @@
+# Force old Netlify subdomain to redirect to the primary custom domain.
+# Prevents Google from treating gyaniq.netlify.app and gyaniq.in as duplicate
+# content, and ensures anyone with an old link lands on the canonical site.
+https://gyaniq.netlify.app/*  https://gyaniq.in/:splat  301!
