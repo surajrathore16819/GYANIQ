@@ -769,13 +769,37 @@ function showScreen(id) {
   window.scrollTo(0, 0);
 }
 
-function buildPool() {
-  // Build a mixed pool from all types
-  const fills   = shuffle(FILL).map(q  => ({...q,  type:'fill'}));
-  const images  = shuffle(IMAGE).map(q => ({...q,  type:'image'}));
-  const hindis  = shuffle(HINDI).map(q => ({...q,  type:'hindi'}));
-  const words   = shuffle(SCRAMBLE).map(q => ({...q, type:'word'}));
-  // Interleave: fill, image, hindi, word, fill, image...
+/* ── CROSS-SESSION NO-REPEAT TRACKING (localStorage) ──
+   Har question-type (fill/image/hindi/word) ke liye "already dekhe hue"
+   question-ids yaad rakhte hain, taaki ek hi user dobara aaye to pehle
+   khele hue MCQ turant repeat na ho. Jab us type ke SAARE questions
+   dekh liye jaate hain, list apne aap reset ho jaati hai. */
+function seenKey(type){ return 'wr_seen_'+type; }
+function getSeenIds(type){
+  try{ return new Set(JSON.parse(localStorage.getItem(seenKey(type))||'[]')); }
+  catch(e){ return new Set(); }
+}
+function markSeen(type,id){
+  if(!id)return;
+  try{
+    const arr=JSON.parse(localStorage.getItem(seenKey(type))||'[]');
+    if(!arr.includes(id)){
+      arr.push(id);
+      localStorage.setItem(seenKey(type),JSON.stringify(arr));
+    }
+  }catch(e){/* localStorage unavailable — silently skip, game still works */}
+}
+function unseenFirst(arr, type){
+  const seen = getSeenIds(type);
+  const unseen = arr.filter(q=>!seen.has(q.id));
+  if(unseen.length===0){
+    // Sab dekh liya — rotation reset karo aur fresh se shuru karo
+    localStorage.removeItem(seenKey(type));
+    return shuffle(arr);
+  }
+  return shuffle(unseen);
+}
+function interleave(fills, images, hindis, words){
   const pool = [];
   const max = Math.max(fills.length, images.length, hindis.length, words.length);
   for (let i = 0; i < max; i++) {
@@ -784,7 +808,16 @@ function buildPool() {
     if (hindis[i])  pool.push(hindis[i]);
     if (words[i])   pool.push(words[i]);
   }
-  return shuffle(pool); // extra shuffle for variety
+  return shuffle(pool);
+}
+
+function buildPool() {
+  // Build a mixed pool, preferring questions this user hasn't seen yet
+  const fills   = unseenFirst(FILL, 'fill').map(q  => ({...q,  type:'fill'}));
+  const images  = unseenFirst(IMAGE, 'image').map(q => ({...q,  type:'image'}));
+  const hindis  = unseenFirst(HINDI, 'hindi').map(q => ({...q,  type:'hindi'}));
+  const words   = unseenFirst(SCRAMBLE, 'word').map(q => ({...q, type:'word'}));
+  return interleave(fills, images, hindis, words);
 }
 
 /* ═══════════════════════════════════════════
@@ -870,11 +903,18 @@ function startTimer() {
 ═══════════════════════════════════════════ */
 function loadQuestion() {
   if (G.poolIdx >= G.pool.length) {
-    // Rebuild pool if exhausted
-    G.pool = buildPool();
+    // Session pool khatam — poore set se (seen+unseen) reshuffle karo taaki
+    // 60-second round seamlessly chalta rahe. Cross-session ke liye "seen"
+    // list already persist ho chuki hai buildPool()'s unseenFirst() se.
+    const fills   = shuffle(FILL).map(q  => ({...q,  type:'fill'}));
+    const images  = shuffle(IMAGE).map(q => ({...q,  type:'image'}));
+    const hindis  = shuffle(HINDI).map(q => ({...q,  type:'hindi'}));
+    const words   = shuffle(SCRAMBLE).map(q => ({...q, type:'word'}));
+    G.pool = interleave(fills, images, hindis, words);
     G.poolIdx = 0;
   }
   const q = G.pool[G.poolIdx++];
+  markSeen(q.type, q.id);
   G.asked++;
   G.answered = false;
   G.qCount++;

@@ -98,6 +98,30 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 .nav-btns{display:flex;gap:10px;}
 .btn-nav-login{padding:clamp(6px,1.3vw,8px) clamp(11px,2vw,18px);border-radius:10px;border:1px solid var(--muted2);color:var(--white);background:none;font-size:clamp(11.5px,1.3vw,13px);font-weight:600;cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:all .2s;white-space:nowrap;}
 .btn-nav-login:hover{border-color:var(--teal);color:var(--teal);}
+
+/* Profile dropdown */
+.profile-trigger{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.06);padding:5px 12px 5px 5px;border-radius:20px;border:none;cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:background .2s;}
+.profile-trigger:hover{background:rgba(255,255,255,0.1);}
+.profile-avatar{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--teal));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#05080F;object-fit:cover;flex-shrink:0;}
+.profile-trigger-name{color:var(--white);font-size:13px;font-weight:600;}
+.profile-dropdown-wrap{position:relative;display:inline-block;}
+.profile-dropdown{position:absolute;top:calc(100% + 10px);right:0;width:280px;background:#05080F;border:1px solid rgba(255,255,255,0.08);border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,0.5);z-index:200;display:none;overflow:hidden;}
+.profile-dropdown.open{display:block;}
+.pd-head{padding:18px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:12px;}
+.pd-avatar-wrap{position:relative;width:52px;height:52px;flex-shrink:0;cursor:pointer;}
+.pd-avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--teal));display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:600;color:#05080F;object-fit:cover;}
+.pd-avatar-badge{position:absolute;bottom:-2px;right:-2px;width:20px;height:20px;border-radius:50%;background:var(--surface2,#131C30);border:2px solid #05080F;display:flex;align-items:center;justify-content:center;font-size:10px;}
+.pd-name{color:var(--white);font-size:15px;font-weight:600;}
+.pd-stats{padding:14px 18px;display:grid;grid-template-columns:1fr 1fr;gap:10px;border-bottom:1px solid rgba(255,255,255,0.06);}
+.pd-stat{background:rgba(255,255,255,0.04);border-radius:10px;padding:10px 12px;}
+.pd-stat-label{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;}
+.pd-stat-value{color:var(--gold);font-size:17px;font-weight:700;}
+.pd-stat-value.rank{color:var(--white);}
+.pd-links{padding:6px;}
+.pd-links a, .pd-logout-btn{display:flex;align-items:center;gap:10px;padding:10px 12px;color:#C5CEE0;font-size:13px;text-decoration:none;border-radius:8px;cursor:pointer;background:none;border:none;width:100%;text-align:left;font-family:'Space Grotesk',sans-serif;}
+.pd-links a:hover, .pd-logout-btn:hover{background:rgba(255,255,255,0.05);}
+.pd-divider{height:1px;background:rgba(255,255,255,0.06);margin:4px 10px;}
+.pd-logout-btn{color:var(--pink);}
 .btn-nav-signup{padding:clamp(6px,1.3vw,8px) clamp(12px,2.2vw,20px);border-radius:10px;background:linear-gradient(135deg,var(--gold),#e8a020);border:none;color:#0A0D14;font-size:clamp(11.5px,1.3vw,13px);font-weight:700;cursor:pointer;font-family:'Baloo 2',cursive;box-shadow:0 4px 16px rgba(247,183,49,0.3);transition:all .2s;white-space:nowrap;}
 .btn-nav-signup:hover{transform:translateY(-1px);}
 
@@ -305,23 +329,17 @@ footer{padding:20px clamp(16px,6vw,60px);border-top:1px solid rgba(255,255,255,0
 
       <!-- SIGNUP -->
       <div id="sf">
-        <div class="afield"><label>Poora Naam</label><input type="text" id="sn" placeholder="Jaise: Rahul Sharma" autocomplete="name"></div>
-        <div class="afield"><label>Email</label><input type="email" id="se" placeholder="tumhara@email.com" autocomplete="email"></div>
-        <div class="afield"><label>Password</label><input type="password" id="sp" placeholder="Minimum 6 characters" autocomplete="new-password"></div>
+        <div class="afield"><label>Poora Naam</label><input type="text" id="sn" placeholder="Jaise: Rahul Sharma"></div>
+        <div class="afield"><label>Email</label><input type="email" id="se" placeholder="tumhara@email.com"></div>
+        <div class="afield"><label>Password</label><input type="password" id="sp" placeholder="Minimum 6 characters"></div>
         <button class="abtn" id="sb" onclick="doSignup()">🚀 Free Mein Join Karo</button>
         <div class="amsg" id="sm"></div>
       </div>
 
       <!-- LOGIN -->
       <div id="lf" style="display:none">
-        <div class="afield"><label>Email</label><input type="email" id="le" placeholder="tumhara@email.com" autocomplete="email"></div>
-        <div class="afield">
-          <label>Password</label>
-          <input type="password" id="lp" placeholder="Tumhara password" autocomplete="current-password">
-          <div style="text-align:right;margin-top:6px;">
-            <a onclick="window.location.href='forgot-password.html'" style="color:#00E5C3;font-size:12px;cursor:pointer;font-weight:600;">Password bhool gaye?</a>
-          </div>
-        </div>
+        <div class="afield"><label>Email</label><input type="email" id="le" placeholder="tumhara@email.com"></div>
+        <div class="afield"><label>Password</label><input type="password" id="lp" placeholder="Tumhara password"></div>
         <button class="abtn" id="lb" onclick="doLogin()">🔓 Login Karo</button>
         <div class="amsg" id="lm"></div>
       </div>
@@ -458,7 +476,7 @@ footer{padding:20px clamp(16px,6vw,60px);border-top:1px solid rgba(255,255,255,0
 <!-- FOOTER -->
 <footer>
   <div class="f-logo">🧠 GyanIQ</div>
-  <div class="f-copy">© 2025 GyanIQ. Sab rights reserved.</div>
+  <div class="f-copy">© 2025 GyanIQ. Sab rights reserved. · <a href="about.html" style="color:inherit;text-decoration:underline;">About</a> · <a href="privacy-policy.html" style="color:inherit;text-decoration:underline;">Privacy Policy</a> · <a href="terms-and-conditions.html" style="color:inherit;text-decoration:underline;">Terms</a></div>
   <div class="f-tag">Khelo. Seekho. Aage Badho. 🎯</div>
 </footer>
 
@@ -499,14 +517,113 @@ try {
     if(session) {
       const name = session.user.user_metadata?.name || ('Player' + session.user.id.slice(0,6));
       document.getElementById('nav-btns').innerHTML = `
-        <span style="color:var(--teal);font-size:13px;font-weight:600;">👋 ${name}</span>
-        <button class="btn-nav-login" onclick="sb.auth.signOut().then(()=>location.reload())">Logout</button>
+        <div class="profile-dropdown-wrap" id="pdWrap">
+          <button class="profile-trigger" id="pdTrigger">
+            <div class="profile-avatar" id="pdTriggerAvatar">${(name||'P').trim().slice(0,1).toUpperCase()}</div>
+            <span class="profile-trigger-name">${name}</span>
+          </button>
+          <div class="profile-dropdown" id="pdPanel">
+            <div class="pd-head">
+              <div class="pd-avatar-wrap" id="pdAvatarWrap">
+                <div class="pd-avatar" id="pdAvatar">${(name||'P').trim().slice(0,1).toUpperCase()}</div>
+                <div class="pd-avatar-badge">📷</div>
+              </div>
+              <div class="pd-name" id="pdName">${name}</div>
+              <input type="file" id="pdAvatarInput" accept="image/png,image/jpeg,image/webp" style="display:none;">
+            </div>
+            <div class="pd-stats">
+              <div class="pd-stat">
+                <div class="pd-stat-label">Wallet</div>
+                <div class="pd-stat-value" id="pdWallet">—</div>
+              </div>
+              <div class="pd-stat">
+                <div class="pd-stat-label">Rank</div>
+                <div class="pd-stat-value rank" id="pdRank">—</div>
+              </div>
+            </div>
+            <div class="pd-links">
+              <a href="about.html">ℹ️ About us</a>
+              <a href="privacy-policy.html">🔒 Privacy policy</a>
+              <a href="terms-and-conditions.html">📄 Terms and conditions</a>
+              <div class="pd-divider"></div>
+              <button class="pd-logout-btn" onclick="sb.auth.signOut().then(()=>location.reload())">🚪 Logout</button>
+            </div>
+          </div>
+        </div>
       `;
       ensureUniqueUsername();
+      initProfileDropdown(session);
     }
   }).catch(err => console.error('GyanIQ: getSession failed', err));
 } catch(err) {
   console.error('GyanIQ: Supabase init failed', err);
+}
+
+/* ============================
+   PROFILE DROPDOWN — avatar upload, wallet (points), rank
+   ============================ */
+async function initProfileDropdown(session){
+  const wrap = document.getElementById('pdWrap');
+  const trigger = document.getElementById('pdTrigger');
+  const panel = document.getElementById('pdPanel');
+  const avatarWrap = document.getElementById('pdAvatarWrap');
+  const avatarInput = document.getElementById('pdAvatarInput');
+  const avatarEl = document.getElementById('pdAvatar');
+  const triggerAvatarEl = document.getElementById('pdTriggerAvatar');
+
+  // Toggle dropdown open/close
+  trigger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    panel.classList.toggle('open');
+  });
+  document.addEventListener('click', (e) => {
+    if(!wrap.contains(e.target)) panel.classList.remove('open');
+  });
+
+  // Load existing avatar + username from user_profiles
+  try{
+    const { data: profile } = await sb.from('user_profiles').select('username, avatar_url').eq('id', session.user.id).maybeSingle();
+    if(profile?.avatar_url){
+      avatarEl.innerHTML = `<img src="${profile.avatar_url}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">`;
+      triggerAvatarEl.innerHTML = `<img src="${profile.avatar_url}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">`;
+    }
+    if(profile?.username) document.getElementById('pdName').textContent = profile.username;
+  }catch(err){ console.error('GyanIQ: profile fetch for dropdown failed', err); }
+
+  // Click avatar -> open file picker (badge only shows on hover, no permanent text)
+  avatarWrap.addEventListener('click', () => avatarInput.click());
+  avatarInput.addEventListener('change', async () => {
+    const file = avatarInput.files[0];
+    if(!file) return;
+    const ext = file.name.split('.').pop().toLowerCase();
+    const path = `${session.user.id}/avatar.${ext}`;
+    try{
+      const { error: upErr } = await sb.storage.from('avatars').upload(path, file, { upsert: true, contentType: file.type });
+      if(upErr){ console.error('GyanIQ: avatar upload failed', upErr); return; }
+      const { data: pub } = sb.storage.from('avatars').getPublicUrl(path);
+      const url = pub.publicUrl + '?t=' + Date.now();
+      await sb.from('user_profiles').update({ avatar_url: url }).eq('id', session.user.id);
+      avatarEl.innerHTML = `<img src="${url}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">`;
+      triggerAvatarEl.innerHTML = `<img src="${url}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">`;
+    }catch(err){ console.error('GyanIQ: avatar upload exception', err); }
+  });
+
+  // Wallet (total points across all zones/games) + Rank (position in Study Zone)
+  try{
+    const { data: rows, error } = await sb.from('leaderboard_players').select('points').eq('player_id', session.user.id);
+    if(!error){
+      const total = (rows || []).reduce((sum, r) => sum + (r.points || 0), 0);
+      document.getElementById('pdWallet').textContent = total.toLocaleString('en-IN');
+    }
+  }catch(err){ console.error('GyanIQ: wallet fetch failed', err); }
+
+  try{
+    const { data: board, error } = await sb.from('leaderboard_players').select('player_id, points').eq('zone', 'study').order('points', { ascending: false });
+    if(!error && board){
+      const idx = board.findIndex(r => r.player_id === session.user.id);
+      document.getElementById('pdRank').textContent = idx >= 0 ? ('#' + (idx + 1)) : '—';
+    }
+  }catch(err){ console.error('GyanIQ: rank fetch failed', err); }
 }
 
 async function doSignup() {
