@@ -294,9 +294,9 @@ footer{padding:20px clamp(16px,6vw,60px);border-top:1px solid rgba(255,255,255,0
   <div class="logo">🧠 GyanIQ</div>
   <div class="nav-links">
     <button class="nav-link active">Home</button>
-    <button class="nav-link" onclick="goProtected('games.html')">Games</button>
-    <button class="nav-link" onclick="goProtected('tournaments.html')">Tournaments</button>
-    <button class="nav-link" onclick="goProtected('leaderboard.html')">Leaderboard</button>
+    <button class="nav-link" onclick="location.href='games.html'">Games</button>
+    <button class="nav-link" onclick="location.href='tournaments.html'">Tournaments</button>
+    <button class="nav-link" onclick="location.href='leaderboard.html'">Leaderboard</button>
     <a class="nav-link" href="contact.html">Contact</a>
     <a class="nav-link" href="help.html">Help</a>
   </div>
@@ -703,6 +703,9 @@ async function doLogin() {
   }
 }
 
+/* goProtected() DISABLED: Games/Tournaments/Leaderboard ab sabke liye
+   bina login khulte hain — login sirf Play/Join click par maanga jata
+   hai. Function yahan reference ke liye rakha hai, ab use nahi hota. */
 function goProtected(page) {
   if(!sb){ location.href='login.html'; return; }
   sb.auth.getSession().then(({data:{session}}) => {
