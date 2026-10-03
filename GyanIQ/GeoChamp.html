@@ -670,6 +670,51 @@ function shuf(a) {
 function el(id) { return document.getElementById(id); }
 function showScr(id) { ['homeScr','quizScr','resultScr'].forEach(s => el(s).classList.toggle('on', s===id)); }
 
+/* ══════════════════════════════════════════
+   NO-REPEAT ROTATION
+   localStorage mein "seen" question-IDs track karta hai (poore
+   filtered pool ke against — diff + selected categories), taaki
+   jab tak saare unseen na dekhe jaayein wahi purane repeat na hon.
+   Sab dekh liye jaane par sirf usi pool ki history reset hoti hai.
+══════════════════════════════════════════ */
+const GC_SEEN_KEY = 'gc_seenIds';
+function gcLoadSeen() {
+  try {
+    const arr = JSON.parse(localStorage.getItem(GC_SEEN_KEY) || '[]');
+    return new Set(Array.isArray(arr) ? arr : []);
+  } catch (e) { return new Set(); }
+}
+function gcSaveSeen(s) {
+  try { localStorage.setItem(GC_SEEN_KEY, JSON.stringify([...s])); } catch (e) {}
+}
+function gcMarkSeen(ids) {
+  const s = gcLoadSeen();
+  ids.forEach(id => s.add(id));
+  gcSaveSeen(s);
+}
+function resetGeoChampRotation() {
+  try { localStorage.removeItem(GC_SEEN_KEY); } catch (e) {}
+}
+// Unseen (is filtered pool ke) shuffled pehle, phir seen shuffled — taaki
+// jab pool bada ho lekin round chhota (10), naye questions hamesha pehle aayen.
+function buildPool(base, count) {
+  const seen = gcLoadSeen();
+  const poolIds = new Set(base.map(q => q.id));
+  let unseen = base.filter(q => !seen.has(q.id));
+  let seenItems = base.filter(q => seen.has(q.id));
+
+  if (unseen.length === 0) {
+    const remaining = new Set([...seen].filter(id => !poolIds.has(id)));
+    gcSaveSeen(remaining);
+    unseen = base.slice();
+    seenItems = [];
+  }
+
+  const chosen = [...shuf(unseen), ...shuf(seenItems)].slice(0, count);
+  gcMarkSeen(chosen.map(q => q.id));
+  return chosen;
+}
+
 function toast(msg, color='') {
   document.querySelectorAll('.toast').forEach(x => x.remove());
   const d = document.createElement('div');
@@ -755,8 +800,8 @@ function startGame() {
   let base = QB.filter(q => q.diff === diff);
   if (selCats.size > 0) base = base.filter(q => selCats.has(q.cat));
   if (base.length < 5) base = QB.filter(q => q.diff === diff);
-  // Always shuffle for a different sequence every play
-  pool = shuf(base).slice(0, 10);
+  // Unseen-first rotation, har play mein naye questions priority se
+  pool = buildPool(base, 10);
   qi = 0; score = 0; answered = false; history = [];
   streak = 0; bestStreak = 0; totalTime = 0;
 
@@ -1035,5 +1080,32 @@ document.addEventListener('keydown', e => {
   if (idx !== -1 && !answered) { const opts = el('optsEl').children; if (opts[idx]) opts[idx].click(); }
 });
 </script>
+<!-- GYANIQ-PLAY-LOGIN-GUARD:START -->
+<script>
+/* Page sabko dikhta hai. Login sirf tab maanga jaata hai jab user game START/PLAY karne ki koshish kare. */
+(function(){
+  var START_SELECTORS = '.start-btn';
+  function isLoggedIn(){
+    try{
+      var raw = localStorage.getItem('sb-tkdsvzumcribcmbsikwg-auth-token');
+      if(!raw) return false;
+      var p = JSON.parse(raw);
+      var exp = p && (p.expires_at || (p.currentSession && p.currentSession.expires_at));
+      var tok = p && (p.access_token || (p.currentSession && p.currentSession.access_token));
+      if(!tok) return false;
+      if(exp && exp * 1000 < Date.now()) return false;
+      return true;
+    }catch(e){ return false; }
+  }
+  window.addEventListener('click', function(e){
+    var t = e.target && e.target.closest ? e.target.closest(START_SELECTORS) : null;
+    if(!t || isLoggedIn()) return;
+    e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation();
+    var back = (location.pathname.split('/').pop() || 'games.html') + location.search;
+    location.href = 'login.html?redirect=' + encodeURIComponent(back);
+  }, true);
+})();
+</script>
+<!-- GYANIQ-PLAY-LOGIN-GUARD:END -->
 </body>
 </html>

@@ -209,7 +209,15 @@ body{background:#05080F;color:#F0F4FF;font-family:'Space Grotesk',sans-serif;min
       btn.textContent = '✅ Login ho gaya...';
       const username = await ensureUniqueUsername();
       showMsg(username ? ('✅ Login ho gaya! Tumhari User ID: ' + username) : '✅ Login ho gaya!', 'success');
-      setTimeout(() => window.location.href = 'games.html', 1200);
+      setTimeout(() => {
+        // Agar user kisi game/tournament se aaya tha toh wapas wahin bhejo (sirf apni site ke .html pages)
+        let dest = 'games.html';
+        try {
+          const r = new URLSearchParams(window.location.search).get('redirect');
+          if (r && /^[A-Za-z0-9._-]+\.html(\?[A-Za-z0-9=&._%-]*)?$/.test(r)) dest = r;
+        } catch (e) {}
+        window.location.href = dest;
+      }, 1200);
     }
   }
 

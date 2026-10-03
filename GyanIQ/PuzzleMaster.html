@@ -1843,5 +1843,32 @@ window.addEventListener('DOMContentLoaded',()=>{
   });
 });
 </script>
+<!-- GYANIQ-PLAY-LOGIN-GUARD:START -->
+<script>
+/* Page sabko dikhta hai. Login sirf tab maanga jaata hai jab user game START/PLAY karne ki koshish kare. */
+(function(){
+  var START_SELECTORS = '.daily-card, .lvl-card';
+  function isLoggedIn(){
+    try{
+      var raw = localStorage.getItem('sb-tkdsvzumcribcmbsikwg-auth-token');
+      if(!raw) return false;
+      var p = JSON.parse(raw);
+      var exp = p && (p.expires_at || (p.currentSession && p.currentSession.expires_at));
+      var tok = p && (p.access_token || (p.currentSession && p.currentSession.access_token));
+      if(!tok) return false;
+      if(exp && exp * 1000 < Date.now()) return false;
+      return true;
+    }catch(e){ return false; }
+  }
+  window.addEventListener('click', function(e){
+    var t = e.target && e.target.closest ? e.target.closest(START_SELECTORS) : null;
+    if(!t || isLoggedIn()) return;
+    e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation();
+    var back = (location.pathname.split('/').pop() || 'games.html') + location.search;
+    location.href = 'login.html?redirect=' + encodeURIComponent(back);
+  }, true);
+})();
+</script>
+<!-- GYANIQ-PLAY-LOGIN-GUARD:END -->
 </body>
 </html>

@@ -342,6 +342,11 @@ footer{padding:20px clamp(16px,5vw,56px);border-top:1px solid var(--bord);displa
         <div class="gc-body"><h3>NEET Warrior</h3><p>Biology, Physics, Chemistry — MCQ practice aur test papers</p></div>
         <div class="lock-overlay"><span>🔒</span><p>Login to unlock</p></div>
       </div>
+      <div class="gc-locked">
+        <div class="gc-thumb th5">🎯</div>
+        <div class="gc-body"><h3>JEE Warrior</h3><p>Physics, Chemistry, Maths — MCQ practice aur test papers</p></div>
+        <div class="lock-overlay"><span>🔒</span><p>Login to unlock</p></div>
+      </div>
       <!-- unlock banner -->
       <div class="unlock-banner" style="grid-column:1/-1">
         <span>🔒 Login karke saare Study Zone games unlock karo</span>
@@ -461,12 +466,23 @@ footer{padding:20px clamp(16px,5vw,56px);border-top:1px solid var(--bord);displa
       <a class="gc" href="neet-warrior.html">
         <div class="gc-thumb th7">
           🩺
-          <span class="gc-badge r b-new">NEW</span>
         </div>
         <div class="gc-body">
           <h3>NEET Warrior</h3>
           <p>Biology, Physics, Chemistry — MCQ Practice Mode aur exam-style Test Papers.</p>
           <div class="gc-tags"><span class="gc-tag">NEET</span><span class="gc-tag">Medical</span><span class="gc-tag">Biology</span></div>
+          <button class="gc-play">▶ Khelo</button>
+        </div>
+      </a>
+
+      <a class="gc" href="jee-warrior.html">
+        <div class="gc-thumb th5">
+          🎯
+        </div>
+        <div class="gc-body">
+          <h3>JEE Warrior</h3>
+          <p>Physics, Chemistry, Maths — MCQ Practice Mode aur exam-style Test Papers.</p>
+          <div class="gc-tags"><span class="gc-tag">JEE</span><span class="gc-tag">Engineering</span><span class="gc-tag">Maths</span></div>
           <button class="gc-play">▶ Khelo</button>
         </div>
       </a>
@@ -486,7 +502,6 @@ footer{padding:20px clamp(16px,5vw,56px);border-top:1px solid var(--bord);displa
     <!-- GUEST: locked -->
     <div class="games-grid" id="fun-locked" style="display:none">
       <div class="gc-locked"><div class="gc-thumb th7">🎴</div><div class="gc-body"><h3>UNO</h3><p>creativity Test</p></div><div class="lock-overlay"><span>🔒</span><p>Login to unlock</p></div></div>
-      <div class="gc-locked"><div class="gc-thumb th8">🃏</div><div class="gc-body"><h3>Memory Match</h3><p>Card matching game</p></div><div class="lock-overlay"><span>🔒</span><p>Login to unlock</p></div></div>
       <div class="gc-locked"><div class="gc-thumb th9">🧩</div><div class="gc-body"><h3>Puzzle Master</h3><p>Dimaag Lagaoo</p></div><div class="lock-overlay"><span>🔒</span><p>Login to unlock</p></div></div>
       <div class="unlock-banner" style="grid-column:1/-1">
         <span>🔒 Login karke Fun Zone games unlock karo</span>
@@ -504,16 +519,6 @@ footer{padding:20px clamp(16px,5vw,56px);border-top:1px solid var(--bord);displa
           <h3>UNO</h3>
           <p>creativity And Mind Test</p>
           <div class="gc-tags"><span class="gc-tag">Casual</span><span class="gc-tag">Hindi</span></div>
-          <button class="gc-play">▶ Khelo</button>
-        </div>
-      </a>
-
-      <a class="gc" href="#" onclick="alert('🃏 Memory Match — Coming Soon! Stay tuned 🚀'); return false;">
-        <div class="gc-thumb th8">🃏</div>
-        <div class="gc-body">
-          <h3>Memory Match</h3>
-          <p>Cards flip karo, pairs dhundho — memory improve karo.</p>
-          <div class="gc-tags"><span class="gc-tag">Memory</span><span class="gc-tag">Fun</span></div>
           <button class="gc-play">▶ Khelo</button>
         </div>
       </a>
@@ -806,6 +811,7 @@ function isLoggedInGyanIQ(){
     return true;
   }catch(e){ return false; }
 }
+/* CARD-LEVEL GUARD DISABLED: ab game page sabke liye khulta hai; login sirf game ke andar Start/Play click par maanga jata hai.
 document.addEventListener('click', function(e){
   var card = e.target.closest('a.gc');
   if(!card) return;
@@ -816,6 +822,7 @@ document.addEventListener('click', function(e){
     location.href = 'login.html?redirect=' + encodeURIComponent(href);
   }
 });
+*/
 
 async function doLogout() {
   if(!supa){ location.reload(); return; }

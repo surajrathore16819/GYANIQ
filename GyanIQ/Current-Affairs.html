@@ -626,6 +626,7 @@ nav{
       <div class="sec-label">Category Filter Karo</div>
       <div class="cat-grid" id="cat-grid">
         <div class="cat-chip on" data-cat="all" onclick="selCat(this)"><span class="ci">🎯</span>Sab</div>
+        <div class="cat-chip" data-cat="general" onclick="selCat(this)"><span class="ci">📚</span>General GK</div>
         <div class="cat-chip" data-cat="politics" onclick="selCat(this)"><span class="ci">🏛️</span>Politics</div>
         <div class="cat-chip" data-cat="schemes" onclick="selCat(this)"><span class="ci">📋</span>Schemes</div>
         <div class="cat-chip" data-cat="budget" onclick="selCat(this)"><span class="ci">💼</span>Budget</div>
@@ -786,6 +787,7 @@ nav{
    CAT META
 ══════════════════════════════════════════ */
 const CAT_META = {
+  general:       {icon:'📚',label:'General Knowledge',col:'var(--teal)'},
   politics:      {icon:'🏛️',label:'Politics',      col:'var(--blue)'},
   schemes:       {icon:'📋',label:'Govt Schemes',   col:'var(--teal)'},
   budget:        {icon:'💼',label:'Budget',          col:'var(--gold)'},
@@ -809,7 +811,7 @@ const CAT_META = {
    and buildGameSession() for saving results)
 ══════════════════════════════════════════ */
 let G = {
-  pool:[],idx:0,
+  pool:[],idx:0,filtered:[],
   score:0,correct:0,wrong:0,
   streak:0,bestStreak:0,
   timeLeft:60,timer:null,
@@ -863,6 +865,41 @@ function showScreen(id){
 }
 
 /* ══════════════════════════════════════════
+   NO-REPEAT ROTATION
+   localStorage mein "seen" question-IDs track hote hain.
+   Jab tak filtered pool ke saare questions dekhe nahi jaate,
+   purane repeat nahi hote. Sab dekh liye to sirf usi pool ki
+   history reset hoti hai (baaki categories ka data safe rehta hai).
+══════════════════════════════════════════ */
+const CA_SEEN_KEY='currentAffairsSeenIds';
+function caLoadSeen(){
+  try{
+    const arr=JSON.parse(localStorage.getItem(CA_SEEN_KEY)||'[]');
+    return new Set(Array.isArray(arr)?arr:[]);
+  }catch(e){return new Set();}
+}
+function caSaveSeen(set){
+  try{localStorage.setItem(CA_SEEN_KEY,JSON.stringify([...set]));}catch(e){}
+}
+function caMarkSeen(id){
+  const s=caLoadSeen();s.add(id);caSaveSeen(s);
+}
+// Unseen pehle (shuffled), phir seen (shuffled). Agar sab seen hain to
+// sirf isi pool ki seen-history clear karke fresh cycle shuru hota hai.
+function buildPool(list){
+  let seen=caLoadSeen();
+  let unseen=list.filter(q=>!seen.has(q.id));
+  let seenItems=list.filter(q=>seen.has(q.id));
+  if(unseen.length===0){
+    const ids=new Set(list.map(q=>q.id));
+    seen=new Set([...seen].filter(id=>!ids.has(id)));
+    caSaveSeen(seen);
+    unseen=list.slice();seenItems=[];
+  }
+  return [...shuffle(unseen),...shuffle(seenItems)];
+}
+
+/* ══════════════════════════════════════════
    HOME
 ══════════════════════════════════════════ */
 function selCat(el){
@@ -892,10 +929,11 @@ function startCountdown(){
     catStats:{},
     sessionId:Date.now()+Math.random().toString(36).slice(2),
   };
-  // Build pool: filter + shuffle (random each game)
+  // Build pool: filter + unseen-first rotation
   let src=QUESTIONS.filter(q=>G.filterCat==='all'||q.cat===G.filterCat);
   if(src.length===0) src=QUESTIONS;
-  G.pool=shuffle(src);
+  G.filtered=src;
+  G.pool=buildPool(src);
   G.idx=0;
 
   showScreen('s-cd');
@@ -963,9 +1001,10 @@ function startTimer(){
 function loadQuestion(){
   if(G.gameEnded)return;
   if(G.idx>=G.pool.length){
-    G.pool=shuffle(G.pool);G.idx=0; // reshuffle for endless
+    G.pool=buildPool(G.filtered||G.pool);G.idx=0; // endless mode: naye unseen pehle
   }
   const q=G.pool[G.idx++];
+  caMarkSeen(q.id);
   G.qCount++;G.answered=false;
 
   // Difficulty badge
@@ -1220,5 +1259,32 @@ function goHome(){
 ══════════════════════════════════════════ */
 loadHomeStats();
 </script>
+<!-- GYANIQ-PLAY-LOGIN-GUARD:START -->
+<script>
+/* Page sabko dikhta hai. Login sirf tab maanga jaata hai jab user game START/PLAY karne ki koshish kare. */
+(function(){
+  var START_SELECTORS = '#start-btn';
+  function isLoggedIn(){
+    try{
+      var raw = localStorage.getItem('sb-tkdsvzumcribcmbsikwg-auth-token');
+      if(!raw) return false;
+      var p = JSON.parse(raw);
+      var exp = p && (p.expires_at || (p.currentSession && p.currentSession.expires_at));
+      var tok = p && (p.access_token || (p.currentSession && p.currentSession.access_token));
+      if(!tok) return false;
+      if(exp && exp * 1000 < Date.now()) return false;
+      return true;
+    }catch(e){ return false; }
+  }
+  window.addEventListener('click', function(e){
+    var t = e.target && e.target.closest ? e.target.closest(START_SELECTORS) : null;
+    if(!t || isLoggedIn()) return;
+    e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation();
+    var back = (location.pathname.split('/').pop() || 'games.html') + location.search;
+    location.href = 'login.html?redirect=' + encodeURIComponent(back);
+  }, true);
+})();
+</script>
+<!-- GYANIQ-PLAY-LOGIN-GUARD:END -->
 </body>
 </html>
