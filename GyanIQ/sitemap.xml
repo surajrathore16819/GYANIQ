@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://gyaniq.in/</loc>
     <lastmod>2026-09-20</lastmod>
@@ -162,4 +162,1506 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  <!-- LIBRARY:START -->
+  <url>
+    <loc>https://gyaniq.in/library/</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/polity/</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/polity/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/polity/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/polity/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/polity/"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/polity/</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/polity/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/polity/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/polity/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/polity/"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/polity/</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/polity/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/polity/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/polity/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/polity/"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/history/</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/history/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/history/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/history/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/history/"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/history/</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/history/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/history/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/history/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/history/"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/history/</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/history/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/history/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/history/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/history/"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/geography/</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/geography/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/geography/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/geography/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/geography/"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/geography/</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/geography/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/geography/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/geography/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/geography/"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/geography/</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/geography/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/geography/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/geography/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/geography/"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/science/</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/science/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/science/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/science/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/science/"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/science/</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/science/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/science/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/science/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/science/"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/science/</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/science/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/science/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/science/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/science/"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/maths/</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/maths/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/maths/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/maths/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/maths/"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/maths/</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/maths/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/maths/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/maths/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/maths/"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/maths/</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/maths/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/maths/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/maths/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/maths/"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/reasoning/</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/reasoning/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/reasoning/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/reasoning/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/reasoning/"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/reasoning/</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/reasoning/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/reasoning/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/reasoning/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/reasoning/"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/reasoning/</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/reasoning/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/reasoning/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/reasoning/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/reasoning/"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/english/</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/english/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/english/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/english/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/english/"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/english/</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/english/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/english/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/english/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/english/"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/english/</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/english/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/english/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/english/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/english/"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/gk/</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/gk/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/gk/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/gk/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/gk/"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/gk/</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/gk/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/gk/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/gk/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/gk/"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/gk/</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/gk/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/gk/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/gk/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/gk/"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/neet-jee/</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/neet-jee/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/neet-jee/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/neet-jee/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/neet-jee/"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/neet-jee/</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/neet-jee/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/neet-jee/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/neet-jee/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/neet-jee/"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/neet-jee/</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/neet-jee/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/neet-jee/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/neet-jee/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/neet-jee/"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/game-guides/</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/game-guides/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/game-guides/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/game-guides/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/game-guides/"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/game-guides/</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/game-guides/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/game-guides/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/game-guides/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/game-guides/"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/game-guides/</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/game-guides/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/game-guides/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/game-guides/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/game-guides/"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/polity/maulik-adhikar.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/polity/maulik-adhikar.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/polity/maulik-adhikar.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/polity/maulik-adhikar.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/polity/maulik-adhikar.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/polity/maulik-adhikar.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/polity/maulik-adhikar.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/polity/maulik-adhikar.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/polity/maulik-adhikar.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/polity/maulik-adhikar.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/polity/maulik-adhikar.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/polity/maulik-adhikar.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/polity/maulik-adhikar.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/polity/maulik-adhikar.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/polity/maulik-adhikar.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/polity/prastavana.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/polity/prastavana.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/polity/prastavana.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/polity/prastavana.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/polity/prastavana.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/polity/prastavana.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/polity/prastavana.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/polity/prastavana.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/polity/prastavana.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/polity/prastavana.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/polity/prastavana.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/polity/prastavana.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/polity/prastavana.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/polity/prastavana.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/polity/prastavana.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/polity/sansad-parliament.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/polity/sansad-parliament.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/polity/sansad-parliament.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/polity/sansad-parliament.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/polity/sansad-parliament.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/polity/sansad-parliament.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/polity/sansad-parliament.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/polity/sansad-parliament.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/polity/sansad-parliament.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/polity/sansad-parliament.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/polity/sansad-parliament.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/polity/sansad-parliament.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/polity/sansad-parliament.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/polity/sansad-parliament.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/polity/sansad-parliament.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/history/revolt-1857.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/history/revolt-1857.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/history/revolt-1857.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/history/revolt-1857.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/history/revolt-1857.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/history/revolt-1857.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/history/revolt-1857.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/history/revolt-1857.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/history/revolt-1857.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/history/revolt-1857.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/history/revolt-1857.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/history/revolt-1857.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/history/revolt-1857.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/history/revolt-1857.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/history/revolt-1857.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/history/freedom-movement.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/history/freedom-movement.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/history/freedom-movement.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/history/freedom-movement.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/history/freedom-movement.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/history/freedom-movement.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/history/freedom-movement.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/history/freedom-movement.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/history/freedom-movement.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/history/freedom-movement.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/history/freedom-movement.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/history/freedom-movement.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/history/freedom-movement.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/history/freedom-movement.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/history/freedom-movement.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/history/mughal-empire.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/history/mughal-empire.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/history/mughal-empire.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/history/mughal-empire.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/history/mughal-empire.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/history/mughal-empire.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/history/mughal-empire.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/history/mughal-empire.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/history/mughal-empire.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/history/mughal-empire.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/history/mughal-empire.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/history/mughal-empire.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/history/mughal-empire.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/history/mughal-empire.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/history/mughal-empire.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/geography/indian-rivers.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/geography/indian-rivers.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/geography/indian-rivers.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/geography/indian-rivers.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/geography/indian-rivers.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/geography/indian-rivers.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/geography/indian-rivers.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/geography/indian-rivers.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/geography/indian-rivers.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/geography/indian-rivers.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/geography/indian-rivers.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/geography/indian-rivers.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/geography/indian-rivers.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/geography/indian-rivers.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/geography/indian-rivers.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/geography/mountains-plateaus.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/geography/mountains-plateaus.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/geography/mountains-plateaus.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/geography/mountains-plateaus.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/geography/mountains-plateaus.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/geography/mountains-plateaus.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/geography/mountains-plateaus.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/geography/mountains-plateaus.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/geography/mountains-plateaus.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/geography/mountains-plateaus.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/geography/mountains-plateaus.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/geography/mountains-plateaus.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/geography/mountains-plateaus.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/geography/mountains-plateaus.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/geography/mountains-plateaus.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/geography/indian-climate-monsoon.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/geography/indian-climate-monsoon.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/geography/indian-climate-monsoon.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/geography/indian-climate-monsoon.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/geography/indian-climate-monsoon.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/geography/indian-climate-monsoon.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/geography/indian-climate-monsoon.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/geography/indian-climate-monsoon.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/geography/indian-climate-monsoon.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/geography/indian-climate-monsoon.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/geography/indian-climate-monsoon.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/geography/indian-climate-monsoon.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/geography/indian-climate-monsoon.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/geography/indian-climate-monsoon.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/geography/indian-climate-monsoon.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/geography/world-capitals.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/geography/world-capitals.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/geography/world-capitals.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/geography/world-capitals.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/geography/world-capitals.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/geography/world-capitals.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/geography/world-capitals.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/geography/world-capitals.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/geography/world-capitals.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/geography/world-capitals.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/geography/world-capitals.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/geography/world-capitals.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/geography/world-capitals.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/geography/world-capitals.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/geography/world-capitals.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/science/vitamins-deficiency-diseases.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/science/vitamins-deficiency-diseases.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/science/vitamins-deficiency-diseases.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/science/vitamins-deficiency-diseases.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/science/vitamins-deficiency-diseases.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/science/vitamins-deficiency-diseases.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/science/vitamins-deficiency-diseases.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/science/vitamins-deficiency-diseases.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/science/vitamins-deficiency-diseases.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/science/vitamins-deficiency-diseases.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/science/vitamins-deficiency-diseases.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/science/vitamins-deficiency-diseases.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/science/vitamins-deficiency-diseases.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/science/vitamins-deficiency-diseases.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/science/vitamins-deficiency-diseases.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/science/human-body-systems.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/science/human-body-systems.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/science/human-body-systems.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/science/human-body-systems.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/science/human-body-systems.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/science/human-body-systems.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/science/human-body-systems.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/science/human-body-systems.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/science/human-body-systems.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/science/human-body-systems.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/science/human-body-systems.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/science/human-body-systems.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/science/human-body-systems.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/science/human-body-systems.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/science/human-body-systems.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/science/acids-bases-salts.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/science/acids-bases-salts.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/science/acids-bases-salts.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/science/acids-bases-salts.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/science/acids-bases-salts.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/science/acids-bases-salts.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/science/acids-bases-salts.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/science/acids-bases-salts.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/science/acids-bases-salts.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/science/acids-bases-salts.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/science/acids-bases-salts.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/science/acids-bases-salts.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/science/acids-bases-salts.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/science/acids-bases-salts.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/science/acids-bases-salts.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/science/physics-motion-units.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/science/physics-motion-units.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/science/physics-motion-units.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/science/physics-motion-units.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/science/physics-motion-units.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/science/physics-motion-units.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/science/physics-motion-units.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/science/physics-motion-units.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/science/physics-motion-units.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/science/physics-motion-units.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/science/physics-motion-units.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/science/physics-motion-units.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/science/physics-motion-units.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/science/physics-motion-units.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/science/physics-motion-units.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/maths/percentage-tricks.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/maths/percentage-tricks.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/maths/percentage-tricks.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/maths/percentage-tricks.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/maths/percentage-tricks.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/maths/percentage-tricks.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/maths/percentage-tricks.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/maths/percentage-tricks.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/maths/percentage-tricks.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/maths/percentage-tricks.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/maths/percentage-tricks.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/maths/percentage-tricks.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/maths/percentage-tricks.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/maths/percentage-tricks.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/maths/percentage-tricks.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/maths/profit-and-loss.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/maths/profit-and-loss.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/maths/profit-and-loss.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/maths/profit-and-loss.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/maths/profit-and-loss.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/maths/profit-and-loss.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/maths/profit-and-loss.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/maths/profit-and-loss.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/maths/profit-and-loss.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/maths/profit-and-loss.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/maths/profit-and-loss.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/maths/profit-and-loss.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/maths/profit-and-loss.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/maths/profit-and-loss.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/maths/profit-and-loss.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/maths/probability-basics.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/maths/probability-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/maths/probability-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/maths/probability-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/maths/probability-basics.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/maths/probability-basics.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/maths/probability-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/maths/probability-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/maths/probability-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/maths/probability-basics.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/maths/probability-basics.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/maths/probability-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/maths/probability-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/maths/probability-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/maths/probability-basics.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/maths/squares-cubes-tables.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/maths/squares-cubes-tables.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/maths/squares-cubes-tables.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/maths/squares-cubes-tables.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/maths/squares-cubes-tables.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/maths/squares-cubes-tables.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/maths/squares-cubes-tables.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/maths/squares-cubes-tables.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/maths/squares-cubes-tables.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/maths/squares-cubes-tables.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/maths/squares-cubes-tables.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/maths/squares-cubes-tables.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/maths/squares-cubes-tables.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/maths/squares-cubes-tables.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/maths/squares-cubes-tables.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/reasoning/number-series.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/reasoning/number-series.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/reasoning/number-series.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/reasoning/number-series.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/reasoning/number-series.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/reasoning/number-series.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/reasoning/number-series.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/reasoning/number-series.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/reasoning/number-series.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/reasoning/number-series.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/reasoning/number-series.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/reasoning/number-series.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/reasoning/number-series.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/reasoning/number-series.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/reasoning/number-series.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/reasoning/blood-relations.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/reasoning/blood-relations.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/reasoning/blood-relations.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/reasoning/blood-relations.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/reasoning/blood-relations.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/reasoning/blood-relations.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/reasoning/blood-relations.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/reasoning/blood-relations.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/reasoning/blood-relations.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/reasoning/blood-relations.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/reasoning/blood-relations.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/reasoning/blood-relations.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/reasoning/blood-relations.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/reasoning/blood-relations.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/reasoning/blood-relations.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/reasoning/detective-logic.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/reasoning/detective-logic.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/reasoning/detective-logic.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/reasoning/detective-logic.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/reasoning/detective-logic.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/reasoning/detective-logic.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/reasoning/detective-logic.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/reasoning/detective-logic.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/reasoning/detective-logic.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/reasoning/detective-logic.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/reasoning/detective-logic.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/reasoning/detective-logic.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/reasoning/detective-logic.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/reasoning/detective-logic.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/reasoning/detective-logic.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/reasoning/riddles-lateral-thinking.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/reasoning/riddles-lateral-thinking.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/reasoning/riddles-lateral-thinking.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/reasoning/riddles-lateral-thinking.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/reasoning/riddles-lateral-thinking.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/reasoning/riddles-lateral-thinking.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/reasoning/riddles-lateral-thinking.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/reasoning/riddles-lateral-thinking.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/reasoning/riddles-lateral-thinking.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/reasoning/riddles-lateral-thinking.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/reasoning/riddles-lateral-thinking.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/reasoning/riddles-lateral-thinking.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/reasoning/riddles-lateral-thinking.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/reasoning/riddles-lateral-thinking.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/reasoning/riddles-lateral-thinking.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/english/tenses-basics.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/english/tenses-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/english/tenses-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/english/tenses-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/english/tenses-basics.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/english/tenses-basics.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/english/tenses-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/english/tenses-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/english/tenses-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/english/tenses-basics.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/english/tenses-basics.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/english/tenses-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/english/tenses-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/english/tenses-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/english/tenses-basics.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/english/articles-prepositions.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/english/articles-prepositions.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/english/articles-prepositions.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/english/articles-prepositions.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/english/articles-prepositions.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/english/articles-prepositions.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/english/articles-prepositions.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/english/articles-prepositions.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/english/articles-prepositions.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/english/articles-prepositions.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/english/articles-prepositions.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/english/articles-prepositions.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/english/articles-prepositions.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/english/articles-prepositions.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/english/articles-prepositions.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/english/hindi-english-vocabulary.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/english/hindi-english-vocabulary.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/english/hindi-english-vocabulary.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/english/hindi-english-vocabulary.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/english/hindi-english-vocabulary.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/english/hindi-english-vocabulary.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/english/hindi-english-vocabulary.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/english/hindi-english-vocabulary.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/english/hindi-english-vocabulary.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/english/hindi-english-vocabulary.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/english/hindi-english-vocabulary.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/english/hindi-english-vocabulary.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/english/hindi-english-vocabulary.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/english/hindi-english-vocabulary.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/english/hindi-english-vocabulary.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/gk/important-days.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/gk/important-days.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/gk/important-days.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/gk/important-days.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/gk/important-days.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/gk/important-days.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/gk/important-days.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/gk/important-days.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/gk/important-days.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/gk/important-days.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/gk/important-days.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/gk/important-days.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/gk/important-days.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/gk/important-days.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/gk/important-days.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/gk/international-organisations.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/gk/international-organisations.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/gk/international-organisations.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/gk/international-organisations.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/gk/international-organisations.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/gk/international-organisations.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/gk/international-organisations.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/gk/international-organisations.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/gk/international-organisations.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/gk/international-organisations.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/gk/international-organisations.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/gk/international-organisations.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/gk/international-organisations.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/gk/international-organisations.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/gk/international-organisations.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/gk/indian-economy-basics.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/gk/indian-economy-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/gk/indian-economy-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/gk/indian-economy-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/gk/indian-economy-basics.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/gk/indian-economy-basics.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/gk/indian-economy-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/gk/indian-economy-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/gk/indian-economy-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/gk/indian-economy-basics.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/gk/indian-economy-basics.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/gk/indian-economy-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/gk/indian-economy-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/gk/indian-economy-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/gk/indian-economy-basics.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/gk/current-affairs-strategy.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/gk/current-affairs-strategy.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/gk/current-affairs-strategy.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/gk/current-affairs-strategy.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/gk/current-affairs-strategy.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/gk/current-affairs-strategy.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/gk/current-affairs-strategy.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/gk/current-affairs-strategy.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/gk/current-affairs-strategy.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/gk/current-affairs-strategy.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/gk/current-affairs-strategy.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/gk/current-affairs-strategy.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/gk/current-affairs-strategy.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/gk/current-affairs-strategy.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/gk/current-affairs-strategy.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/neet-jee/neet-cell-biology.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/neet-jee/neet-cell-biology.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/neet-jee/neet-cell-biology.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/neet-jee/neet-cell-biology.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/neet-jee/neet-cell-biology.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/neet-jee/neet-cell-biology.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/neet-jee/neet-cell-biology.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/neet-jee/neet-cell-biology.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/neet-jee/neet-cell-biology.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/neet-jee/neet-cell-biology.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/neet-jee/neet-cell-biology.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/neet-jee/neet-cell-biology.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/neet-jee/neet-cell-biology.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/neet-jee/neet-cell-biology.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/neet-jee/neet-cell-biology.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/neet-jee/neet-genetics-basics.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/neet-jee/neet-genetics-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/neet-jee/neet-genetics-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/neet-jee/neet-genetics-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/neet-jee/neet-genetics-basics.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/neet-jee/neet-genetics-basics.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/neet-jee/neet-genetics-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/neet-jee/neet-genetics-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/neet-jee/neet-genetics-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/neet-jee/neet-genetics-basics.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/neet-jee/neet-genetics-basics.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/neet-jee/neet-genetics-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/neet-jee/neet-genetics-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/neet-jee/neet-genetics-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/neet-jee/neet-genetics-basics.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/neet-jee/jee-kinematics.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/neet-jee/jee-kinematics.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/neet-jee/jee-kinematics.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/neet-jee/jee-kinematics.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/neet-jee/jee-kinematics.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/neet-jee/jee-kinematics.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/neet-jee/jee-kinematics.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/neet-jee/jee-kinematics.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/neet-jee/jee-kinematics.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/neet-jee/jee-kinematics.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/neet-jee/jee-kinematics.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/neet-jee/jee-kinematics.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/neet-jee/jee-kinematics.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/neet-jee/jee-kinematics.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/neet-jee/jee-kinematics.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/neet-jee/jee-periodic-trends.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/neet-jee/jee-periodic-trends.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/neet-jee/jee-periodic-trends.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/neet-jee/jee-periodic-trends.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/neet-jee/jee-periodic-trends.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/neet-jee/jee-periodic-trends.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/neet-jee/jee-periodic-trends.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/neet-jee/jee-periodic-trends.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/neet-jee/jee-periodic-trends.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/neet-jee/jee-periodic-trends.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/neet-jee/jee-periodic-trends.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/neet-jee/jee-periodic-trends.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/neet-jee/jee-periodic-trends.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/neet-jee/jee-periodic-trends.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/neet-jee/jee-periodic-trends.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/game-guides/ludo-guide.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/game-guides/ludo-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/game-guides/ludo-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/game-guides/ludo-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/game-guides/ludo-guide.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/game-guides/ludo-guide.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/game-guides/ludo-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/game-guides/ludo-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/game-guides/ludo-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/game-guides/ludo-guide.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/game-guides/ludo-guide.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/game-guides/ludo-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/game-guides/ludo-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/game-guides/ludo-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/game-guides/ludo-guide.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/game-guides/uno-guide.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/game-guides/uno-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/game-guides/uno-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/game-guides/uno-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/game-guides/uno-guide.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/game-guides/uno-guide.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/game-guides/uno-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/game-guides/uno-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/game-guides/uno-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/game-guides/uno-guide.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/game-guides/uno-guide.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/game-guides/uno-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/game-guides/uno-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/game-guides/uno-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/game-guides/uno-guide.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/game-guides/rummy-guide.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/game-guides/rummy-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/game-guides/rummy-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/game-guides/rummy-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/game-guides/rummy-guide.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/game-guides/rummy-guide.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/game-guides/rummy-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/game-guides/rummy-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/game-guides/rummy-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/game-guides/rummy-guide.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/game-guides/rummy-guide.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/game-guides/rummy-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/game-guides/rummy-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/game-guides/rummy-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/game-guides/rummy-guide.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/game-guides/chess-basics.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/game-guides/chess-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/game-guides/chess-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/game-guides/chess-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/game-guides/chess-basics.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/game-guides/chess-basics.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/game-guides/chess-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/game-guides/chess-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/game-guides/chess-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/game-guides/chess-basics.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/game-guides/chess-basics.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/game-guides/chess-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/game-guides/chess-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/game-guides/chess-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/game-guides/chess-basics.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/game-guides/snake-rush-guide.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/game-guides/snake-rush-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/game-guides/snake-rush-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/game-guides/snake-rush-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/game-guides/snake-rush-guide.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/game-guides/snake-rush-guide.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/game-guides/snake-rush-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/game-guides/snake-rush-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/game-guides/snake-rush-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/game-guides/snake-rush-guide.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/game-guides/snake-rush-guide.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/game-guides/snake-rush-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/game-guides/snake-rush-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/game-guides/snake-rush-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/game-guides/snake-rush-guide.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/game-guides/tic-tac-toe-guide.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/game-guides/tic-tac-toe-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/game-guides/tic-tac-toe-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/game-guides/tic-tac-toe-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/game-guides/tic-tac-toe-guide.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/hi/game-guides/tic-tac-toe-guide.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/game-guides/tic-tac-toe-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/game-guides/tic-tac-toe-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/game-guides/tic-tac-toe-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/game-guides/tic-tac-toe-guide.html"/>
+  </url>
+  <url>
+    <loc>https://gyaniq.in/library/en/game-guides/tic-tac-toe-guide.html</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="hi-Latn" href="https://gyaniq.in/library/game-guides/tic-tac-toe-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://gyaniq.in/library/hi/game-guides/tic-tac-toe-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://gyaniq.in/library/en/game-guides/tic-tac-toe-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://gyaniq.in/library/game-guides/tic-tac-toe-guide.html"/>
+  </url>
+  <!-- LIBRARY:END -->
 </urlset>
